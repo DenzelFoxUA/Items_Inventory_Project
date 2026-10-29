@@ -1,13 +1,13 @@
 ﻿
-
 using System;
-using System.Transactions;
 
 namespace InventoryCoreLib
 {
     public class BowInstance : WeaponInstance, IRanged
     {
         private BowDefinition Bow => (BowDefinition)Definition;
+
+        public ArrowInstance? CurrentAmmo { get; private set; }
 
         public BowInstance(BowDefinition bow) : base(bow)
         {
@@ -28,7 +28,6 @@ namespace InventoryCoreLib
             return 0;
         }
 
-
         public override uint? SecondaryAttack(double distanceToTarget)
         {
             if (Bow.SecondaryAttack is null)
@@ -45,18 +44,12 @@ namespace InventoryCoreLib
 
         }
 
-
         public void Reload()
         {
             throw new System.NotImplementedException();
         }
 
-        public void ApplyAmmunition()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public bool CanUseAmmo(IAmmo ammo)
+        public bool CanUseAmmo(ArrowDefinition ammo)
         {
             throw new System.NotImplementedException();
         }

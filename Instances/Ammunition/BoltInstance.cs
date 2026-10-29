@@ -1,9 +1,9 @@
 ﻿
 namespace InventoryCoreLib
 {
-    public class BoltInstance : EquipableInstance
+    public class BoltInstance : EquipableInstance, IAmmoInstance
     {
-        private BoltDefinition Bolt => (BoltDefinition)Definition;
+        public IAmmo AmmoDefinition => (BoltDefinition)Definition;
 
         public BoltInstance(BoltDefinition bolt): base(bolt)
         {

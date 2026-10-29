@@ -1,9 +1,9 @@
 ﻿
 namespace InventoryCoreLib
 {
-    public class BulletInstance: EquipableInstance
+    public class BulletInstance: EquipableInstance, IAmmoInstance
     {
-        public BulletDefinition Bullet => (BulletDefinition)Definition;
+        public IAmmo AmmoDefinition => (BulletDefinition)Definition;
 
         public BulletInstance(BulletDefinition bullet) : base(bullet)
         {

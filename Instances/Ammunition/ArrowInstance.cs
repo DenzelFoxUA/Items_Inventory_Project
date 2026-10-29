@@ -1,9 +1,10 @@
 ﻿
 namespace InventoryCoreLib
 {
-    public class ArrowInstance : EquipableInstance
+    public class ArrowInstance : EquipableInstance, IAmmoInstance
     {
-        private ArrowDefinition Arrow => (ArrowDefinition)Definition;
+
+        public IAmmo AmmoDefinition => (ArrowDefinition)Definition;
 
         public ArrowInstance(ArrowDefinition arrow) : base(arrow)
         {
