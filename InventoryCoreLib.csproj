@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Instances\Armor\" />
     <Folder Include="Instances\Usables\" />
-    <Folder Include="Instances\Weapons\" />
   </ItemGroup>
 
 </Project>

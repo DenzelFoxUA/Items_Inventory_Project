@@ -15,29 +15,34 @@ namespace InventoryCoreLib
 
         //IAttack
 
-        public virtual AttackResult PrimaryAttack()
+        public virtual uint PrimaryAttack(double distanceToTarget)
         {
-            double conditionCoef = GetDurabilityCoefficient();
+            if (distanceToTarget <= Weapon.PrimaryAttack.AttackRange)
+            {
+                double conditionCoef = GetDurabilityCoefficient();
 
-            uint damage = (uint)Math.Round(Weapon.PrimaryAttack.MaxDamage * conditionCoef);
+                uint damage = (uint)Math.Round(Weapon.PrimaryAttack.MaxDamage * conditionCoef);
 
-            return new (Weapon.PrimaryAttack.AttackRange, damage);
+                return damage;
+            }
+
+            return 0;
         }
 
-        public virtual AttackResult? SecondaryAttack()
+        public virtual uint? SecondaryAttack(double distanceToTarget)
         {
-            
-            if(Weapon.SecondaryAttack is not null)
-            {
+            if (Weapon.SecondaryAttack is null)
+                return null;
 
+            if (distanceToTarget <= Weapon.SecondaryAttack.AttackRange)
+            {
                 double conditionCoef = GetDurabilityCoefficient();
                 uint damage = (uint)Math.Round(Weapon.SecondaryAttack.MaxDamage * conditionCoef);
-                return new(Weapon.SecondaryAttack.AttackRange, damage);
+                return damage;
             }
-            else
-            {
-                return null;
-            }
+
+            return 0;
+
         }
     }
 }

@@ -15,7 +15,7 @@
 
     public abstract class EquipableItem : BaseItem
     {
-        public WearableItemCategory Category { get; init; } = WearableItemCategory.NOTSET;
+        public WearableItemCategory EqupmentCategory { get; init; } = WearableItemCategory.NOTSET;
         public uint LevelRequired { get; init; } = 0;
     }
 }
