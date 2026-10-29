@@ -11,6 +11,6 @@ namespace InventoryCoreLib
 
     public interface IAmmo
     {
-       AmmoType Ammo { get; }
+        public AmmoType Ammo { get; }
     }
 }

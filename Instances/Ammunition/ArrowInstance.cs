@@ -11,5 +11,9 @@ namespace InventoryCoreLib
             
         }
 
+        public void Use()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

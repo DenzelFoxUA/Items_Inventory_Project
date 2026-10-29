@@ -3,9 +3,9 @@ namespace InventoryCoreLib
 {
     public interface IRanged
     {
-        public void Reload();
-        bool CanUseAmmo(IAmmo ammo);
-        bool SetAmmo(IAmmo ammo);
+        public bool Reload();
+        bool CanUseAmmo(IAmmoInstance ammo);
+        bool SetAmmo(IAmmoInstance ammo);
         void ClearAmmo();
     }
 }

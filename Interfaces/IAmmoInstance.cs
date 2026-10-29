@@ -3,6 +3,8 @@ namespace InventoryCoreLib
 {
     public interface IAmmoInstance
     {
-        IAmmo AmmoDefinition { get; }
+        public IAmmo AmmoDefinition { get; }
+        public uint CurrentStackCount { get; }
+        public void Use();
     }
 }

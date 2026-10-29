@@ -3,11 +3,9 @@ using System;
 
 namespace InventoryCoreLib
 {
-    public class BowInstance : WeaponInstance, IRanged
+    public class BowInstance : RangedInstance
     {
         private BowDefinition Bow => (BowDefinition)Definition;
-
-        public ArrowInstance? CurrentAmmo { get; private set; }
 
         public BowInstance(BowDefinition bow) : base(bow)
         {
@@ -44,26 +42,37 @@ namespace InventoryCoreLib
 
         }
 
-        public void Reload()
+        public override bool Reload()
         {
-            throw new System.NotImplementedException();
+            if (CurrentAmmoInstance is null)
+                return false;
+
+            if (CurrentAmmoInstance.CurrentStackCount > 0 && CurrentAmmoCount == 0)
+            {
+
+                CurrentAmmoInstance.Use();
+
+                CurrentAmmoCount++;
+                return true;
+            }
+
+            return false;
         }
 
-        public bool CanUseAmmo(ArrowDefinition ammo)
+        public override bool CanUseAmmo(IAmmoInstance ammo)
         {
-            throw new System.NotImplementedException();
+            return ammo.AmmoDefinition.Ammo == AmmoType.Arrow;
         }
 
-        public bool SetAmmo(IAmmo ammo)
+        public override bool SetAmmo(IAmmoInstance ammo)
         {
-            throw new System.NotImplementedException();
-        }
+            if (!CanUseAmmo(ammo))
+                return false;
 
-        public void ClearAmmo()
-        {
-            throw new System.NotImplementedException();
-        }
+            CurrentAmmoInstance = ammo;
 
+            return true;
+        }
 
     }
 }
