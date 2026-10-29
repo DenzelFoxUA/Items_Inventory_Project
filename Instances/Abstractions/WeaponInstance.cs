@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace InventoryCoreLib
 {
 
     public abstract class WeaponInstance : DurableInstance, IAttack
     {
-
         public BaseWeapon Weapon => (BaseWeapon)Definition;
 
-        public WeaponInstance(BaseWeapon _weapon) : base(_weapon)
+        public WeaponInstance(BaseWeapon _weapon) :
+            base(_weapon)
         {
             
         }

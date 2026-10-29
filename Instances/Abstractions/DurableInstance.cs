@@ -1,16 +1,19 @@
 ﻿
+using System.Collections.Generic;
+
 namespace InventoryCoreLib
 {
     public abstract class DurableInstance : EquipableInstance, IDurable
     {
-        protected DurableItem DurableDefinition 
+        private DurableItem DurableDefinition 
         { 
             get => (DurableItem)Definition; 
         }
 
         public uint CurrentDurability { get; protected set; }
 
-        public DurableInstance(DurableItem definition) : base(definition)
+        public DurableInstance(DurableItem definition) :
+            base(definition)
         {
             CurrentDurability = definition.MaxDurability;
         }

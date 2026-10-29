@@ -1,5 +1,7 @@
 ﻿
 
+using System.Collections.Generic;
+
 namespace InventoryCoreLib
 {
     public class DaggerDefinition : BaseWeapon
@@ -13,7 +15,8 @@ namespace InventoryCoreLib
             uint levelReq,
             uint attackDamage,
             string iconPath,
-            string miniaturePath)
+            string miniaturePath,
+            List<IEffect>? effects = null) : base(effects)
         {
             Id = id;
             Name = name;
@@ -26,13 +29,16 @@ namespace InventoryCoreLib
             EqupmentCategory = WearableItemCategory.OneHanded;
             LevelRequired = levelReq;
 
-            this.PrimaryAttack.AttackRange(1.0);
-            PrimaryAttack.MaxDamage = attackDamage;
-            SecondaryAttack.AttackRange = 1.0;
+            PrimaryAttack = new AttackDefinition 
+            { 
+                AttackRange = WeaponDistanceConstants.DAGGER_PHYSICAL_ATTACK_DIST, 
+                MaxDamage = attackDamage 
+            };
+
+            SecondaryAttack = null;
 
             Icon = iconPath;
             Miniature2D = miniaturePath;
-
 
         }
     }

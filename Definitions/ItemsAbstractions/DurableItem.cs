@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace InventoryCoreLib
 {
     public abstract class DurableItem: EquipableItem
@@ -6,5 +8,10 @@ namespace InventoryCoreLib
         public uint MaxDurability { get; init; } = 0;
 
         public bool IsIndestructible { get; init; } = false;
+
+        public DurableItem(List<IEffect>? effects = null) : base(effects)
+        {
+
+        }
     }
 }
