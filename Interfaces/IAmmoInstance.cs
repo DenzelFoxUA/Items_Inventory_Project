@@ -5,6 +5,6 @@ namespace InventoryCoreLib
     {
         public IAmmo AmmoDefinition { get; }
         public uint CurrentStackCount { get; }
-        public void Use();
+        public bool Use();
     }
 }

@@ -49,7 +49,6 @@ namespace InventoryCoreLib
 
             if (CurrentAmmoInstance.CurrentStackCount > 0 && CurrentAmmoCount == 0)
             {
-
                 CurrentAmmoInstance.Use();
 
                 CurrentAmmoCount++;

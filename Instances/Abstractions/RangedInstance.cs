@@ -4,7 +4,7 @@ namespace InventoryCoreLib
     public abstract class RangedInstance : WeaponInstance, IRanged
     {
 
-        public RangedWeapon RangedWeapon => (RangedWeapon)Definition;
+        private RangedWeapon RangedWeapon => (RangedWeapon)Definition;
 
         public IAmmoInstance? CurrentAmmoInstance { get; protected set; }
 
@@ -24,6 +24,7 @@ namespace InventoryCoreLib
 
         public virtual void ClearAmmo()
         {
+            CurrentAmmoCount = 0;
             CurrentAmmoInstance = null;
         }
     }

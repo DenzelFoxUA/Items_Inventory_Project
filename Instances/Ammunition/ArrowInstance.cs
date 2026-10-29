@@ -11,9 +11,13 @@ namespace InventoryCoreLib
             
         }
 
-        public void Use()
+        public bool Use()
         {
-            throw new System.NotImplementedException();
+            if (CurrentStackCount == 0)
+                return false;
+
+            CurrentStackCount--;
+            return true;
         }
     }
 }

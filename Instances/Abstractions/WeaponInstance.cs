@@ -6,7 +6,7 @@ namespace InventoryCoreLib
 
     public abstract class WeaponInstance : DurableInstance, IAttack
     {
-        public BaseWeapon Weapon => (BaseWeapon)Definition;
+        private BaseWeapon Weapon => (BaseWeapon)Definition;
 
         public WeaponInstance(BaseWeapon _weapon) :
             base(_weapon)

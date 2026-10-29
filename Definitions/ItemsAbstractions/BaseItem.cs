@@ -13,7 +13,7 @@
         public uint MaxStackSize { get; init; } = 1;
 
         //resource ref
-        public string Icon { get; protected set; } = "";
+        public string Icon { get; init; } = "";
         public string Miniature2D { get; init; } = "";
 
     }
