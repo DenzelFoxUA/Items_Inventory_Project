@@ -37,6 +37,7 @@ namespace InventoryCoreLib
         }
 
         public AmmoType Ammo => AmmoType.Bolt;
+        public uint MaxStackCount => MaxStackSize;
         public IReadOnlyList<IEffect> GetEffects() => Effects;
     }
 }

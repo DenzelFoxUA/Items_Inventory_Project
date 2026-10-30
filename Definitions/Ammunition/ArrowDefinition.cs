@@ -38,6 +38,8 @@ namespace InventoryCoreLib
 
         public AmmoType Ammo => AmmoType.Arrow;
 
+        public uint MaxStackCount => MaxStackSize;
+
         public IReadOnlyList<IEffect> GetEffects() => Effects;
     }
 }

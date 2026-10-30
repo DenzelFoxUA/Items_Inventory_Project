@@ -29,8 +29,8 @@ namespace InventoryCoreLib
                 $"Description: {EquipableDefinition.Descriprion}\n" +
                 $"Price: {EquipableDefinition.Price}\n" +
                 $"Weight: {EquipableDefinition.Weight}\n" +
-                $"Is Stackable{EquipableDefinition.IsStackable}\n" +
-                $"Max stack{EquipableDefinition.MaxStackSize}\n" +
+                $"Is Stackable: {EquipableDefinition.IsStackable}\n" +
+                $"Max stack: {EquipableDefinition.MaxStackSize}\n" +
                 $"Is equipped: {IsEquipped}";
         }
         

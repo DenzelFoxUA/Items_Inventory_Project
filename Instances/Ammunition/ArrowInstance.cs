@@ -22,5 +22,14 @@ namespace InventoryCoreLib
             CurrentStackCount--;
             return true;
         }
+
+        //temp code
+        public void AddToStack(uint numOfArrows)
+        {
+            if (AmmoDefinition.MaxStackCount <= CurrentStackCount + numOfArrows)
+                CurrentStackCount = AmmoDefinition.MaxStackCount;
+            else
+                CurrentStackCount += numOfArrows;
+        }
     }
 }

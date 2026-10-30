@@ -24,8 +24,13 @@ namespace InventoryCoreLib
 
         public virtual void ClearAmmo()
         {
-            CurrentAmmoCount = 0;
-            CurrentAmmoInstance = null;
+            if(CurrentAmmoInstance != null)
+            {
+                CurrentAmmoCount = 0;
+                CurrentAmmoInstance.Unequip();
+                CurrentAmmoInstance = null;
+            }
+
         }
     }
 }

@@ -14,7 +14,8 @@ namespace InventoryCoreLib
 
         public override uint PrimaryAttack(double distanceToTarget)
         {
-            if (distanceToTarget > Bow.PrimaryAttack.AttackRange)
+            if (Bow.PrimaryAttack is null &&
+                distanceToTarget > Bow.PrimaryAttack!.AttackRange)
                 return 0;
 
             if (CurrentAmmoCount == 0 && !Reload())
@@ -23,17 +24,37 @@ namespace InventoryCoreLib
             double conditionCoef = GetDurabilityCoefficient();
             uint damage = (uint)Math.Round(Bow.PrimaryAttack.MaxDamage * conditionCoef);
 
-            foreach(var effect in Bow.Effects)
+            foreach(var eff in Bow.Effects)
             {
-                if (effect.IsDestructive)
-                    damage += effect.Apply();
+                if (!eff.IsPassive)
+                {
+                    var effectResult = eff.Apply();
+
+                    //temp
+                    Console.WriteLine($"{effectResult.ApplyableForce} hit with +" +
+                        $"{effectResult.Power} power");
+                    //
+
+                    damage += effectResult.Power;
+                }
             }
 
             var effectsList = ArrowInstance.AmmoDefinition.GetEffects();
 
             foreach(var eff in effectsList)
             {
-                damage += eff.Apply();
+                if(!eff.IsPassive)
+                {
+                    var effectResult = eff.Apply();
+
+                    //temp
+                    Console.WriteLine($"{ effectResult.ApplyableForce } hit with +" +
+                        $"{ effectResult.Power } power");
+                    //
+
+                    damage += effectResult.Power;
+                }
+                    
             }
 
             CurrentAmmoCount--;
@@ -70,8 +91,26 @@ namespace InventoryCoreLib
                 return false;
 
             CurrentAmmoInstance = ammo;
+            CurrentAmmoInstance.Equip();
 
             return true;
         }
+
+        public override string ToString()
+        {
+            string ammoInstance = "ARROW::NULL";
+
+            if(ArrowInstance is not null)
+            {
+                ammoInstance = $"Arrows Loaded: {CurrentAmmoCount}\n" +
+                $"Arrows in sack: {ArrowInstance!.CurrentStackCount}\n" +
+                $"Arrow type: {ArrowInstance.AmmoDefinition.Ammo.ToString()}\n";
+            }
+
+            return base.ToString() + 
+                $"\n{ammoInstance}";
+        }
+
+
     }
 }
