@@ -3,6 +3,7 @@ namespace InventoryCoreLib
 {
     public interface IEffect
     {
-        public object Apply();
+        public bool IsDestructive { get; init; }
+        public uint Apply();
     }
 }

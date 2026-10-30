@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace InventoryCoreLib
 {
     public interface IAmmoInstance

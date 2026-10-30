@@ -37,5 +37,6 @@ namespace InventoryCoreLib
         }
 
         public AmmoType Ammo => AmmoType.Bolt;
+        public IReadOnlyList<IEffect> GetEffects() => Effects;
     }
 }

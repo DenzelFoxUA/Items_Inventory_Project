@@ -7,39 +7,39 @@ namespace InventoryCoreLib
     {
         private BowDefinition Bow => (BowDefinition)Definition;
 
-        public BowInstance(BowDefinition bow) : base(bow)
-        {
+        private IAmmoInstance ArrowInstance => CurrentAmmoInstance!;
 
-        }
+        public BowInstance(BowDefinition bow) : base(bow)
+        { }
 
         public override uint PrimaryAttack(double distanceToTarget)
         {
-            if (distanceToTarget <= Bow.PrimaryAttack.AttackRange)
+            if (distanceToTarget > Bow.PrimaryAttack.AttackRange)
+                return 0;
+
+            if (CurrentAmmoCount == 0 && !Reload())
+                return 0;
+
+            double conditionCoef = GetDurabilityCoefficient();
+            uint damage = (uint)Math.Round(Bow.PrimaryAttack.MaxDamage * conditionCoef);
+
+            foreach(var effect in Bow.Effects)
             {
-                double conditionCoef = GetDurabilityCoefficient();
-
-                uint damage = (uint)Math.Round(Bow.PrimaryAttack.MaxDamage * conditionCoef);
-
-                return damage;
+                if (effect.IsDestructive)
+                    damage += effect.Apply();
             }
 
-            return 0;
-        }
+            var effectsList = ArrowInstance.AmmoDefinition.GetEffects();
 
-        public override uint? SecondaryAttack(double distanceToTarget)
-        {
-            if (Bow.SecondaryAttack is null)
-                return null;
-
-            if (distanceToTarget <= Bow.SecondaryAttack.AttackRange)
+            foreach(var eff in effectsList)
             {
-                double conditionCoef = GetDurabilityCoefficient();
-                uint damage = (uint)Math.Round(Bow.SecondaryAttack.MaxDamage * conditionCoef);
-                return damage;
+                damage += eff.Apply();
             }
 
-            return 0;
+            CurrentAmmoCount--;
 
+            return damage;
+            
         }
 
         public override bool Reload()
@@ -49,7 +49,8 @@ namespace InventoryCoreLib
 
             if (CurrentAmmoInstance.CurrentStackCount > 0 && CurrentAmmoCount == 0)
             {
-                CurrentAmmoInstance.Use();
+                if(!CurrentAmmoInstance.Use())
+                    return false;
 
                 CurrentAmmoCount++;
                 return true;
@@ -72,6 +73,5 @@ namespace InventoryCoreLib
 
             return true;
         }
-
     }
 }

@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="../TestEnvironment/TestEnvironment.csproj" Id="505e0c8b-9027-43af-b191-314c086505dd" />
   <Project Path="InventoryCoreLib.csproj" />
 </Solution>

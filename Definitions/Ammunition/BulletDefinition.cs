@@ -37,5 +37,6 @@ namespace InventoryCoreLib
         }
 
         public AmmoType Ammo => AmmoType.Bullet;
+        public IReadOnlyList<IEffect> GetEffects() => Effects;
     }
 }

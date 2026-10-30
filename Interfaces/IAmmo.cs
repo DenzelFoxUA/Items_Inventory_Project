@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace InventoryCoreLib
 {
     public enum AmmoType
@@ -12,5 +14,6 @@ namespace InventoryCoreLib
     public interface IAmmo
     {
         public AmmoType Ammo { get; }
+        public IReadOnlyList<IEffect> GetEffects();
     }
 }
