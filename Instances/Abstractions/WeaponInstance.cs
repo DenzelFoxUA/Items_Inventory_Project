@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace InventoryCoreLib
 {
-
     public abstract class WeaponInstance : DurableInstance, IAttack
     {
         private BaseWeapon Weapon => (BaseWeapon)Definition;
@@ -14,17 +12,40 @@ namespace InventoryCoreLib
             
         }
 
-        //IAttack
+        private uint BaseAttackFunc(uint weaponDamage)
+        {
+            double conditionCoef = GetDurabilityCoefficient();
 
+            uint damage = (uint)Math.Round(weaponDamage * conditionCoef);
+
+            foreach (var effect in Weapon.Effects)
+            {
+                if (!effect.IsPassive)
+                {
+                    var effectResult = effect.Apply();
+
+                    //temp
+                    Console.WriteLine($"+{effectResult.Power} damage of {effectResult.ApplyableForce}");
+                    //
+
+                    damage += effectResult.Power;
+
+                }
+            }
+
+            return damage;
+
+        }
+
+        //IAttack
         public virtual uint PrimaryAttack(double distanceToTarget)
         {
+            if (Weapon.PrimaryAttack == null)
+                throw new ArgumentNullException("ERR::Primary attack not set!");
+
             if (distanceToTarget <= Weapon.PrimaryAttack.AttackRange)
             {
-                double conditionCoef = GetDurabilityCoefficient();
-
-                uint damage = (uint)Math.Round(Weapon.PrimaryAttack.MaxDamage * conditionCoef);
-
-                return damage;
+                return BaseAttackFunc(Weapon.PrimaryAttack.MaxDamage);
             }
 
             return 0;
@@ -37,9 +58,7 @@ namespace InventoryCoreLib
 
             if (distanceToTarget <= Weapon.SecondaryAttack.AttackRange)
             {
-                double conditionCoef = GetDurabilityCoefficient();
-                uint damage = (uint)Math.Round(Weapon.SecondaryAttack.MaxDamage * conditionCoef);
-                return damage;
+                return BaseAttackFunc(Weapon.SecondaryAttack.MaxDamage);
             }
 
             return 0;

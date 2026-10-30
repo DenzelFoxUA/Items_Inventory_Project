@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace InventoryCoreLib
 {
     public abstract class EquipableInstance : BaseItemInstance, IEquipable
@@ -8,9 +10,7 @@ namespace InventoryCoreLib
         public bool IsEquipped { get; protected set; } = false;
 
         public EquipableInstance(EquipableItem definition) 
-            : base(definition)
-        {
-        }
+            : base(definition){}
 
         public virtual void Equip()
         {

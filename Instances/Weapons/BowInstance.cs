@@ -53,8 +53,7 @@ namespace InventoryCoreLib
                     //
 
                     damage += effectResult.Power;
-                }
-                    
+                }    
             }
 
             CurrentAmmoCount--;

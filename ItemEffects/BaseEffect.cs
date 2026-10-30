@@ -17,5 +17,15 @@
         public bool IsPassive { get; init; }
 
         public abstract ForceEffect Apply();
+
+        public override string ToString()
+        {
+            return $"Id: {Id}\n" +
+                $"Name: {Name}\n" +
+                $"Force: {Force}\n" +
+                $"Power: {PowerValue} points\n" +
+                $"Describtion: {Describtion}\n" +
+                $"Is Passive: {IsPassive}\n";
+        }
     }
 }
