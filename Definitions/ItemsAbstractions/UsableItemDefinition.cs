@@ -5,25 +5,38 @@ namespace InventoryCoreLib
 {
     public abstract class UsableItemDefinition : BaseItem
     {
-        public uint Volume { get; protected init; }
+        //public uint Volume { get; protected init; }
+
+        public BaseEffect? ItemEffect { get; protected init; }
 
         public override string ToString()
         {
-            return base.ToString() + $"\n" +
-                $"Volume: {Volume}";
+            string itemEff = "";
+
+            if (ItemEffect is null)
+                itemEff = "no effect";
+            else
+                itemEff = ItemEffect.ToString();
+
+            return base.ToString() + $"\n" + itemEff;
+                
         }
 
-        public bool Equals(UsableItemDefinition? obj)
+        public override bool Equals(BaseItem? obj)
         {
             if (obj is null)
                 return false;
 
-            return base.Equals(obj) && this.Volume == obj.Volume;
+            if (obj is not UsableItemDefinition other)
+                return false;
+
+            return base.Equals(obj) && ItemEffect == other.ItemEffect;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(base.GetHashCode(), Volume);
+            return HashCode.Combine(base.GetHashCode(), 
+                ItemEffect is not null ? ItemEffect.GetHashCode() : 0);
         }
 
     }

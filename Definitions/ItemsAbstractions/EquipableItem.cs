@@ -4,17 +4,16 @@ namespace InventoryCoreLib
 {
     public enum WearableItemCategory
     {
-        NOTSET = 0,
-        BodyArmor = 1,
-        Head = 2,
-        Boots,
+        BodyArmor = 0,
+        Head = 1,
+        Boots = 2,
         Gloves,
         OneHanded,
         LeftHandOnly,
         RightHandOnly,
         TwoHanded,
         Amulet,
-        Ring
+        Ring = 9
     }
 
     public abstract class EquipableItem : BaseItem

@@ -1,22 +1,17 @@
-﻿
+﻿using System;
+
 namespace InventoryCoreLib
 {
 
     public class PotionDefinition : UsableItemDefinition
     {
-
-        public uint EffectDuration { get; protected init; } = 1;
-        public bool IsPoisoness { get; protected init; } = false;
-
         public PotionDefinition(
              uint id,
              string name,
              string describtion,
-             uint volume,
              double weight_kg,
              uint price,
-             uint duration_sec,
-             bool isPoisoness,
+             BaseEffect?effect,
              string iconRef,
              string miniature2DRef)
         {
@@ -24,11 +19,24 @@ namespace InventoryCoreLib
             Name = name;
             Descriprion = describtion;
             Weight = weight_kg;
-            Volume = volume;
             Price = price;
 
-            EffectDuration = duration_sec;
-            IsPoisoness = isPoisoness; 
+            if (effect is null)
+            {
+                throw new ArgumentNullException("Effect is null");
+            }
+            else if (
+                effect.Effect == ApplyableEffect.NotSet ||
+                effect.Effect == ApplyableEffect.Repair ||
+                effect.Effect == ApplyableEffect.RechargeItem ||
+                effect.Effect == ApplyableEffect.Unlock)
+            {
+                throw new ArgumentException("Wrong effect category");
+            }
+            else
+            {
+                ItemEffect = effect;
+            }
 
             Icon = iconRef;
             Miniature2D = miniature2DRef;

@@ -10,16 +10,7 @@ namespace InventoryCoreLib
         public UsableItemInstance(UsableItemDefinition item) : base(item)
         { }
 
-        public virtual uint Use()
-        {
-            if (CurrentStackCount > 0)
-            {
-                CurrentStackCount--;
-                return UsableItem.Volume;
-            }
-
-            return 0;
-        }
+        public abstract ForceEffect? Use();
 
         public virtual void AddToStack(UsableItemInstance? other)
         {

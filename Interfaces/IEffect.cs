@@ -1,24 +1,37 @@
 ﻿
 namespace InventoryCoreLib
 {
-    public enum Force
+    public enum ApplyableEffect
     {
         NotSet = 0,
         Fire = 1,
         Ice,
         Shock,
-        Curse
+        Curse,
+        Poison,
+        Heal,
+        RestoreMana,
+        RestoreStamina,
+        DamageHealth,
+        DamageMana,
+        DamageStamina,
+        IncreaseStats,
+        DecreaseStats,
+        RechargeItem,
+        Unlock,
+        Repair
     }
 
     public struct ForceEffect
     {
-        public Force ApplyableForce { get; init; }
+        public ApplyableEffect ApplyableForce { get; init; }
+        public uint Duration { get; init; }
         public uint Power { get; init; }
     }
 
     public interface IEffect
     {
-        public bool IsPassive { get; init; }
+        public bool IsPassive { get; }
         public ForceEffect Apply();
     }
 }

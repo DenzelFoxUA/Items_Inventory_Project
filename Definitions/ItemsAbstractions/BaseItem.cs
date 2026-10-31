@@ -26,7 +26,7 @@ namespace InventoryCoreLib
                 $"Price: {Price}";
         }
 
-        public bool Equals(BaseItem? other)
+        public virtual bool Equals(BaseItem? other)
         {
             if (ReferenceEquals(other, null))
                 return false;
