@@ -8,7 +8,9 @@
 
   <ItemGroup>
     <Folder Include="Instances\Armor\" />
-    <Folder Include="Instances\Usables\" />
+    <Folder Include="Instances\Usables\Books\" />
+    <Folder Include="Instances\Usables\Scrolls\" />
+    <Folder Include="Instances\Usables\Tools\" />
   </ItemGroup>
 
 </Project>

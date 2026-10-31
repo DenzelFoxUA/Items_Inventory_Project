@@ -20,11 +20,11 @@ namespace InventoryCoreLib
     public abstract class EquipableItem : BaseItem
     {
 
-        public WearableItemCategory EqupmentCategory { get; init; } = WearableItemCategory.NOTSET;
+        public WearableItemCategory EqupmentCategory { get; protected init; } = WearableItemCategory.NOTSET;
 
         public IReadOnlyList<IEffect> Effects { get; }
         
-        public uint LevelRequired { get; init; } = 0;
+        public uint LevelRequired { get; protected init; } = 0;
 
         public EquipableItem(List<IEffect>? effects = null)
         {

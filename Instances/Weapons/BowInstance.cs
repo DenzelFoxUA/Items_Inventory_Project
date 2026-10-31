@@ -5,7 +5,7 @@ namespace InventoryCoreLib
 {
     public class BowInstance : RangedInstance
     {
-        private BowDefinition Bow => (BowDefinition)Definition;
+        public BowDefinition Bow => (BowDefinition)Definition;
 
         private IAmmoInstance ArrowInstance => CurrentAmmoInstance!;
 

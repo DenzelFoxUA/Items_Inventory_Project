@@ -5,7 +5,7 @@ namespace InventoryCoreLib
 {
     public abstract class DurableInstance : EquipableInstance, IDurable
     {
-        private DurableItem DurableDefinition => (DurableItem)Definition;
+        public DurableItem DurableDefinition => (DurableItem)Definition;
 
         public uint CurrentDurability { get; protected set; }
 

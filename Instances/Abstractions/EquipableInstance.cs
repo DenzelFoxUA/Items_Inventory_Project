@@ -5,7 +5,7 @@ namespace InventoryCoreLib
 {
     public abstract class EquipableInstance : BaseItemInstance, IEquipable
     {
-        private EquipableItem EquipableDefinition => (EquipableItem)Definition;
+        public EquipableItem EquipableDefinition => (EquipableItem)Definition;
 
         public bool IsEquipped { get; protected set; } = false;
 
