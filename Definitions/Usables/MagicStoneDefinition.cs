@@ -12,32 +12,32 @@ namespace InventoryCoreLib
              string describtion,
              double weight_kg,
              uint price,
-             BaseEffect? effect,
              string iconRef,
-             string miniature2DRef)
+             string miniature2DRef,
+             params BaseEffect[] effects) : base(effects)
         {
+
+            ValidateEffects(effects);
+
             Id = id;
             Name = name;
             Descriprion = describtion;
             Weight = weight_kg;
             Price = price;
 
-            if (effect is null)
-            {
-                throw new ArgumentNullException("Effect is null");
-            }
-
-            if (effect.Effect == ApplyableEffect.RechargeItem)
-            {
-                ItemEffect = effect;
-            }
-            else
-            {
-                throw new ArgumentException("Wrong effect category");
-            }
-
             Icon = iconRef;
             Miniature2D = miniature2DRef;
         }
+
+        protected override void ValidateEffects(params BaseEffect[]? effects)
+        {
+            if (effects is null)
+                throw new ArgumentNullException(nameof(effects));
+
+            if (effects.Length == 0)
+                throw new ArgumentException("Effects cannot be empty", nameof(effects));
+
+        }
+
     }
 }

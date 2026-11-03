@@ -22,13 +22,13 @@ namespace InventoryCoreLib
             {
                 if (!effect.IsPassive)
                 {
-                    var effectResult = effect.Apply();
+                    effect.Apply();
 
                     //temp
-                    Console.WriteLine($"+{effectResult.Power} damage of {effectResult.ApplyableForce}");
+                    //Console.WriteLine($"+{effectResult.Power} damage of {effectResult.ApplyableForce}");
                     //
 
-                    damage += effectResult.Power;
+                    //damage += effectResult.Power;
 
                 }
             }

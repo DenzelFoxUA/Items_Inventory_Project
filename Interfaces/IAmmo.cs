@@ -15,6 +15,6 @@ namespace InventoryCoreLib
     {
         public AmmoType Ammo { get; }
         public uint MaxStackCount { get; }
-        public IReadOnlyList<IEffect> GetEffects();
+        public IReadOnlyList<BaseEffect> GetEffects();
     }
 }

@@ -9,7 +9,7 @@ namespace InventoryCoreLib
 
         public bool IsIndestructible { get; protected init; } = false;
 
-        public DurableItem(List<IEffect>? effects = null) : base(effects)
+        public DurableItem(List<BaseEffect>? effects = null) : base(effects)
         {
 
         }

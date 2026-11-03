@@ -17,7 +17,7 @@ namespace InventoryCoreLib
             uint physicalAttackDmg,
             string iconPath,
             string miniaturePath,
-            List<IEffect>? effects = null) : base(effects)
+            List<BaseEffect>? effects = null) : base(effects)
         {
             Id = id;
             Name = name;

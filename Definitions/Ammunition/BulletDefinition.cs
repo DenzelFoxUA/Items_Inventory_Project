@@ -13,8 +13,8 @@ namespace InventoryCoreLib
             uint price,
             string iconRef,
             string miniatureRef,
-            IEffect? effect = null) :
-                base(effect is null ? null : new List<IEffect> { effect })
+            BaseEffect? effect = null) :
+                base(effect is null ? null : new List<BaseEffect> { effect })
         {
 
             Id = id;
@@ -38,6 +38,6 @@ namespace InventoryCoreLib
 
         public AmmoType Ammo => AmmoType.Bullet;
         public uint MaxStackCount => MaxStackSize;
-        public IReadOnlyList<IEffect> GetEffects() => Effects;
+        public IReadOnlyList<BaseEffect> GetEffects() => Effects;
     }
 }

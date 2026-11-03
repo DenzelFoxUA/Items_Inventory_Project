@@ -1,7 +1,7 @@
 ﻿
 namespace InventoryCoreLib
 {
-    public interface IDurable
+    public interface IDurable : IAffectable
     {
         public double GetDurabilityCoefficient();
 

@@ -7,7 +7,7 @@ namespace InventoryCoreLib
     {
         public uint MaxDefence { get; protected init; } = 0;
 
-        public BaseArmor(List<IEffect>? effects = null) : base(effects)
+        public BaseArmor(List<BaseEffect>? effects = null) : base(effects)
         {
 
         }

@@ -1,5 +1,8 @@
 ﻿
 using System;
+using System.Collections.Generic;
+using System.Linq;
+
 
 namespace InventoryCoreLib
 {
@@ -7,16 +10,29 @@ namespace InventoryCoreLib
     {
         //public uint Volume { get; protected init; }
 
-        public BaseEffect? ItemEffect { get; protected init; }
+        //public System.Collections.Generic.List<BaseEffect>? ItemEffects { get; protected init; }
+
+        protected abstract void ValidateEffects(params BaseEffect[]? effects);
+
+        public IReadOnlyList<BaseEffect> ItemEffects { get; }
+
+        protected UsableItemDefinition(params BaseEffect[] effects)
+        {
+            ItemEffects = Array.AsReadOnly(effects?.ToArray() ?? Array.Empty<BaseEffect>());
+        }
 
         public override string ToString()
         {
             string itemEff = "";
 
-            if (ItemEffect is null)
+            if (ItemEffects is null)
                 itemEff = "no effect";
             else
-                itemEff = ItemEffect.ToString();
+            {
+                foreach(var effect in ItemEffects)
+
+                itemEff += effect.ToString() + "\n";
+            }
 
             return base.ToString() + $"\n" + itemEff;
                 
@@ -30,13 +46,28 @@ namespace InventoryCoreLib
             if (obj is not UsableItemDefinition other)
                 return false;
 
-            return base.Equals(obj) && ItemEffect == other.ItemEffect;
+            return base.Equals(obj) && ItemEffects == other.ItemEffects;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(base.GetHashCode(), 
-                ItemEffect is not null ? ItemEffect.GetHashCode() : 0);
+            HashCode hash = new HashCode();
+
+            hash.Add(base.GetHashCode());
+
+            if (ItemEffects is null)
+            {
+                hash.Add(-1);
+            }
+            else
+            {
+                hash.Add(ItemEffects.Count);
+
+                foreach (var effect in ItemEffects)
+                    hash.Add(effect);
+            }
+
+            return hash.ToHashCode();
         }
 
     }

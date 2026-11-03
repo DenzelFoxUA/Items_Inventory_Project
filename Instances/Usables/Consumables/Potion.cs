@@ -1,4 +1,6 @@
 ﻿
+using System.Linq;
+
 namespace InventoryCoreLib
 {
     public class Potion : UsableItemInstance
@@ -11,21 +13,13 @@ namespace InventoryCoreLib
 
         }
 
-        public override ForceEffect? Use()
+        public override System.Collections.Generic.List<BaseEffect>? Use()
         {
             if (CurrentStackCount > 0)
             {
                 CurrentStackCount--;
 
-                if (PotionDef.ItemEffect is null)
-                    return null;
-
-                return new ForceEffect
-                {
-                    ApplyableForce = PotionDef.ItemEffect.Effect,
-                    Duration = PotionDef.ItemEffect.EffectDuration,
-                    Power = PotionDef.ItemEffect.PowerValue
-                };
+                return PotionDef.ItemEffects.ToList();
             }
 
             return null;

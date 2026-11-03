@@ -28,14 +28,14 @@ namespace InventoryCoreLib
             {
                 if (!eff.IsPassive)
                 {
-                    var effectResult = eff.Apply();
+                    //var effectResult = eff.Apply();
 
                     //temp
-                    Console.WriteLine($"{effectResult.ApplyableForce} hit with +" +
-                        $"{effectResult.Power} power");
+                    //Console.WriteLine($"{effectResult.ApplyableForce} hit with +" +
+                     //   $"{effectResult.Power} power");
                     //
 
-                    damage += effectResult.Power;
+                   // damage += effectResult.Power;
                 }
             }
 
@@ -45,14 +45,14 @@ namespace InventoryCoreLib
             {
                 if(!eff.IsPassive)
                 {
-                    var effectResult = eff.Apply();
+                    //var effectResult = eff.Apply();
 
-                    //temp
-                    Console.WriteLine($"{ effectResult.ApplyableForce } hit with +" +
-                        $"{ effectResult.Power } power");
-                    //
+                    ////temp
+                    //Console.WriteLine($"{ effectResult.ApplyableForce } hit with +" +
+                    //    $"{ effectResult.Power } power");
+                    ////
 
-                    damage += effectResult.Power;
+                    //damage += effectResult.Power;
                 }    
             }
 

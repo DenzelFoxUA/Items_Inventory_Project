@@ -8,7 +8,7 @@ namespace InventoryCoreLib
         public AttackDefinition? PrimaryAttack { get; protected init; } = null;
         public AttackDefinition? SecondaryAttack { get; protected init; } = null;
 
-        public BaseWeapon(List<IEffect>? effects = null) : base(effects)
+        public BaseWeapon(List<BaseEffect>? effects = null) : base(effects)
         {
 
         }

@@ -7,7 +7,7 @@ namespace InventoryCoreLib
     {
         public uint ProjectilesCapacity { get; protected init; }
 
-        public RangedWeapon(List<IEffect>? effects = null) : base(effects)
+        public RangedWeapon(List<BaseEffect>? effects = null) : base(effects)
         {
 
         }

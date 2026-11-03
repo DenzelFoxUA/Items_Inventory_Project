@@ -10,7 +10,7 @@ namespace InventoryCoreLib
         public UsableItemInstance(UsableItemDefinition item) : base(item)
         { }
 
-        public abstract ForceEffect? Use();
+        public abstract System.Collections.Generic.List<BaseEffect>? Use();
 
         public virtual void AddToStack(UsableItemInstance? other)
         {

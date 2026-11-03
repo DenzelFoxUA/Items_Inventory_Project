@@ -1,10 +1,11 @@
 ﻿
+
 namespace InventoryCoreLib
 {
     public interface IUsable
     {
         //public uint Use();
 
-        public ForceEffect? Use();
+        public System.Collections.Generic.List<BaseEffect>? Use();
     }
 }
