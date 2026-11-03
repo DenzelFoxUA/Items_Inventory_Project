@@ -4,46 +4,38 @@ using System;
 
 namespace InventoryCoreLib
 {
+    public enum Elements
+    {
+        Fire,
+        Ice,
+        Shock
+    }
+
     public class ElementalEffect : BaseEffect
     {
-        public string ElementName { get; protected init; } = "";
+        
+        public Elements Element { get; init; }
+        private readonly IModifiableStat _target;
+        //private readonly uint _value;
 
-        public ElementalEffect(
-            string elementName,
-            uint damage,
-            bool isPassive,
-            uint duaration)
+        public ElementalEffect(Elements element,
+            IModifiableStat target,
+            uint value,
+            uint duration_sec)
         {
-            ElementName = elementName;
-            EffectCategory = EffectCategory.Elemental;
-            PowerValue = damage;
-            IsPassive = isPassive;
-            EffectDuration = duaration;
-        }
-
-        //equals
-
-        public override bool Equals(BaseEffect? obj)
-        {
-            if (obj is null)
-                return false;
-
-            if (obj is not ElementalEffect other)
-                return false;
-
-            return base.Equals(obj) && ElementName == other.ElementName;
-        }
-
-        public override bool Equals(object? obj) => Equals(obj as ElementalEffect);
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(EffectCategory, PowerValue, EffectDuration, IsPassive);
+            _target = target;
+            Element = element;
+            PowerValue = value;
+            EffectCategory = EffectCategory.Recovery;
+            EffectDuration = duration_sec;
+            IsPassive = false;
         }
 
         public override void Apply()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Effect {Element} applyed");
+            Console.ReadLine();
+            _target.Decrease(PowerValue);
         }
     }
 }

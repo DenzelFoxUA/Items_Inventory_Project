@@ -73,13 +73,20 @@ namespace InventoryCoreLib
         public uint MaxLevel { get; protected init; } = 99;
     }
 
-    
-    public class Character<T, P> : CharacterDefinition, IAffectable
+    /// <typeparam name="T">
+    /// The type of items stored in the inventory.
+    /// Must be a reference type.
+    /// </typeparam>
+    /// <typeparam name="P">
+    /// The type used to identify an item's position.
+    /// Can be an index, coordinates, or another position type.
+    /// </typeparam>
+    public abstract class Character<T, P> : CharacterDefinition, IAffectable
         where T: class
     {
 
-        public FrozenDictionary<string, VitalStat> VitalStats { get; }
-        public FrozenDictionary<string, AttributeStat> AttributeStats { get; }
+        public FrozenDictionary<string, VitalStat> VitalStats { get; protected set; }
+        public FrozenDictionary<string, AttributeStat> AttributeStats { get; protected set; }
 
         public uint CurrentLevel { get; protected set; }
 
@@ -118,24 +125,8 @@ namespace InventoryCoreLib
             Inventory = inventoryClass;
         }
 
-        public void UseItem(UsableItemInstance item)
-        {
-            var effects = item.Use();
-
-            //
-            Console.WriteLine($"Item: {item.UsableItem.Name} used");
-            Console.ReadLine();
-            //
-
-            if(effects is not null)
-            {
-                foreach (var effect in effects)
-                {
-                    effect.Apply();
-                }
-            }
-
-        }
+        public abstract void UseItem(T item);
+        public abstract void UseItem(P itemPos);
 
         public override string ToString()
         {
@@ -152,15 +143,15 @@ namespace InventoryCoreLib
 
             foreach (var stat in AttributeStats)
             {
-                attributeStats += stat.Key;
-                attributeStats += " ----------- ";
-                attributeStats += stat.Value.CurrentValue;
-                attributeStats += "\n";
+                attributeStats += $"{stat.Key, -20}{stat.Value.CurrentValue}\n";
             }
 
             return $"Name: {Name}\n" +
                 $"Level: {CurrentLevel}\n" +
-                $"\n" + attributeStats;
+                $"Attributes: \n" +
+                $"\n" + attributeStats +
+                $"Vital Stats: \n" +
+                $"{vitals}\n";
         }
     }
 }

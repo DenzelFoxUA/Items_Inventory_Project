@@ -7,7 +7,7 @@ namespace InventoryCoreLib
 
         public AttributeStat(uint minValue, uint maxValue) : base(minValue, maxValue)
         {
-
+            CurrentValue = minValue;
         }
 
         public override void Increase(uint value)
