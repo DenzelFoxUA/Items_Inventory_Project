@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 
 namespace InventoryCoreLib
@@ -9,9 +10,22 @@ namespace InventoryCoreLib
 
         public bool IsIndestructible { get; protected init; } = false;
 
-        public DurableItem(List<BaseEffect>? effects = null) : base(effects)
+        public override bool Equals(BaseItem? obj)
         {
+            if (obj is null)
+                return false;
 
+            if (obj is not RangedWeapon other)
+                return false;
+
+            return base.Equals(obj) && 
+                MaxDurability == other.MaxDurability &&
+                IsIndestructible == other.IsIndestructible;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(base.GetHashCode(), MaxDurability, IsIndestructible);
         }
     }
 }

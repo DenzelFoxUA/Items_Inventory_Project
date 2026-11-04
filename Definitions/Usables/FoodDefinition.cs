@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace InventoryCoreLib
 {
     public enum FoodCategory
@@ -15,7 +14,7 @@ namespace InventoryCoreLib
         Alcohol
     }
 
-    public class FoodDefinition: UsableItemDefinition
+    public class FoodDefinition: UsableItem
     {
         public FoodCategory Category { get; protected init; } = FoodCategory.NotSet;
 
@@ -27,10 +26,8 @@ namespace InventoryCoreLib
              double weight_kg,
              uint price,
              string iconRef,
-             string miniature2DRef,
-             params BaseEffect[] effects) : base(effects)
+             string miniature2DRef)
         {
-            ValidateEffects(effects);
 
             Id = id;
             Name = name;
@@ -43,14 +40,5 @@ namespace InventoryCoreLib
             Miniature2D = miniature2DRef;
         }
 
-        protected override void ValidateEffects(params BaseEffect[]? effects)
-        {
-            if (effects is null)
-                throw new ArgumentNullException(nameof(effects));
-
-            if (effects.Length == 0)
-                throw new ArgumentException("Effects cannot be empty", nameof(effects));
-
-        }
     }
 }

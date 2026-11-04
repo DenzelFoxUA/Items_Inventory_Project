@@ -1,20 +1,32 @@
 ﻿
+using CharacterMainLib;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 
 namespace InventoryCoreLib
 {
-    public abstract class BaseItemInstance
+    public abstract class BaseItemInstance : IUsable
     {
         public BaseItem Definition { get; }
 
         public uint CurrentStackCount { get; protected set; } = 1;
 
-        public BaseItemInstance(BaseItem definition)
+        public IReadOnlyList<BaseEffect> Effects { get; }
+
+        protected abstract void ValidateEffects(params BaseEffect[]? effects);
+
+
+
+        public BaseItemInstance(BaseItem definition, params BaseEffect[]? effects)
         {
             if (definition is null)
                 throw new ArgumentNullException(nameof(definition));
 
             Definition = definition;
+
+            Effects = Array.AsReadOnly(effects?.ToArray() ?? Array.Empty<BaseEffect>());
         }
 
         public bool Equals(BaseItemInstance? other)
@@ -34,7 +46,28 @@ namespace InventoryCoreLib
 
         public override int GetHashCode()
         {
-            return Definition.GetHashCode();
+            HashCode hash = new HashCode();
+
+            hash.Add(base.GetHashCode());
+
+            if (Effects is null)
+            {
+                hash.Add(-1);
+            }
+            else
+            {
+                hash.Add(Effects.Count);
+
+                foreach (var effect in Effects)
+                    hash.Add(effect);
+            }
+
+            return hash.ToHashCode();
+        }
+
+        public virtual object ?Use()
+        {
+            return null;
         }
 
         public static bool operator == (BaseItemInstance? one, BaseItemInstance? other)
@@ -51,6 +84,23 @@ namespace InventoryCoreLib
         public static bool operator != (BaseItemInstance one, BaseItemInstance other)
         {
             return !(one == other);
+        }
+
+        public override string ToString()
+        {
+            string itemEff = "";
+
+            if (Effects is null)
+                itemEff = "no effect";
+            else
+            {
+                foreach (var effect in Effects)
+
+                    itemEff += effect.ToString() + "\n";
+            }
+
+            return base.ToString() + $"\n" + itemEff;
+
         }
     }
 }

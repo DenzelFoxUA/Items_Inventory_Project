@@ -1,5 +1,5 @@
 ﻿using System;
-
+using CharacterMainLib;
 namespace InventoryCoreLib
 {
     public enum EffectCategory
@@ -31,6 +31,8 @@ namespace InventoryCoreLib
         }
 
         public abstract void Apply();
+
+        public abstract void SetTarget<T>(T? target) where T : class, IAffectable;
 
         //equality
 

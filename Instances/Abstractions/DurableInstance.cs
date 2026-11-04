@@ -9,8 +9,8 @@ namespace InventoryCoreLib
 
         public uint CurrentDurability { get; protected set; }
 
-        public DurableInstance(DurableItem definition) :
-            base(definition)
+        public DurableInstance(DurableItem definition, params BaseEffect[]?effects) :
+            base(definition,effects)
         {
             CurrentDurability = definition.MaxDurability;
         }

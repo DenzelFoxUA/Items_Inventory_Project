@@ -13,4 +13,8 @@
     <Folder Include="Instances\Usables\Tools\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CharacterMainLib\CharacterMainLib.csproj" />
+  </ItemGroup>
+
 </Project>

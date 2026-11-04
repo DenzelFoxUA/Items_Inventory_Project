@@ -1,5 +1,7 @@
 ﻿
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace InventoryCoreLib
 {
@@ -9,8 +11,11 @@ namespace InventoryCoreLib
 
         public bool IsEquipped { get; protected set; } = false;
 
-        public EquipableInstance(EquipableItem definition) 
-            : base(definition){}
+        public EquipableInstance(EquipableItem definition, params BaseEffect[]? effects) 
+            : base(definition, effects)
+        {
+
+        }
 
         public virtual void Equip()
         {

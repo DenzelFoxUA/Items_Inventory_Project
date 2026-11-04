@@ -1,15 +1,15 @@
 ﻿
 using System;
+using CharacterMainLib;
 
 namespace InventoryCoreLib
 {
     public class StatIncreseEffect : BaseEffect
     {
-        private readonly IModifiableStat _target;
-        //private readonly uint _value;
+        private IModifiableStat? _target;
 
         public StatIncreseEffect(
-            IModifiableStat target,
+            IModifiableStat? target,
             uint value,
             uint duration_sec)
         {
@@ -24,7 +24,21 @@ namespace InventoryCoreLib
         {
             Console.WriteLine($"Effect {EffectCategory} applyed");
             Console.ReadLine();
-            _target.Increase(PowerValue);
+
+            if(_target is not null)
+            {
+                _target.Increase(PowerValue);
+            }
+            
+        }
+
+        public override void SetTarget<T>(T? target) where T : class
+        {
+            if(target is not null && target is IModifiableStat stat)
+            {
+                _target = stat;
+            }
+                
         }
     }
 }

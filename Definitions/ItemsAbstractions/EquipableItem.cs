@@ -1,37 +1,45 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace InventoryCoreLib
 {
-    public enum WearableItemCategory
-    {
-        BodyArmor = 0,
-        Head = 1,
-        Boots = 2,
-        Gloves,
-        OneHanded,
-        LeftHandOnly,
-        RightHandOnly,
-        TwoHanded,
-        Amulet,
-        Ring = 9
-    }
+    //public enum WearableItemCategory
+    //{
+    //    BodyArmor = 0,
+    //    Head = 1,
+    //    Boots = 2,
+    //    Gloves,
+    //    OneHanded,
+    //    LeftHandOnly,
+    //    RightHandOnly,
+    //    TwoHanded,
+    //    Amulet,
+    //    Ring = 9
+    //}
 
     public abstract class EquipableItem : BaseItem
     {
 
-        public WearableItemCategory EqupmentCategory { get; protected init; }
+        public string EqupmentCategory { get; protected init; } = "";
 
-        public IReadOnlyList<BaseEffect> Effects { get; }
+        //public IReadOnlyList<BaseEffect> Effects { get; }
         
         public uint LevelRequired { get; protected init; } = 0;
 
-        public EquipableItem(List<BaseEffect>? effects = null)
+        public override bool Equals(BaseItem? obj)
         {
-            List<BaseEffect> specialEffects = effects is null ?
-                          new List<BaseEffect>() :
-                          new List<BaseEffect>(effects);
+            if (obj is null)
+                return false;
 
-            Effects = specialEffects.AsReadOnly();
+            if (obj is not EquipableItem other)
+                return false;
+
+            return base.Equals(obj) && EqupmentCategory == other.EqupmentCategory;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(base.GetHashCode(), EqupmentCategory);
         }
     }
 }

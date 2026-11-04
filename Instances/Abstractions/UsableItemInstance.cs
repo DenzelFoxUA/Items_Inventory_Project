@@ -1,16 +1,20 @@
 ﻿
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace InventoryCoreLib
 {
-    public abstract class UsableItemInstance : BaseItemInstance, IUsable
+    public abstract class UsableItemInstance : BaseItemInstance
     {
-        public UsableItemDefinition UsableItem => (UsableItemDefinition)Definition;
+        public UsableItem UsableItem => (UsableItem)Definition;
 
-        public UsableItemInstance(UsableItemDefinition item) : base(item)
-        { }
+        public UsableItemInstance(UsableItem item, params BaseEffect[]? effects) : base(item, effects)
+        {
+            
+        }
 
-        public abstract System.Collections.Generic.List<BaseEffect>? Use();
+        public abstract override System.Collections.Generic.List<BaseEffect>? Use();
 
         public virtual void AddToStack(UsableItemInstance? other)
         {
@@ -42,5 +46,7 @@ namespace InventoryCoreLib
                 other.CurrentStackCount = 0;
             }
         }
+
+        
     }
 }

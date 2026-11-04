@@ -1,6 +1,6 @@
 ﻿
-
 using System;
+using CharacterMainLib;
 
 namespace InventoryCoreLib
 {

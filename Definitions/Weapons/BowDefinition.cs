@@ -10,14 +10,14 @@ namespace InventoryCoreLib
         public BowDefinition(uint id,
             string name,
             string describtion,
+            string equipCategory,
             double weight_kg,
             uint price,
             uint maxDurability,
             uint levelReq,
             uint physicalAttackDmg,
             string iconPath,
-            string miniaturePath,
-            List<BaseEffect>? effects = null) : base(effects)
+            string miniaturePath)
         {
             Id = id;
             Name = name;
@@ -27,9 +27,11 @@ namespace InventoryCoreLib
             IsStackable = false;
             MaxStackSize = 1;
             MaxDurability = maxDurability;
-            EqupmentCategory = WearableItemCategory.LeftHandOnly;
+            EqupmentCategory = equipCategory;
             LevelRequired = levelReq;
             ProjectilesCapacity = 1;
+
+            IsTwoHanded = false;
 
             //attack set
             PrimaryAttack = new AttackDefinition

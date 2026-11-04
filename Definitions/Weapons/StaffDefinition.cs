@@ -8,6 +8,7 @@ namespace InventoryCoreLib
         public StaffDefinition(uint id,
             string name,
             string describtion,
+            string equipCategory,
             double weight_kg,
             uint price,
             uint maxDurability,
@@ -16,8 +17,7 @@ namespace InventoryCoreLib
             uint magicAttackDmg,
             uint numOfProjectiles,
             string iconPath,
-            string miniaturePath,
-            List<BaseEffect>? effects = null) : base(effects)
+            string miniaturePath)
         {
             Id = id;
             Name = name;
@@ -27,8 +27,9 @@ namespace InventoryCoreLib
             IsStackable = false;
             MaxStackSize = 1;
             MaxDurability = maxDurability;
-            EqupmentCategory = WearableItemCategory.TwoHanded;
+            EqupmentCategory = equipCategory;
             LevelRequired = levelReq;
+            IsTwoHanded = true;
 
             PrimaryAttack = new AttackDefinition
             {

@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 
 namespace InventoryCoreLib
@@ -7,9 +8,20 @@ namespace InventoryCoreLib
     {
         public uint ProjectilesCapacity { get; protected init; }
 
-        public RangedWeapon(List<BaseEffect>? effects = null) : base(effects)
+        public override bool Equals(BaseItem? obj)
         {
+            if (obj is null)
+                return false;
 
+            if (obj is not RangedWeapon other)
+                return false;
+
+            return base.Equals(obj) && ProjectilesCapacity == other.ProjectilesCapacity;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(base.GetHashCode(), ProjectilesCapacity);
         }
     }
 }

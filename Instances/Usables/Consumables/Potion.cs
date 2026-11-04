@@ -8,7 +8,7 @@ namespace InventoryCoreLib
 
         public PotionDefinition PotionDef => (PotionDefinition)Definition;
 
-        public Potion(PotionDefinition potion) : base(potion)
+        public Potion(PotionDefinition potion, params BaseEffect[] effects) : base(potion,effects)
         {
 
         }
@@ -19,10 +19,15 @@ namespace InventoryCoreLib
             {
                 CurrentStackCount--;
 
-                return PotionDef.ItemEffects.ToList();
+                return ItemEffects.ToList();
             }
 
             return null;
+        }
+
+        protected override void ValidateEffects(params BaseEffect[]? effects)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

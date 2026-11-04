@@ -1,13 +1,11 @@
 ﻿
-
-using System;
-
 namespace InventoryCoreLib
 {
-    public class ScrollDefinition : UsableItemDefinition
+    public class ScrollDefinition : UsableItem
     {
 
         public double MaxRange { get; protected init; }
+        public uint Power { get; protected init; }
 
         public ScrollDefinition(
              uint id,
@@ -16,32 +14,21 @@ namespace InventoryCoreLib
              double weight_kg,
              uint price,
              double maxRange,
+             uint power,
              string iconRef,
-             string miniature2DRef,
-             params BaseEffect[] effects) : base(effects)
+             string miniature2DRef)
         {
-
-            ValidateEffects(effects);
 
             Id = id;
             Name = name;
             Descriprion = describtion;
             Weight = weight_kg;
             Price = price;
-
+            Power = power;
             MaxRange = maxRange;
 
             Icon = iconRef;
             Miniature2D = miniature2DRef;
-        }
-
-        protected override void ValidateEffects(params BaseEffect[]? effects)
-        {
-            if (effects is null)
-                throw new ArgumentNullException(nameof(effects));
-            else if (effects.Length == 0)
-                throw new ArgumentException("Effects cannot be empty", nameof(effects));
-
         }
 
     }

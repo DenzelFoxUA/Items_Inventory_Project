@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="../CharacterMainLib/CharacterMainLib.csproj" Id="f95a8162-4887-4ff0-afe5-1df63186302b" />
   <Project Path="../TestEnvironment/TestEnvironment.csproj" Id="505e0c8b-9027-43af-b191-314c086505dd" />
   <Project Path="InventoryCoreLib.csproj" />
 </Solution>

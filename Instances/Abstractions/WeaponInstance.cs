@@ -6,8 +6,8 @@ namespace InventoryCoreLib
     {
         public BaseWeapon Weapon => (BaseWeapon)Definition;
 
-        public WeaponInstance(BaseWeapon _weapon) :
-            base(_weapon)
+        public WeaponInstance(BaseWeapon _weapon, params BaseEffect[]?effects) :
+            base(_weapon,effects)
         {
             
         }
@@ -18,7 +18,7 @@ namespace InventoryCoreLib
 
             uint damage = (uint)Math.Round(weaponDamage * conditionCoef);
 
-            foreach (var effect in Weapon.Effects)
+            foreach (var effect in Effects)
             {
                 if (!effect.IsPassive)
                 {

@@ -14,9 +14,10 @@ namespace InventoryCoreLib
             uint maxDurability,
             uint levelReq,
             uint attackDamage,
+            string placementCategory,
+            bool isIndestructible,
             string iconPath,
-            string miniaturePath,
-            List<BaseEffect>? effects = null) : base(effects)
+            string miniaturePath) 
         {
             Id = id;
             Name = name;
@@ -25,9 +26,12 @@ namespace InventoryCoreLib
             Price = price;
             IsStackable = false;
             MaxStackSize = 1;
-            MaxDurability = maxDurability;
-            EqupmentCategory = WearableItemCategory.OneHanded;
+            EqupmentCategory = placementCategory;
             LevelRequired = levelReq;
+            MaxDurability = maxDurability;
+            IsIndestructible = isIndestructible;
+            IsTwoHanded = false;
+
 
             PrimaryAttack = new AttackDefinition 
             { 

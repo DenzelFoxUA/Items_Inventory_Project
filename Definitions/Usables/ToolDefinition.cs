@@ -1,11 +1,7 @@
 ﻿
-using System;
-
-
 namespace InventoryCoreLib
 {
-
-    public class ToolDefinition : UsableItemDefinition
+    public class ToolDefinition : UsableItem
     {
         public uint MaxNumberOfUses { get; protected init; }
 
@@ -17,11 +13,8 @@ namespace InventoryCoreLib
              uint price,
              uint numOfUses,
              string iconRef,
-             string miniature2DRef,
-             params BaseEffect[] effect): base(effect)
+             string miniature2DRef)
         {
-
-            ValidateEffects(effect);
 
             Id = id;
             Name = name;
@@ -35,13 +28,5 @@ namespace InventoryCoreLib
             Miniature2D = miniature2DRef;
         }
 
-        protected override void ValidateEffects(params BaseEffect[]? effects)
-        {
-            if (effects is null)
-                throw new ArgumentNullException(nameof(effects));
-            else if (effects.Length == 0)
-                throw new ArgumentException("Effects cannot be empty", nameof(effects));
-
-        }
     }
 }
