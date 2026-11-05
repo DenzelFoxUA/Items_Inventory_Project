@@ -6,10 +6,10 @@ using System.Collections.Generic;
 
 namespace InventoryCoreLib
 {
-    public class RestorationPotion : UsableItemInstance
+    public class CustomPotionInstnce : UsableItemInstance
     {
 
-        public RestorationPotion(PotionDefinition potion, params IAffect<IAffectableActor>[] effects) 
+        public CustomPotionInstnce(PotionDefinition potion, params IAffect<IAffectableActor>[] effects) 
             : base(potion,effects)
         {
             
@@ -17,12 +17,8 @@ namespace InventoryCoreLib
 
         public override List<IAffect<IAffectableActor>>? Use()
         {
-            Console.WriteLine($"Is it stackable? - {Definition.IsStackable}");
-
             if (CurrentStackCount > 0)
             {
-                //CurrentStackCount--;
-
                 return Effects.ToList();
             }
 

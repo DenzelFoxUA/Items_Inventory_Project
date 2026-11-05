@@ -11,23 +11,20 @@ namespace InventoryCoreLib
         Shock
     }
 
-    public class ElementalEffect : BaseEffect<IAffectable>
+    public class ElementalEffect : BaseEffect<IAffectable, uint>
     {
-        
+
         public Elements Element { get; init; }
         private readonly IModifiableStat _target;
         //private readonly uint _value;
 
         public ElementalEffect(Elements element,
             IModifiableStat target,
-            uint value,
-            uint duration_sec)
+            uint value)
         {
             _target = target;
             Element = element;
             PowerValue = value;
-            EffectDuration = duration_sec;
-            IsPassive = false;
         }
 
         public override void Apply()

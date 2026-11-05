@@ -1,38 +1,31 @@
 ﻿using System;
+using System.Numerics;
 using CharacterMainLib;
 namespace InventoryCoreLib
 {
-    //public enum EffectCategory
-    //{
-    //    Physical = 0,
-    //    Elemental = 1,
-    //    Magic,
-    //    Recovery,
-    //    Mining,
-    //    Utility
-    //}
 
     public interface IAffect<T> where T : class, IAffectable
     {
         public void Apply();
 
+        public void Remove();
+
         public void SetTarget(T? target);
     }
 
-    public abstract class BaseEffect<T> : IAffect<T>
+    public abstract class BaseEffect<T, P> : IAffect<T>
         where T : class, IAffectable
+        where P : INumber<P>
     {
         public T? Target { get; protected set; }
 
-        public uint EffectDuration { get; protected init; } = 0;
-
-        public uint PowerValue { get; protected init; } = 0;
-
-        public bool IsPassive { get; protected init; } = false;
+        public P PowerValue { get; protected init; }
 
         //methods
 
         public abstract void Apply();
+
+        public virtual void Remove() { }
 
         public virtual void SetTarget(T? target)
         {
@@ -41,7 +34,7 @@ namespace InventoryCoreLib
 
         //equality
 
-        public virtual bool Equals(BaseEffect<T>? other)
+        public virtual bool Equals(BaseEffect<T, P>? other)
         {
             if (ReferenceEquals(other, null))
                 return false;
@@ -49,19 +42,17 @@ namespace InventoryCoreLib
             if (ReferenceEquals(this, other))
                 return true;
 
-            return PowerValue.Equals(other.PowerValue) &&
-                EffectDuration.Equals(other.EffectDuration) &&
-                IsPassive.Equals(other.IsPassive);
+            return PowerValue.Equals(other.PowerValue);
         }
 
-        public override bool Equals(object? obj) => Equals(obj as BaseEffect<T>);
+        public override bool Equals(object? obj) => Equals(obj as BaseEffect<T, P>);
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(PowerValue, EffectDuration, IsPassive);
+            return HashCode.Combine(PowerValue);
         }
 
-        public static bool operator ==(BaseEffect<T>? one, BaseEffect<T>? other)
+        public static bool operator ==(BaseEffect<T, P>? one, BaseEffect<T, P>? other)
         {
             if (ReferenceEquals(one, other))
                 return true;
@@ -71,7 +62,7 @@ namespace InventoryCoreLib
 
             return one.Equals(other);
         }
-        public static bool operator !=(BaseEffect<T>? one, BaseEffect<T>? other)
+        public static bool operator !=(BaseEffect<T, P>? one, BaseEffect<T, P>? other)
         {
             return !(one == other);
         }

@@ -4,29 +4,32 @@ using CharacterMainLib;
 
 namespace InventoryCoreLib
 {
-    public class RecoveryVitalEffect : BaseEffect<IAffectableActor>
+    public class RecoveryVitalEffect : BaseEffect<IAffectableActor, uint>
     {
         private Action<string,uint>? _targetFunc = null;
 
         private string vitalName = "";
 
+        /// <summary>
+        /// Use effect to recover vital parameters
+        /// </summary>
+        /// <param name="name">Vital parameter name from your vital system names</param>
+        /// <param name="value">Power of restoration</param>
+        /// <param name="duration_sec">Time effect works</param>
         public RecoveryVitalEffect(
             string name,
-            uint value,
-            uint duration_sec)
+            uint value)
         {
             vitalName = name;
             PowerValue = value;
-            EffectDuration = duration_sec;
-            IsPassive = false;
         }
 
         public override void Apply()
         {
-            if(_targetFunc is not null)
+            if (_targetFunc is not null)
             {
                 _targetFunc.Invoke(vitalName, PowerValue);
-            } 
+            }
         }
 
         public override void SetTarget(IAffectableActor? target)
