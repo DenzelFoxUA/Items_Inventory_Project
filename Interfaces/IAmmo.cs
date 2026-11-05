@@ -1,4 +1,5 @@
 ﻿
+using CharacterMainLib;
 using System.Collections.Generic;
 
 namespace InventoryCoreLib
@@ -15,6 +16,6 @@ namespace InventoryCoreLib
     {
         public AmmoType Ammo { get; }
         public uint MaxStackCount { get; }
-        public IReadOnlyList<BaseEffect> GetEffects();
+        public IReadOnlyList<IAffect<IAffectable>> GetEffects();
     }
 }

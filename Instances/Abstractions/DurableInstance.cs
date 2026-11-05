@@ -1,4 +1,5 @@
 ﻿
+using CharacterMainLib;
 using System.Collections.Generic;
 
 namespace InventoryCoreLib
@@ -9,7 +10,7 @@ namespace InventoryCoreLib
 
         public uint CurrentDurability { get; protected set; }
 
-        public DurableInstance(DurableItem definition, params BaseEffect[]?effects) :
+        public DurableInstance(DurableItem definition, params IAffect<IAffectableActor>[]?effects) :
             base(definition,effects)
         {
             CurrentDurability = definition.MaxDurability;

@@ -1,7 +1,6 @@
 ﻿
+using CharacterMainLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace InventoryCoreLib
 {
@@ -9,44 +8,48 @@ namespace InventoryCoreLib
     {
         public UsableItem UsableItem => (UsableItem)Definition;
 
-        public UsableItemInstance(UsableItem item, params BaseEffect[]? effects) : base(item, effects)
+        public UsableItemInstance(UsableItem item, params IAffect<IAffectableActor>[]? effects) 
+            : base(item, effects)
         {
             
         }
 
-        public abstract override System.Collections.Generic.List<BaseEffect>? Use();
+        public abstract override System.Collections.Generic.List<IAffect<IAffectableActor>>? Use();
 
-        public virtual void AddToStack(UsableItemInstance? other)
+        public override uint AddToStack(uint count)
         {
-
-            if (other is null)
-                throw new ArgumentNullException("Other item is null");
-
-            if (ReferenceEquals(this, other))
-                return;
-
-            if (!Definition.Equals(other.Definition))
-                throw new InvalidOperationException("Different item definitions.");
-
             if (!Definition.IsStackable)
-                throw new InvalidOperationException("Item is not stackable.");
+                return count;
 
-            uint stackSum = other.CurrentStackCount + CurrentStackCount;
-
-            if (stackSum >= UsableItem.MaxStackSize)
+            if (CurrentStackCount >= Definition.MaxStackSize)
             {
-                uint difference = stackSum - UsableItem.MaxStackSize;
-
-                CurrentStackCount = UsableItem.MaxStackSize;
-                other.CurrentStackCount = difference;
+                return count;
+            }
+            else if (count >= Definition.MaxStackSize - CurrentStackCount)
+            {
+                uint difference = Definition.MaxStackSize - CurrentStackCount;
+                CurrentStackCount = Definition.MaxStackSize;
+                return count - difference;
             }
             else
             {
-                CurrentStackCount += other.CurrentStackCount;
-                other.CurrentStackCount = 0;
+                CurrentStackCount += count;
+                return 0;
             }
         }
 
-        
+        public override uint RemoveFromStack(uint count)
+        {
+            if (!Definition.IsStackable)
+                return 0;
+
+            uint toRemove = Math.Min(count, CurrentStackCount);
+
+            CurrentStackCount -= toRemove;
+
+            return count - toRemove;
+        }
+
+
     }
 }

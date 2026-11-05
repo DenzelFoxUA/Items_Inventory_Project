@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CharacterMainLib;
+using System;
 
 namespace InventoryCoreLib
 {
@@ -6,7 +7,7 @@ namespace InventoryCoreLib
     {
         public BaseWeapon Weapon => (BaseWeapon)Definition;
 
-        public WeaponInstance(BaseWeapon _weapon, params BaseEffect[]?effects) :
+        public WeaponInstance(BaseWeapon _weapon, params IAffect<IAffectableActor>[]?effects) :
             base(_weapon,effects)
         {
             
@@ -20,17 +21,7 @@ namespace InventoryCoreLib
 
             foreach (var effect in Effects)
             {
-                if (!effect.IsPassive)
-                {
-                    effect.Apply();
-
-                    //temp
-                    //Console.WriteLine($"+{effectResult.Power} damage of {effectResult.ApplyableForce}");
-                    //
-
-                    //damage += effectResult.Power;
-
-                }
+               
             }
 
             return damage;

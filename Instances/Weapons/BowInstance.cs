@@ -24,36 +24,16 @@ namespace InventoryCoreLib
             double conditionCoef = GetDurabilityCoefficient();
             uint damage = (uint)Math.Round(Bow.PrimaryAttack.MaxDamage * conditionCoef);
 
-            foreach(var eff in Bow.Effects)
+            foreach(var eff in Effects)
             {
-                if (!eff.IsPassive)
-                {
-                    //var effectResult = eff.Apply();
-
-                    //temp
-                    //Console.WriteLine($"{effectResult.ApplyableForce} hit with +" +
-                     //   $"{effectResult.Power} power");
-                    //
-
-                   // damage += effectResult.Power;
-                }
+                
             }
 
             var effectsList = ArrowInstance.AmmoDefinition.GetEffects();
 
             foreach(var eff in effectsList)
             {
-                if(!eff.IsPassive)
-                {
-                    //var effectResult = eff.Apply();
-
-                    ////temp
-                    //Console.WriteLine($"{ effectResult.ApplyableForce } hit with +" +
-                    //    $"{ effectResult.Power } power");
-                    ////
-
-                    //damage += effectResult.Power;
-                }    
+                
             }
 
             CurrentAmmoCount--;
@@ -110,6 +90,24 @@ namespace InventoryCoreLib
                 $"\n{ammoInstance}";
         }
 
+        public override void SetItemTarget<T>(T? target) where T : default
+        {
+            throw new NotImplementedException();
+        }
 
+        public override object? Use()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override uint AddToStack(uint count)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override uint RemoveFromStack(uint count)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

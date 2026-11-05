@@ -1,4 +1,6 @@
 ﻿
+using CharacterMainLib;
+
 namespace InventoryCoreLib
 {
     public interface IDurable : IAffectable

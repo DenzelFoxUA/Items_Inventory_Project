@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using CharacterMainLib;
 
 namespace InventoryCoreLib
@@ -12,34 +13,87 @@ namespace InventoryCoreLib
         {
         }
 
-        public override bool AddItem(BaseItemInstance? item, Position pos)
+        public override BaseItemInstance? AddItem(BaseItemInstance? item, Position pos)
         {
             if (item is null)
-                return false;
+                return null;
 
-            if (Container[pos.Row, pos.Column] is not null)
-                return false;
+            if (pos.Row < 0 || pos.Row >= InventoryGrid.Rows ||
+                pos.Column < 0 || pos.Column >= InventoryGrid.Columns)
+                throw new ArgumentOutOfRangeException(nameof(pos));
 
-            Container[pos.Row, pos.Column] = item;
-            return true;
+            BaseItemInstance? existing = Container[pos.Row, pos.Column];
+
+            // Клітинка порожня
+            if (existing is null)
+            {
+                Container[pos.Row, pos.Column] = item;
+                return null;
+            }
+
+            // Предмети різні або це той самий екземпляр
+            if (ReferenceEquals(existing, item) || existing != item)
+                return item;
+
+            // Об'єднуємо стеки
+            uint remaining = existing.AddToStack(item.CurrentStackCount);
+
+            // Віднімаємо перенесену кількість
+            item.RemoveFromStack(item.CurrentStackCount - remaining);
+
+            return remaining == 0 ? null : item;
         }
 
-        public override bool AddItem(BaseItemInstance item)
+        public override BaseItemInstance? AddItem(BaseItemInstance item)
         {
-            for(short row = 0; row < InventoryGrid.Rows; row++)
+            uint remaining = item.CurrentStackCount;
+
+            if (remaining == 0)
+                return null;
+
+            // 1. Дозаповнюємо існуючі стеки
+            for (int row = 0; row < InventoryGrid.Rows; row++)
             {
-                for(short col = 0; col < InventoryGrid.Columns; col++)
+                for (int col = 0; col < InventoryGrid.Columns; col++)
                 {
-                    if (Container[row,col] == null)
+                    BaseItemInstance? existing = Container[row, col];
+
+                    if (existing is null ||
+                        ReferenceEquals(existing, item) ||
+                        existing != item)
+                        continue;
+
+                    remaining = existing.AddToStack(remaining);
+
+                    if (remaining == 0)
+                        break;
+                }
+
+                if (remaining == 0)
+                    break;
+            }
+
+            // Віднімаємо кількість, перенесену в існуючі стеки
+            item.RemoveFromStack(item.CurrentStackCount - remaining);
+
+            if (remaining == 0)
+                return null;
+
+            // 2. Шукаємо вільну клітинку
+            for (int row = 0; row < InventoryGrid.Rows; row++)
+            {
+                for (int col = 0; col < InventoryGrid.Columns; col++)
+                {
+                    if (Container[row, col] is null)
                     {
                         Container[row, col] = item;
-                        return true;
+                        return null;
                     }
                 }
             }
 
-            return false;
-
+            // 3. Місця немає — повертаємо залишок
+            return item;
         }
 
         public override IEnumerator<BaseItemInstance> GetEnumerator()
@@ -55,7 +109,11 @@ namespace InventoryCoreLib
         {
             if (Container[pos.Row, pos.Column] is not null)
             {
-                return Container[pos.Row, pos.Column];
+                var result = Container[pos.Row, pos.Column];
+
+                Container[pos.Row, pos.Column] = null;
+
+                return result;
             }
 
             return default; //повертає null оскільки T - class
@@ -72,6 +130,8 @@ namespace InventoryCoreLib
             return null;
         }
 
+
+        //це переміщує всередині інвентаря
         public override void SwapItems(Position one, Position two)
         {
             BaseItemInstance? buffer = Container[one.Row, one.Column];
@@ -79,31 +139,44 @@ namespace InventoryCoreLib
             Container[two.Row, two.Column] = buffer;
         }
 
+        //це потенційно використовується для свапання екіпірування, коли зброї наприклад слот зайнятий
         public override void SwapItems(ref BaseItemInstance? one, ref BaseItemInstance? two)
         {
             CommonFunctions.Swap(ref one, ref two);
         }
 
-        public string ShowInventory()
+
+        public override string ShowInventory()
         {
             string result = "";
 
-            const int columnWidth = 20;
+            const int cellWidth = 12;
 
-            for (int y = 0; y < InventoryGrid.Rows; y++)
+            for (int x = 0; x < InventoryGrid.Rows; x++)
             {
-                for (int x = 0; x < InventoryGrid.Columns; x++)
+                for (int y = 0; y < InventoryGrid.Columns; y++)
                 {
-                    string name = Container[x, y]?.Definition.Name ?? "[ EMPTY ]";
+                    string content = Container[x, y] is not null
+                        ? $"[{Container[x, y]!.Definition.Name} x{Container[x, y]!.CurrentStackCount}]"
+                        : $"[ {x},{y} ]";
 
-                    result += $"{name,-columnWidth}";
+                    result += $"{content,-cellWidth}";
                 }
 
-                result += "\n\n";
+                result += "\n";
             }
 
 
             return result;
+        }
+
+        public override BaseItemInstance? ItemAt(Position position)
+        {
+
+            if (Container[position.Row, position.Column] is not null)
+                return Container[position.Row, position.Column];
+            else
+                return null;
         }
     }
 
@@ -112,8 +185,6 @@ namespace InventoryCoreLib
     /// </summary>
     public class DemoCharacter : Character<BaseItemInstance, Position>
     {
-
-        private DemoInventory CurrentInventory => (DemoInventory)Inventory;  
 
         public DemoCharacter(
             string name, 
@@ -134,32 +205,24 @@ namespace InventoryCoreLib
                   inventoryClass)
         {}
 
-        public override void UseItem(BaseItemInstance? item)
+        public void GetItem(BaseItemInstance? item)
         {
             if (item is null)
                 return;
 
-            if (item.Use() is List<BaseEffect> effects)
-            {
-                if (effects is not null)
-                {
-                    foreach (var effect in effects)
-                    {
-                        effect.Apply();
-                    }
-                }
-            }
+            Inventory.AddItem(item);
         }
 
-        public override void UseItem(Position itemPos)
+        public override void UseItem(BaseItemInstance? item, IAffectable? target)
         {
-            var item = CurrentInventory.RemoveItem(itemPos);
+            if (item is null || target is null)
+                return;
 
-            if(item is not null)
+            if(target is IAffectableActor _target)
             {
-                var result = item.Use();
+                item.SetItemTarget(_target);
 
-                if(result is List<BaseEffect> effects)
+                if (item.Use() is List<IAffect<IAffectableActor>> effects)
                 {
                     if (effects is not null)
                     {
@@ -169,6 +232,28 @@ namespace InventoryCoreLib
                         }
                     }
                 }
+
+            }
+        }
+
+        public override void UseItem(Position itemPos, IAffectable? target)
+        {
+            var _item = Inventory.ItemAt(itemPos);
+
+            if(_item is null)
+            {
+                return;
+            }
+
+            if(_item.CurrentStackCount > 1)
+            {
+                _item.RemoveFromStack(1);
+                UseItem(_item, target);
+            }
+            else
+            {
+                var item = Inventory.RemoveItem(itemPos);
+                UseItem(item, target);
             }
             
         }
@@ -180,7 +265,12 @@ namespace InventoryCoreLib
 
         public void OpenInventory()
         {
-            Console.Write(CurrentInventory.ShowInventory());
+            Console.Write(Inventory.ShowInventory());
+        }
+
+        public override void UseTool<T>(T? tool) where T : default
+        {
+            throw new NotImplementedException();
         }
     }
 }

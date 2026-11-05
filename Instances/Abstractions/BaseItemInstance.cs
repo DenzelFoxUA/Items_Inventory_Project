@@ -3,32 +3,31 @@ using CharacterMainLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 
 namespace InventoryCoreLib
 {
+
     public abstract class BaseItemInstance : IUsable
     {
         public BaseItem Definition { get; }
 
         public uint CurrentStackCount { get; protected set; } = 1;
 
-        public IReadOnlyList<BaseEffect> Effects { get; }
+        public IReadOnlyList<IAffect<IAffectableActor>> Effects { get; }
 
-        protected abstract void ValidateEffects(params BaseEffect[]? effects);
+        public IAffectableActor? Target { get; protected set; } = null;
 
-
-
-        public BaseItemInstance(BaseItem definition, params BaseEffect[]? effects)
+        public BaseItemInstance(BaseItem definition, params IAffect<IAffectableActor>[]? effects)
         {
             if (definition is null)
                 throw new ArgumentNullException(nameof(definition));
 
             Definition = definition;
 
-            Effects = Array.AsReadOnly(effects?.ToArray() ?? Array.Empty<BaseEffect>());
+            Effects = Array.AsReadOnly(effects?.ToArray() ?? Array.Empty<IAffect<IAffectableActor>>());
         }
 
+        #region Equals
         public bool Equals(BaseItemInstance? other)
         {
             if (ReferenceEquals(other, null))
@@ -65,12 +64,7 @@ namespace InventoryCoreLib
             return hash.ToHashCode();
         }
 
-        public virtual object ?Use()
-        {
-            return null;
-        }
-
-        public static bool operator == (BaseItemInstance? one, BaseItemInstance? other)
+        public static bool operator ==(BaseItemInstance? one, BaseItemInstance? other)
         {
 
             if (ReferenceEquals(one, other)) return true;
@@ -81,10 +75,22 @@ namespace InventoryCoreLib
             return one.Equals(other);
         }
 
-        public static bool operator != (BaseItemInstance one, BaseItemInstance other)
+        public static bool operator !=(BaseItemInstance one, BaseItemInstance other)
         {
             return !(one == other);
         }
+
+        #endregion //equals
+
+        #region Effects
+
+        //шаблон для того, щоб обмежети тип власника, який обов"язково імплементує інтерфейс
+        public abstract void SetItemTarget<T>(T? target) where T : IAffectableActor;
+        public abstract object? Use();
+
+        #endregion
+
+        #region Methods
 
         public override string ToString()
         {
@@ -102,5 +108,10 @@ namespace InventoryCoreLib
             return base.ToString() + $"\n" + itemEff;
 
         }
+
+        public abstract uint AddToStack(uint count);
+
+        public abstract uint RemoveFromStack(uint count);
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿
+using CharacterMainLib;
 namespace InventoryCoreLib
 {
     public interface IRechargeble : IAffectable

@@ -1,4 +1,6 @@
 ﻿
+using CharacterMainLib;
+
 namespace InventoryCoreLib
 {
     public abstract class RangedInstance : WeaponInstance, IRanged
@@ -10,7 +12,7 @@ namespace InventoryCoreLib
 
         public uint CurrentAmmoCount { get; protected set; } = 0;
 
-        public RangedInstance(RangedWeapon _weapon, params BaseEffect[]? effects) :
+        public RangedInstance(RangedWeapon _weapon, params IAffect<IAffectableActor>[]? effects) :
             base(_weapon, effects)
         {
 

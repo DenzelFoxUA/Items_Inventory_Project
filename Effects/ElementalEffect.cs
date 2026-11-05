@@ -11,7 +11,7 @@ namespace InventoryCoreLib
         Shock
     }
 
-    public class ElementalEffect : BaseEffect
+    public class ElementalEffect : BaseEffect<IAffectable>
     {
         
         public Elements Element { get; init; }
@@ -26,7 +26,6 @@ namespace InventoryCoreLib
             _target = target;
             Element = element;
             PowerValue = value;
-            EffectCategory = EffectCategory.Recovery;
             EffectDuration = duration_sec;
             IsPassive = false;
         }
@@ -36,6 +35,11 @@ namespace InventoryCoreLib
             Console.WriteLine($"Effect {Element} applyed");
             Console.ReadLine();
             _target.Decrease(PowerValue);
+        }
+
+        public override void SetTarget(IAffectable? target)
+        {
+            throw new NotImplementedException();
         }
     }
 }

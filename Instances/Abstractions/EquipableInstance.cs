@@ -1,4 +1,5 @@
 ﻿
+using CharacterMainLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace InventoryCoreLib
 
         public bool IsEquipped { get; protected set; } = false;
 
-        public EquipableInstance(EquipableItem definition, params BaseEffect[]? effects) 
+        public EquipableInstance(EquipableItem definition, params IAffect<IAffectableActor>[]? effects) 
             : base(definition, effects)
         {
 

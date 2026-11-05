@@ -25,12 +25,12 @@ namespace InventoryCoreLib
             if (obj is not UsableItem other)
                 return false;
 
-            return base.Equals(obj) && Volume == other.Volume;
+            return base.Equals(obj);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(base.GetHashCode(),Volume);
+            return base.GetHashCode();
         }
 
     }

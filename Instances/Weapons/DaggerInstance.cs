@@ -10,5 +10,24 @@ namespace InventoryCoreLib
 
         }
 
+        public override void SetItemTarget<T>(T? target) where T : default
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override object? Use()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override uint AddToStack(uint count)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override uint RemoveFromStack(uint count)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

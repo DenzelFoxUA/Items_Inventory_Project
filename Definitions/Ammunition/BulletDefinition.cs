@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace InventoryCoreLib
 {
-    public class BulletDefinition : EquipableItem, IAmmo
+    public class BulletDefinition : EquipableItem//, IAmmo
     {
         public BulletDefinition(
             uint id,
@@ -12,9 +12,7 @@ namespace InventoryCoreLib
             double weigh_kg,
             uint price,
             string iconRef,
-            string miniatureRef,
-            BaseEffect? effect = null) :
-                base(effect is null ? null : new List<BaseEffect> { effect })
+            string miniatureRef)
         {
 
             Id = id;
@@ -28,7 +26,7 @@ namespace InventoryCoreLib
             MaxStackSize = AmmoStackConstants.AMMO_STACK_MAX_COUNT;
 
             //equip
-            EqupmentCategory = WearableItemCategory.RightHandOnly;
+            EqupmentCategory = "WeaponRight";
             LevelRequired = 1;
             //res
             Icon = iconRef;
@@ -38,6 +36,6 @@ namespace InventoryCoreLib
 
         public AmmoType Ammo => AmmoType.Bullet;
         public uint MaxStackCount => MaxStackSize;
-        public IReadOnlyList<BaseEffect> GetEffects() => Effects;
+        //public IReadOnlyList<BaseEffect> GetEffects() => Effects;
     }
 }
