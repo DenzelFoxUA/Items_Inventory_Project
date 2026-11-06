@@ -13,18 +13,19 @@ namespace InventoryCoreLib
 
         public uint CurrentStackCount { get; protected set; } = 1;
 
-        public IReadOnlyList<IAffect<IAffectableActor>> Effects { get; }
+        //I affect characters list
+        public IReadOnlyList<IAffect<IAffectableCharacter>> Effects { get; }
 
-        public IAffectableActor? Target { get; protected set; } = null;
+        public IAffectableCharacter? Target { get; protected set; } = null;
 
-        public BaseItemInstance(BaseItem definition, params IAffect<IAffectableActor>[]? effects)
+        public BaseItemInstance(BaseItem definition, params IAffect<IAffectableCharacter>[]? effects)
         {
             if (definition is null)
                 throw new ArgumentNullException(nameof(definition));
 
             Definition = definition;
 
-            Effects = Array.AsReadOnly(effects?.ToArray() ?? Array.Empty<IAffect<IAffectableActor>>());
+            Effects = Array.AsReadOnly(effects?.ToArray() ?? Array.Empty<IAffect<IAffectableCharacter>>());
         }
 
         #region Equals
@@ -85,7 +86,7 @@ namespace InventoryCoreLib
         #region Effects
 
         //шаблон для того, щоб обмежети тип власника, який обов"язково імплементує інтерфейс
-        public abstract void SetItemTarget<T>(T? target) where T : IAffectableActor;
+        public abstract void SetItemTarget<T>(T? target) where T : IAffectableCharacter;
         public abstract object? Use();
 
         #endregion

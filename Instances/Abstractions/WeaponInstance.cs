@@ -7,7 +7,7 @@ namespace InventoryCoreLib
     {
         public BaseWeapon Weapon => (BaseWeapon)Definition;
 
-        public WeaponInstance(BaseWeapon _weapon, params IAffect<IAffectableActor>[]?effects) :
+        public WeaponInstance(BaseWeapon _weapon, params IAffect<IAffectableCharacter>[]?effects) :
             base(_weapon,effects)
         {
             

@@ -4,7 +4,8 @@ using System.Numerics;
 
 namespace InventoryCoreLib
 {
-    public abstract class TemporaryEffect<T> : BaseEffect<IAffectableActor, T>
+    public abstract class TemporaryEffect<T> 
+        : BaseEffect<IAffectableCharacter, T>, IAffectTemporary<IAffectableActor>
         where T: INumber<T>
     {
 
@@ -62,5 +63,66 @@ namespace InventoryCoreLib
             }
 
         }
+
+        public bool IsEffectExpired() => IsExpired;
+
+    }
+
+    public abstract class TemporaryEffect<TTarget, TPower>
+    : BaseEffect<TTarget, TPower>, IAffectTemporary<TTarget>
+    where TTarget : class, IAffectable
+    where TPower : INumber<TPower>
+    {
+        protected Action<TPower>? _applyFunc;
+        protected Action<TPower>? _restoreFunc;
+
+        protected bool _isApplied = false;
+
+        public bool IsExpired => EffectDuration <= 0;
+
+        protected float EffectDuration { get; set; }
+
+        protected TemporaryEffect(TPower power, float durationSec)
+        {
+            if (durationSec <= 0.0f)
+                throw new ArgumentOutOfRangeException(nameof(durationSec));
+
+            EffectDuration = durationSec;
+            PowerValue = power;
+        }
+
+        public override void Apply()
+        {
+            if (_isApplied)
+                return;
+
+            if (_applyFunc is null || _restoreFunc is null)
+                throw new InvalidOperationException("Functions of this effect are not set!");
+
+            _applyFunc(PowerValue);
+            _isApplied = true;
+        }
+
+        public override void Remove()
+        {
+            if (!_isApplied)
+                return;
+
+            _restoreFunc?.Invoke(PowerValue);
+            _isApplied = false;
+        }
+
+        public virtual void Update(float deltaTime)
+        {
+            if (deltaTime <= 0.0f || IsExpired)
+                return;
+
+            EffectDuration -= deltaTime;
+
+            if (IsExpired)
+                Remove();
+        }
+
+        public bool IsEffectExpired() => IsExpired;
     }
 }

@@ -9,13 +9,13 @@ namespace InventoryCoreLib
     public class CustomPotionInstnce : UsableItemInstance
     {
 
-        public CustomPotionInstnce(PotionDefinition potion, params IAffect<IAffectableActor>[] effects) 
+        public CustomPotionInstnce(PotionDefinition potion, params IAffect<IAffectableCharacter>[] effects) 
             : base(potion,effects)
         {
             
         }
 
-        public override List<IAffect<IAffectableActor>>? Use()
+        public override List<IAffect<IAffectableCharacter>>? Use()
         {
             if (CurrentStackCount > 0)
             {

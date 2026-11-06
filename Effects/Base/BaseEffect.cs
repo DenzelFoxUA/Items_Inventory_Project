@@ -4,7 +4,7 @@ using CharacterMainLib;
 namespace InventoryCoreLib
 {
 
-    public interface IAffect<T> where T : class, IAffectable
+    public interface IAffect<in T> where T : IAffectable
     {
         public void Apply();
 

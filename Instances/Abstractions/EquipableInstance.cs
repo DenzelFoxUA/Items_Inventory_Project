@@ -6,27 +6,23 @@ using System.Linq;
 
 namespace InventoryCoreLib
 {
-    public abstract class EquipableInstance : BaseItemInstance, IEquipable
+    public abstract class EquipableInstance : UsableItemInstance, IEquipable
     {
         public EquipableItem EquipableDefinition => (EquipableItem)Definition;
 
         public bool IsEquipped { get; protected set; } = false;
 
-        public EquipableInstance(EquipableItem definition, params IAffect<IAffectableActor>[]? effects) 
+        public EquipableInstance(BaseItem definition, params IAffect<IAffectableCharacter>[]? effects) 
             : base(definition, effects)
         {
 
         }
 
-        public virtual void Equip()
-        {
-            IsEquipped = true;
-        }
-        
-        public virtual void Unequip()
-        {
-            IsEquipped = false;
-        }
+        public abstract override List<IAffect<IAffectableCharacter>>? Use();
+
+        public abstract void Equip();
+
+        public abstract void Unequip();
 
         public override string ToString()
         {

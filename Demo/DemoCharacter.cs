@@ -7,7 +7,7 @@ using CharacterMainLib;
 namespace InventoryCoreLib
 {
     public class DemoInventory :
-        InventoryDefault<BaseItemInstance, Position>
+        InventoryGridArray<BaseItemInstance>
     {
         public DemoInventory(InventorySize body) : base(body)
         {
@@ -183,36 +183,37 @@ namespace InventoryCoreLib
     /// <summary>
     /// Demo-verison of a class using Grid as Inventory.
     /// </summary>
-    public class DemoCharacter : Character<BaseItemInstance, Position>
+    public class DemoCharacter : Character<BaseItemInstance>
     {
 
+        private DemoInventory CurrInventory => (DemoInventory)Inventory;
+
+        public List<IAffect<IAffectableCharacter>> ActiveEffects { get; }
+
         public DemoCharacter(
-            string name, 
-            uint maxLevel, 
-            uint minAttributeValue, 
-            uint attributesMaxValue,
-            BasicPhysics charPhysParams,
+            string name,
+            CharacterBase baseFeatures,
             in IReadOnlyDictionary<string, VitalsBaseValues> vitals, 
             in IEnumerable<string> attributes,
             in IEnumerable<string> equipBlockNames,
             DemoInventory inventoryClass) 
-            : base(name, 
-                  maxLevel, 
-                  minAttributeValue, 
-                  attributesMaxValue,
-                  charPhysParams,
+            : base(name,  
+                  baseFeatures,
                   vitals, 
                   attributes,
                   equipBlockNames,
                   inventoryClass)
-        {}
+        {
+            ActiveEffects = new List<IAffect<IAffectableCharacter>>();
+
+        }
 
         public void GetItem(BaseItemInstance? item)
         {
             if (item is null)
                 return;
 
-            Inventory.AddItem(item);
+            CurrInventory.AddItem(item);
         }
 
         public override void UseItem(BaseItemInstance? item, IAffectable? target)
@@ -220,11 +221,11 @@ namespace InventoryCoreLib
             if (item is null || target is null)
                 return;
 
-            if(target is IAffectableActor _target)
+            if(target is IAffectableCharacter _target)
             {
                 item.SetItemTarget(_target);
 
-                if (item.Use() is List<IAffect<IAffectableActor>> effects)
+                if (item.Use() is List<IAffect<IAffectableCharacter>> effects)
                 {
                     if (effects is not null)
                     {
@@ -238,9 +239,9 @@ namespace InventoryCoreLib
             }
         }
 
-        public override void UseItem(Position itemPos, IAffectable? target)
+        public void UseItem(Position itemPos, IAffectable? target)
         {
-            var _item = Inventory.ItemAt(itemPos);
+            var _item = CurrInventory.ItemAt(itemPos);
 
             if(_item is null)
             {
@@ -254,7 +255,7 @@ namespace InventoryCoreLib
             }
             else
             {
-                var item = Inventory.RemoveItem(itemPos);
+                var item = CurrInventory.RemoveItem(itemPos);
                 UseItem(item, target);
             }
             
@@ -267,12 +268,17 @@ namespace InventoryCoreLib
 
         public void OpenInventory()
         {
-            Console.Write(Inventory.ShowInventory());
+            Console.Write(CurrInventory.ShowInventory());
         }
 
         public override void UseTool<T>(T? tool) where T : default
         {
             throw new NotImplementedException();
+        }
+
+        public override void Move<DirVector>(DirVector? directionVector) where DirVector : default
+        {
+            Console.WriteLine($"{Name} - moving");
         }
     }
 }

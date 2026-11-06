@@ -10,7 +10,7 @@ namespace InventoryCoreLib.Effects
         {
         }
 
-        public override void SetTarget(IAffectableActor? target)
+        public override void SetTarget(IAffectableCharacter? target)
         {
             if (_isApplied)
                 throw new InvalidOperationException(

@@ -1,5 +1,7 @@
 ﻿
+using CharacterMainLib;
 using System;
+using System.Collections.Generic;
 
 namespace InventoryCoreLib
 {
@@ -95,7 +97,7 @@ namespace InventoryCoreLib
             throw new NotImplementedException();
         }
 
-        public override object? Use()
+        public override List<IAffect<IAffectableCharacter>>? Use()
         {
             throw new NotImplementedException();
         }

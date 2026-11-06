@@ -4,7 +4,7 @@ using System;
 
 namespace InventoryCoreLib
 {
-    public class DamageVitalEffect : BaseEffect<IAffectableActor,uint>
+    public class DamageVitalEffect : BaseEffect<IAffectableCharacter,uint>
     {
         private Action<string, uint>? _targetFunc = null;
 
@@ -32,7 +32,7 @@ namespace InventoryCoreLib
             }
         }
 
-        public override void SetTarget(IAffectableActor? target)
+        public override void SetTarget(IAffectableCharacter? target)
         {
             Target = target;
 

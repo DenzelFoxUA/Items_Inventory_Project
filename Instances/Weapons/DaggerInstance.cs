@@ -1,4 +1,7 @@
 ﻿
+using CharacterMainLib;
+using System.Collections.Generic;
+
 namespace InventoryCoreLib
 {
     public class DaggerInstance : WeaponInstance
@@ -15,7 +18,7 @@ namespace InventoryCoreLib
             throw new System.NotImplementedException();
         }
 
-        public override object? Use()
+        public override List<IAffect<IAffectableCharacter>>? Use()
         {
             throw new System.NotImplementedException();
         }

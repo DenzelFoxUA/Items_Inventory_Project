@@ -8,13 +8,13 @@ namespace InventoryCoreLib
     {
         public UsableItem UsableItem => (UsableItem)Definition;
 
-        public UsableItemInstance(UsableItem item, params IAffect<IAffectableActor>[]? effects) 
+        public UsableItemInstance(BaseItem item, params IAffect<IAffectableCharacter>[]? effects) 
             : base(item, effects)
         {
             
         }
 
-        public abstract override System.Collections.Generic.List<IAffect<IAffectableActor>>? Use();
+        public abstract override System.Collections.Generic.List<IAffect<IAffectableCharacter>>? Use();
 
         public override uint AddToStack(uint count)
         {

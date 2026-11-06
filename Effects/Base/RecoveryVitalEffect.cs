@@ -4,7 +4,7 @@ using CharacterMainLib;
 
 namespace InventoryCoreLib
 {
-    public class RecoveryVitalEffect : BaseEffect<IAffectableActor, uint>
+    public class RecoveryVitalEffect : BaseEffect<IAffectableCharacter, uint>
     {
         private Action<string,uint>? _targetFunc = null;
 
@@ -32,7 +32,7 @@ namespace InventoryCoreLib
             }
         }
 
-        public override void SetTarget(IAffectableActor? target)
+        public override void SetTarget(IAffectableCharacter? target)
         {
             Target = target;
 

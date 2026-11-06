@@ -12,7 +12,7 @@ namespace InventoryCoreLib
 
         public uint CurrentAmmoCount { get; protected set; } = 0;
 
-        public RangedInstance(RangedWeapon _weapon, params IAffect<IAffectableActor>[]? effects) :
+        public RangedInstance(RangedWeapon _weapon, params IAffect<IAffectableCharacter>[]? effects) :
             base(_weapon, effects)
         {
 
