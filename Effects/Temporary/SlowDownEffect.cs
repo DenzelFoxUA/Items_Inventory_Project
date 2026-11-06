@@ -3,14 +3,13 @@ using System;
 
 namespace InventoryCoreLib.Effects
 {
-    public class SlowDownEffect : TemporaryEffect<float>
+    public class SlowDownEffect : TemporaryEffect<ICanMove,float>
     {
-
         public SlowDownEffect(float strength, uint durationSec) : base(strength ,durationSec)
         {
         }
 
-        public override void SetTarget(IAffectableCharacter? target)
+        public override void SetTarget(ICanMove? target)
         {
             if (_isApplied)
                 throw new InvalidOperationException(

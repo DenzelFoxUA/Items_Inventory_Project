@@ -1,115 +1,115 @@
 ﻿
-using CharacterMainLib;
-using System;
-using System.Collections.Generic;
+//using CharacterMainLib;
+//using System;
+//using System.Collections.Generic;
 
-namespace InventoryCoreLib
-{
-    public class BowInstance : RangedInstance
-    {
-        public BowDefinition Bow => (BowDefinition)Definition;
+//namespace InventoryCoreLib
+//{
+//    public class BowInstance : RangedInstance
+//    {
+//        public BowDefinition Bow => (BowDefinition)Definition;
 
-        private IAmmoInstance ArrowInstance => CurrentAmmoInstance!;
+//        private IAmmoInstance ArrowInstance => CurrentAmmoInstance!;
 
-        public BowInstance(BowDefinition bow) : base(bow)
-        { }
+//        public BowInstance(BowDefinition bow) : base(bow)
+//        { }
 
-        public override uint PrimaryAttack(double distanceToTarget)
-        {
-            if (Bow.PrimaryAttack is null &&
-                distanceToTarget > Bow.PrimaryAttack!.AttackRange)
-                return 0;
+//        public override uint PrimaryAttack(double distanceToTarget)
+//        {
+//            if (Bow.PrimaryAttack is null &&
+//                distanceToTarget > Bow.PrimaryAttack!.AttackRange)
+//                return 0;
 
-            if (CurrentAmmoCount == 0 && !Reload())
-                return 0;
+//            if (CurrentAmmoCount == 0 && !Reload())
+//                return 0;
 
-            double conditionCoef = GetDurabilityCoefficient();
-            uint damage = (uint)Math.Round(Bow.PrimaryAttack.MaxDamage * conditionCoef);
+//            double conditionCoef = GetDurabilityCoefficient();
+//            uint damage = (uint)Math.Round(Bow.PrimaryAttack.MaxDamage * conditionCoef);
 
-            foreach(var eff in Effects)
-            {
+//            foreach(var eff in Effects)
+//            {
                 
-            }
+//            }
 
-            var effectsList = ArrowInstance.AmmoDefinition.GetEffects();
+//            var effectsList = ArrowInstance.AmmoDefinition.GetEffects();
 
-            foreach(var eff in effectsList)
-            {
+//            foreach(var eff in effectsList)
+//            {
                 
-            }
+//            }
 
-            CurrentAmmoCount--;
+//            CurrentAmmoCount--;
 
-            return damage;
+//            return damage;
             
-        }
+//        }
 
-        public override bool Reload()
-        {
-            if (CurrentAmmoInstance is null)
-                return false;
+//        public override bool Reload()
+//        {
+//            if (CurrentAmmoInstance is null)
+//                return false;
 
-            if (CurrentAmmoInstance.CurrentStackCount > 0 && CurrentAmmoCount == 0)
-            {
-                if(!CurrentAmmoInstance.Use())
-                    return false;
+//            if (CurrentAmmoInstance.CurrentStackCount > 0 && CurrentAmmoCount == 0)
+//            {
+//                if(!CurrentAmmoInstance.Use())
+//                    return false;
 
-                CurrentAmmoCount++;
-                return true;
-            }
+//                CurrentAmmoCount++;
+//                return true;
+//            }
 
-            return false;
-        }
+//            return false;
+//        }
 
-        public override bool CanUseAmmo(IAmmoInstance ammo)
-        {
-            return ammo.AmmoDefinition.Ammo == AmmoType.Arrow;
-        }
+//        public override bool CanUseAmmo(IAmmoInstance ammo)
+//        {
+//            return ammo.AmmoDefinition.Ammo == AmmoType.Arrow;
+//        }
 
-        public override bool SetAmmo(IAmmoInstance ammo)
-        {
-            if (!CanUseAmmo(ammo))
-                return false;
+//        public override bool SetAmmo(IAmmoInstance ammo)
+//        {
+//            if (!CanUseAmmo(ammo))
+//                return false;
 
-            CurrentAmmoInstance = ammo;
-            CurrentAmmoInstance.Equip();
+//            CurrentAmmoInstance = ammo;
+//            CurrentAmmoInstance.Equip();
 
-            return true;
-        }
+//            return true;
+//        }
 
-        public override string ToString()
-        {
-            string ammoInstance = "ARROW::NULL";
+//        public override string ToString()
+//        {
+//            string ammoInstance = "ARROW::NULL";
 
-            if(ArrowInstance is not null)
-            {
-                ammoInstance = $"Arrows Loaded: {CurrentAmmoCount}\n" +
-                $"Arrows in sack: {ArrowInstance!.CurrentStackCount}\n" +
-                $"Arrow type: {ArrowInstance.AmmoDefinition.Ammo.ToString()}\n";
-            }
+//            if(ArrowInstance is not null)
+//            {
+//                ammoInstance = $"Arrows Loaded: {CurrentAmmoCount}\n" +
+//                $"Arrows in sack: {ArrowInstance!.CurrentStackCount}\n" +
+//                $"Arrow type: {ArrowInstance.AmmoDefinition.Ammo.ToString()}\n";
+//            }
 
-            return base.ToString() + 
-                $"\n{ammoInstance}";
-        }
+//            return base.ToString() + 
+//                $"\n{ammoInstance}";
+//        }
 
-        public override void SetItemTarget<T>(T? target) where T : default
-        {
-            throw new NotImplementedException();
-        }
+//        public override void SetItemTarget<T>(T? target) where T : default
+//        {
+//            throw new NotImplementedException();
+//        }
 
-        public override List<IAffect<IAffectableCharacter>>? Use()
-        {
-            throw new NotImplementedException();
-        }
+//        public override List<IAffect<IAffectableCharacter>>? Use()
+//        {
+//            throw new NotImplementedException();
+//        }
 
-        public override uint AddToStack(uint count)
-        {
-            throw new NotImplementedException();
-        }
+//        public override uint AddToStack(uint count)
+//        {
+//            throw new NotImplementedException();
+//        }
 
-        public override uint RemoveFromStack(uint count)
-        {
-            throw new NotImplementedException();
-        }
-    }
-}
+//        public override uint RemoveFromStack(uint count)
+//        {
+//            throw new NotImplementedException();
+//        }
+//    }
+//}
