@@ -1,16 +1,19 @@
 ﻿using CharacterMainLib;
 using System;
+using System.Linq;
 
 namespace InventoryCoreLib
 {
-    public abstract class WeaponInstance : DurableInstance, IAttack
+    public abstract class WeaponInstance<T> : DurableInstance<T>, IAttack
+        where T : IAffectImmediately<IAffectableCharacter>
     {
         public BaseWeapon Weapon => (BaseWeapon)Definition;
 
-        public WeaponInstance(BaseWeapon _weapon, params IAffect<IAffectableCharacter>[]?effects) :
+        public IAffectableActor? Target { get; protected set; } = null;
+
+        public WeaponInstance(BaseWeapon _weapon, params T[]?effects) :
             base(_weapon,effects)
         {
-            
         }
 
         private uint BaseAttackFunc(uint weaponDamage)
@@ -54,6 +57,11 @@ namespace InventoryCoreLib
 
             return 0;
 
+        }
+
+        public override void SetItemTarget(IAffectableActor? target)
+        {
+            Target = target;
         }
     }
 }

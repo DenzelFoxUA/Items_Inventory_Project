@@ -6,7 +6,6 @@ public class EffectsManager<T> where T : class, IAffectable
 {
     private readonly T _target;
 
-    private readonly List<IAffect<T>> _staticEffects = [];
     private readonly List<IAffectTemporary<T>> _temporaryEffects = [];
 
     public EffectsManager(T target)
@@ -14,13 +13,22 @@ public class EffectsManager<T> where T : class, IAffectable
         _target = target;
     }
 
-    public void AddToStatic(IAffect<T>? effect)
+    public void AddToStatic(IAffectConditionally<T>? effect)
     {
         if (effect is null)
             return;
 
         effect.SetTarget(_target);
-        _staticEffects.Add(effect);
+        effect.Apply();
+    }
+
+    public void RemoveStatic(IAffectConditionally<T>? effect)
+    {
+        if (effect is null)
+            return;
+
+        effect.SetTarget(_target);
+        effect.Remove();
     }
 
     public void AddToTemporary(IAffectTemporary<T>? effect)
@@ -34,6 +42,7 @@ public class EffectsManager<T> where T : class, IAffectable
 
     public void Update(float deltaTime)
     {
+
         for (int i = _temporaryEffects.Count - 1; i >= 0; i--)
         {
             var effect = _temporaryEffects[i];

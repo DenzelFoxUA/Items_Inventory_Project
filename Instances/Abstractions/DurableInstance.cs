@@ -4,13 +4,15 @@ using System.Collections.Generic;
 
 namespace InventoryCoreLib
 {
-    public abstract class DurableInstance : EquipableInstance, IDurable
+    public abstract class DurableInstance<T> : EquipableInstance<T>, IDurable
+        where T : IAffect<IAffectableCharacter>
     {
-        public DurableItem DurableDefinition => (DurableItem)Definition;
+        private DurableItem DurableDefinition => (DurableItem)Definition;
 
         public uint CurrentDurability { get; protected set; }
 
-        public DurableInstance(DurableItem definition, params IAffect<IAffectableCharacter>[]?effects) :
+        public DurableInstance(DurableItem definition, 
+            params T[]?effects) :
             base(definition,effects)
         {
             CurrentDurability = definition.MaxDurability;

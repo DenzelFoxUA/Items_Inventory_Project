@@ -12,8 +12,7 @@ namespace InventoryCoreLib.Effects
         public override void SetTarget(ICanMove? target)
         {
             if (_isApplied)
-                throw new InvalidOperationException(
-                    "Cannot change target while effect is applied.");
+                throw new InvalidOperationException("Cannot change target when effect is applied.");
 
             Target = target;
 

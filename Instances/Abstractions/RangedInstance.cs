@@ -3,7 +3,8 @@ using CharacterMainLib;
 
 namespace InventoryCoreLib
 {
-    public abstract class RangedInstance : WeaponInstance, IRanged
+    public abstract class RangedInstance<T> : WeaponInstance<T>, IRanged
+        where T : IAffectImmediately<IAffectableCharacter>
     {
 
         public RangedWeapon RangedWeapon => (RangedWeapon)Definition;
@@ -12,8 +13,9 @@ namespace InventoryCoreLib
 
         public uint CurrentAmmoCount { get; protected set; } = 0;
 
-        public RangedInstance(RangedWeapon _weapon, params IAffect<IAffectableCharacter>[]? effects) :
-            base(_weapon, effects)
+        public RangedInstance(RangedWeapon _weapon,
+            params IAffectImmediately<IAffectableCharacter>[]? effects) :
+            base(_weapon)
         {
 
         }
@@ -26,12 +28,6 @@ namespace InventoryCoreLib
 
         public virtual void ClearAmmo()
         {
-            if(CurrentAmmoInstance != null)
-            {
-                CurrentAmmoCount = 0;
-                CurrentAmmoInstance.Unequip();
-                CurrentAmmoInstance = null;
-            }
 
         }
     }

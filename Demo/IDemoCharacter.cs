@@ -1,10 +1,12 @@
 ﻿
-
 using CharacterMainLib;
 
 namespace InventoryCoreLib
 {
-    public interface IDemoCharacter : IAffectableCharacter, ICollectEffects
+    public interface IDemoCharacter : 
+        IAffectableCharacter, 
+        ICanUseItems<IUsable>,
+        ICanUseEquipment<IEquipable>
     {
 
     }

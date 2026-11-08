@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace InventoryCoreLib
 {
-    public interface IAmmoInstance : IEquipable
+    public interface IAmmoInstance
     {
         public IAmmo AmmoDefinition { get; }
         public uint CurrentStackCount { get; }

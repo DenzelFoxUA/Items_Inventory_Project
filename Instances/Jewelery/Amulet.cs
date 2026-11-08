@@ -3,13 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace InventoryCoreLib
 {
-    public class Amulet : EquipableInstance
+    public class Amulet : JewelryInstance<IAffectConditionally<IAffectableCharacter>>
     {
-        public Amulet(BaseItem definition, 
-            params IAffect<IAffectableCharacter>[]? effects) : base(definition, effects)
+        public Amulet(EquipableItem definition, 
+            params IAffectConditionally<IAffectableCharacter>[] effects) 
+            : base(definition, effects)
         {
 
         }
@@ -21,23 +21,21 @@ namespace InventoryCoreLib
             else
             {
                 IsEquipped = true;
-                SetItemTarget(Target);
+                SetItemTarget(MyOwner);
             }
-                
-            
         }
 
-        public override void SetItemTarget<T>(T? target) where T : default
-        {
-            Target = target;
 
-            if (Effects.Count != 0)
-            {
-                foreach (var eff in Effects)
-                    eff.SetTarget(Target);
-            }
+        //public override void SetItemTarget(IAffectableActor? target)
+        //{
+        //    Owner = target as IAffectableCharacter;
 
-        }
+        //    if (Effects.Count != 0)
+        //    {
+        //        foreach (var eff in Effects)
+        //            eff.SetTarget(Owner);
+        //    }
+        //}
 
         public override void Unequip()
         {
@@ -47,10 +45,9 @@ namespace InventoryCoreLib
                 IsEquipped = false;
         }
 
-        public override List<IAffect<IAffectableCharacter>>? Use()
+        public override List<IAffectConditionally<IAffectableCharacter>>? Use()
         {
-            var res = Effects.ToList();
-            return res;
+            return Effects.ToList();
         }
     }
 }

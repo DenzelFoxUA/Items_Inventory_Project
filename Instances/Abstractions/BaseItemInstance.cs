@@ -7,25 +7,21 @@ using System.Linq;
 namespace InventoryCoreLib
 {
 
-    public abstract class BaseItemInstance : IUsable
+    public abstract class BaseItemInstance
     {
         public BaseItem Definition { get; }
 
-        public uint CurrentStackCount { get; protected set; } = 1;
+        protected IAffectableCharacter? _owner;
+        protected IAffectableActor? _target;
 
-        //I affect characters list
-        public IReadOnlyList<IAffect<IAffectableCharacter>> Effects { get; }
-
-        public IAffectableCharacter? Target { get; protected set; } = null;
-
-        public BaseItemInstance(BaseItem definition, params IAffect<IAffectableCharacter>[]? effects)
+        public BaseItemInstance(BaseItem definition)
         {
             if (definition is null)
                 throw new ArgumentNullException(nameof(definition));
 
             Definition = definition;
-
-            Effects = Array.AsReadOnly(effects?.ToArray() ?? Array.Empty<IAffect<IAffectableCharacter>>());
+            _owner = null;
+            _target = null;
         }
 
         #region Equals
@@ -36,7 +32,9 @@ namespace InventoryCoreLib
             if (ReferenceEquals(this, other))
                 return true;
 
-            return this.Definition.Equals(other.Definition);
+            return this.Definition.Equals(other.Definition) &&
+                _owner.Equals(other._owner) &&
+                _target.Equals(other._target);
         }
 
         public override bool Equals(object? obj)
@@ -50,17 +48,9 @@ namespace InventoryCoreLib
 
             hash.Add(base.GetHashCode());
 
-            if (Effects is null)
-            {
-                hash.Add(-1);
-            }
-            else
-            {
-                hash.Add(Effects.Count);
+            hash.Add(_owner);
 
-                foreach (var effect in Effects)
-                    hash.Add(effect);
-            }
+            hash.Add(_target);
 
             return hash.ToHashCode();
         }
@@ -85,34 +75,11 @@ namespace InventoryCoreLib
 
         #region Effects
 
-        //шаблон для того, щоб обмежети тип власника, який обов"язково імплементує інтерфейс
-        public abstract void SetItemTarget<T>(T? target) where T : IAffectableCharacter;
-        public abstract object? Use();
-
         #endregion
 
         #region Methods
 
-        public override string ToString()
-        {
-            string itemEff = "";
 
-            if (Effects is null)
-                itemEff = "no effect";
-            else
-            {
-                foreach (var effect in Effects)
-
-                    itemEff += effect.ToString() + "\n";
-            }
-
-            return base.ToString() + $"\n" + itemEff;
-
-        }
-
-        public abstract uint AddToStack(uint count);
-
-        public abstract uint RemoveFromStack(uint count);
         #endregion
     }
 }

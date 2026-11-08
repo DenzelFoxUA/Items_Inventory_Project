@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 namespace InventoryCoreLib
 {
-    public class HealthPotion : CustomPotionInstnce
+    public class HealthPotion : CustomPotion
     {
-        public HealthPotion(PotionDefinition potion, uint duration_sec) 
-            : base(potion, new RecoveryVitalEffect("Health",potion.Volume))
+        public HealthPotion(PotionDefinition potion, uint stackCount, uint duration_sec) 
+            : base(potion, stackCount, new RecoveryVitalEffect("Health",potion.Volume))
         {
             
         }

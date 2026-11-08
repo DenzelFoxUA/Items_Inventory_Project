@@ -4,15 +4,6 @@ using CharacterMainLib;
 namespace InventoryCoreLib
 {
 
-    public interface IAffect<in T> where T : IAffectable
-    {
-        public void Apply();
-
-        public void Remove();
-
-        public void SetTarget(T? target);
-    }
-
     public abstract class BaseEffect<T, P> : IAffect<T>
         where T : class, IAffectable
         where P : INumber<P>

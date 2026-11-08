@@ -3,10 +3,10 @@ using CharacterMainLib;
 
 namespace InventoryCoreLib
 {
-    public class ManaPotion : CustomPotionInstnce
+    public class ManaPotion : CustomPotion
     {
-        public ManaPotion(PotionDefinition potion, uint duration_sec)
-            : base(potion, new RecoveryVitalEffect("Mana", potion.Volume))
+        public ManaPotion(PotionDefinition potion, uint stackCount, uint duration_sec)
+            : base(potion, stackCount, new RecoveryVitalEffect("Mana", potion.Volume))
         {
         }
     }

@@ -11,6 +11,7 @@
     <Folder Include="Instances\Usables\Books\" />
     <Folder Include="Instances\Usables\Scrolls\" />
     <Folder Include="Instances\Usables\Tools\" />
+    <Folder Include="Interfaces\IItems\" />
   </ItemGroup>
 
   <ItemGroup>
