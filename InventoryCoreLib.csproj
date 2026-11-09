@@ -7,11 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Instances\Armor\" />
     <Folder Include="Instances\Usables\Books\" />
     <Folder Include="Instances\Usables\Scrolls\" />
     <Folder Include="Instances\Usables\Tools\" />
-    <Folder Include="Interfaces\IItems\" />
+    <Folder Include="Tester\" />
   </ItemGroup>
 
   <ItemGroup>

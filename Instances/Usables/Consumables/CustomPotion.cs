@@ -9,6 +9,8 @@ namespace InventoryCoreLib
     public class CustomPotion : UsableItemInstance<IAffectImmediately<IAffectableActor>>
     {
 
+        private Action<IOwnedUsable>? _useFunction = null;
+
         public CustomPotion(PotionDefinition potion, uint stackCount, 
             params IAffectImmediately<IAffectableActor>[] effects) 
             : base(potion, stackCount, effects)
@@ -16,32 +18,21 @@ namespace InventoryCoreLib
             
         }
 
-        public override object? Use()
+        public override void Use()
         {
-            if (CurrentStackCount > 0)
+            SetTargetFunction();
+
+            if (CurrentStackCount > 0 && _useFunction is not null)
             {
-                if(_target is IAffectableCharacter character)
-                {
-                    return Effects.ToList<IAffectImmediately<IAffectableCharacter>>();
-                }
-
-                return Effects.ToList<IAffectImmediately<IAffectableActor>>();
-
+                _useFunction.Invoke(this);
             }
-
-            return null;
         }
 
-        //public override void SetItemTarget(IAffectableActor? target)
-        //{
-        //    Target = target as IAffectableCharacter;
-
-        //    if (Effects.Count != 0)
-        //    {
-        //        foreach (var eff in Effects)
-        //            eff.SetTarget(Target);
-        //    }
-
-        //}
+        public override void SetTargetFunction()
+        {
+            _useFunction = MyOwner.UseConsumable;
+        }
     }
 }
+
+

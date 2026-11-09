@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.Collections.Generic;
 
 namespace InventoryCoreLib
 {
@@ -12,6 +11,7 @@ namespace InventoryCoreLib
 
         public override bool Equals(BaseItem? obj)
         {
+
             if (obj is null)
                 return false;
 
@@ -20,12 +20,13 @@ namespace InventoryCoreLib
 
             return base.Equals(obj) 
                 && PrimaryAttack == other.PrimaryAttack
-                && SecondaryAttack == other.SecondaryAttack;
+                && SecondaryAttack == other.SecondaryAttack
+                && IsTwoHanded == other.IsTwoHanded;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(base.GetHashCode(), PrimaryAttack, SecondaryAttack);
+            return HashCode.Combine(base.GetHashCode(), PrimaryAttack, SecondaryAttack, IsTwoHanded);
         }
     }
 }

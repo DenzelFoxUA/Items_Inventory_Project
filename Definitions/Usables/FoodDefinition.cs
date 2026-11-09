@@ -35,7 +35,7 @@ namespace InventoryCoreLib
             Descriprion = describtion;
             Weight = weight_kg;
             Price = price;
-
+            IsSelfApplycable = true;
             Icon = iconRef;
             Miniature2D = miniature2DRef;
         }

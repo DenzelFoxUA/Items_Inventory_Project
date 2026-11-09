@@ -25,6 +25,11 @@ namespace InventoryCoreLib
             }
         }
 
+        public override void SetTargetFunction()
+        {
+            throw new NotImplementedException();
+        }
+
 
         //public override void SetItemTarget(IAffectableActor? target)
         //{
@@ -45,9 +50,9 @@ namespace InventoryCoreLib
                 IsEquipped = false;
         }
 
-        public override List<IAffectConditionally<IAffectableCharacter>>? Use()
+        public override void Use()
         {
-            return Effects.ToList();
+            
         }
     }
 }

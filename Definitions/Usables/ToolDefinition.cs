@@ -23,7 +23,7 @@ namespace InventoryCoreLib
             Price = price;
 
             MaxNumberOfUses = numOfUses;
-
+            IsSelfApplycable = false;
             Icon = iconRef;
             Miniature2D = miniature2DRef;
         }

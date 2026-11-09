@@ -7,7 +7,7 @@ namespace InventoryCoreLib
     public abstract class ArmorInstance<T>: DurableInstance<T>
         where T : IAffectConditionally<IAffectableCharacter>
     {
-        public BaseArmor Armor => (BaseArmor)Definition;
+        
 
         public uint CurrentDefence { get; protected set; }
 
@@ -16,5 +16,7 @@ namespace InventoryCoreLib
         {
         }
 
+        #region [ Equip ]
+        #endregion
     }
 }

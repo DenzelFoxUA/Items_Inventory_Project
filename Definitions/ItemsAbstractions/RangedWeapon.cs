@@ -1,12 +1,13 @@
 ﻿
 using System;
-using System.Collections.Generic;
 
 namespace InventoryCoreLib
 {
     public abstract class RangedWeapon : BaseWeapon
     {
         public uint ProjectilesCapacity { get; protected init; }
+
+        //придумати і додати посилання на інтерфейс амуніції
 
         public override bool Equals(BaseItem? obj)
         {

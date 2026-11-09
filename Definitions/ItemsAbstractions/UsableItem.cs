@@ -8,14 +8,7 @@ namespace InventoryCoreLib
 {
     public abstract class UsableItem : BaseItem
     {
-        
-
-        ////public System.Collections.Generic.List<BaseEffect>? ItemEffects { get; protected init; }
-
-        //protected abstract void ValidateEffects(params BaseEffect[]? effects);
-
-        //public IReadOnlyList<BaseEffect> ItemEffects { get; }
-
+        public bool IsSelfApplycable { get; protected init; }
 
         public override bool Equals(BaseItem? obj)
         {
@@ -25,12 +18,12 @@ namespace InventoryCoreLib
             if (obj is not UsableItem other)
                 return false;
 
-            return base.Equals(obj);
+            return base.Equals(obj) && IsSelfApplycable == other.IsSelfApplycable;
         }
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return HashCode.Combine(base.GetHashCode(), IsSelfApplycable);
         }
 
     }

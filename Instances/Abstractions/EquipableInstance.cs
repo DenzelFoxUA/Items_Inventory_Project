@@ -6,13 +6,13 @@ using System.Linq;
 
 namespace InventoryCoreLib
 {
-    public abstract class EquipableInstance<T> : BaseItemInstance, IEquipable
+    public abstract class EquipableInstance<T> : BaseItemInstance, IOwnedEquipable
         where T : IAffect<IAffectableCharacter>
     {
 
         public IReadOnlyList<T> Effects { get; }
 
-        public  IAffectableCharacter? MyOwner { get => _owner; }
+        public  IDemoCharacter? MyOwner { get => _owner; }
 
         public IAffectableActor? MyTarget => _target;
 
@@ -27,28 +27,19 @@ namespace InventoryCoreLib
 
         public bool IsEquipped { get; protected set; } = false;
 
-        
 
-        public virtual object? Use()
-        {
-            return Effects.ToList();
-        }
 
-        public virtual void Equip()
-        {
-            if (IsEquipped)
-                return;
+        public abstract void Use();
 
-            IsEquipped = true;
-        }
+        public abstract void Equip();
 
-        public virtual void Unequip()
-        {
-            if (!IsEquipped)
-                return;
+        public abstract void Unequip();
+        //{
+        //    if (!IsEquipped)
+        //        return;
 
-            IsEquipped = false;
-        }
+        //    IsEquipped = false;
+        //}
 
         public override int GetHashCode()
         {
@@ -92,7 +83,7 @@ namespace InventoryCoreLib
 
         public string GetDefinitionName() => Definition.Name;
 
-        public virtual void SetMyOwner(IAffectableCharacter? owner)
+        public virtual void SetMyOwner(IDemoCharacter? owner)
         {
             if (ReferenceEquals(MyOwner, owner)) return;
 
@@ -114,6 +105,11 @@ namespace InventoryCoreLib
             }
 
 
+        }
+
+        public object? GetEffects()
+        {
+            return Effects.ToList().AsReadOnly();
         }
     }
 }

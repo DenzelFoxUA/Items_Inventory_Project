@@ -15,7 +15,7 @@ namespace InventoryCoreLib
             if (obj is null)
                 return false;
 
-            if (obj is not RangedWeapon other)
+            if (obj is not DurableItem other)
                 return false;
 
             return base.Equals(obj) && 

@@ -15,6 +15,7 @@ namespace InventoryCoreLib
              uint price,
              double maxRange,
              uint power,
+             bool isSelfApplycable,
              string iconRef,
              string miniature2DRef)
         {
@@ -29,6 +30,8 @@ namespace InventoryCoreLib
 
             Icon = iconRef;
             Miniature2D = miniature2DRef;
+
+            IsSelfApplycable = isSelfApplycable;
         }
 
     }

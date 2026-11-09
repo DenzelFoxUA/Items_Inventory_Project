@@ -1,21 +1,19 @@
-﻿
-
-using CharacterMainLib;
+﻿using CharacterMainLib;
 using System.Collections.Generic;
-using System.Net;
-using System.Runtime.CompilerServices;
 
 namespace InventoryCoreLib
 {
-    public class DemoEquipmentContainer : EquipmentContainer<IEquipable>
+    public class DemoEquipmentContainer : EquipmentContainer<IOwnedEquipable>
     {
+        public IDemoCharacter? Owner { get; private set; } = null;
+
         public DemoEquipmentContainer(IAffectableCharacter? ownerRef, 
-            IEnumerable<string> equipBlockNames) : base(ownerRef, equipBlockNames)
+            IEnumerable<string> equipBlockNames) : base(equipBlockNames)
         {
+
         }
 
-
-        public override bool TryEquipIntoSlot(ref IEquipable? item)
+        public override bool TryEquipIntoSlot(ref IOwnedEquipable? item)
         {
             if (EquipmentSlots is null || item is null)
                 return false;
@@ -26,22 +24,13 @@ namespace InventoryCoreLib
 
             if(isOk)
             {
-                if(EquipmentSlots[slotCategory].ItemInstance!.Use() 
-                    is List<IAffectConditionally<IAffectableCharacter>> effectList)
-                {
-                    foreach (var effect in effectList)
-                    {
-                        effect.SetTarget(Owner);
-                        effect.Apply();
-                    }
-                }
-
+                EquipmentSlots[slotCategory].ItemInstance!.Equip();
             }
 
             return isOk;
         }
 
-        public override IEquipable? UnequipFromSlot(string slotName)
+        public override IOwnedEquipable? UnequipFromSlot(string slotName)
         {
             if (slotName == string.Empty ||
                 EquipmentSlots is null ||
@@ -49,16 +38,7 @@ namespace InventoryCoreLib
                 EquipmentSlots[slotName] is null)
                 return null;
 
-            if (EquipmentSlots[slotName].ItemInstance!.Use()
-                   is List<IAffectConditionally<IAffectableCharacter>> effectList)
-            {
-                foreach (var effect in effectList)
-                {
-                    effect.SetTarget(Owner);
-                    effect.Remove();
-                }
-            }
-
+            EquipmentSlots[slotName].ItemInstance!.Unequip();
             return EquipmentSlots[slotName].Unequip();
         }
 
@@ -77,6 +57,21 @@ namespace InventoryCoreLib
         public override void Update(float deltaTime)
         {
             throw new System.NotImplementedException();
+        }
+
+        public override string ShowEquipment()
+        {
+            string equipmentStr = "";
+
+            if (EquipmentSlots is null)
+                return "NOTHING TO SHOW";
+
+            foreach(var eq in EquipmentSlots)
+            {
+                equipmentStr += $"{eq.Key} - {eq.Value.ToString()}\n";
+            }
+
+            return equipmentStr;
         }
     }
 }

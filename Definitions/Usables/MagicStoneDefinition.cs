@@ -24,6 +24,8 @@ namespace InventoryCoreLib
             ChargePower = chargePower;
             Icon = iconRef;
             Miniature2D = miniature2DRef;
+
+            IsSelfApplycable = false;
         }
 
     }

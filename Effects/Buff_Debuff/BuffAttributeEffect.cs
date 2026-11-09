@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace InventoryCoreLib
 {
-    public abstract class StaticIncreaseAttributeEffect<TTarget, TPower>
+    public abstract class BuffAttributeEffect<TTarget, TPower>
         : BaseEffect<TTarget, TPower>, IAffectImmediately<TTarget>
             where TTarget : class, IAffectable
             where TPower : INumber<TPower>
@@ -18,7 +18,7 @@ namespace InventoryCoreLib
 
         protected bool _isApplied = false;
 
-        public StaticIncreaseAttributeEffect(string name, TPower power)
+        public BuffAttributeEffect(string name, TPower power)
         {
             _attributeName = name;
             PowerValue = power;

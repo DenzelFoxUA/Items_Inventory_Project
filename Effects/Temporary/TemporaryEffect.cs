@@ -7,7 +7,7 @@ namespace InventoryCoreLib
     public abstract class TemporaryEffect<TTarget, TPower>
     : BaseEffect<TTarget, TPower>, IAffectTemporary<TTarget>
     where TTarget : class, IAffectable
-    where TPower : INumber<TPower>
+    
     {
         protected Action<TPower>? _applyFunc;
         protected Action<TPower>? _restoreFunc;

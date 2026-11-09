@@ -9,9 +9,12 @@ namespace InventoryCoreLib
 
     public abstract class BaseItemInstance
     {
-        public BaseItem Definition { get; }
 
-        protected IAffectableCharacter? _owner;
+        protected BaseItem? _itemDefinition;
+
+        public BaseItem? Definition { get => _itemDefinition; }
+
+        protected IDemoCharacter? _owner;
         protected IAffectableActor? _target;
 
         public BaseItemInstance(BaseItem definition)
@@ -19,12 +22,13 @@ namespace InventoryCoreLib
             if (definition is null)
                 throw new ArgumentNullException(nameof(definition));
 
-            Definition = definition;
+            _itemDefinition = definition;
             _owner = null;
             _target = null;
         }
 
         #region Equals
+
         public bool Equals(BaseItemInstance? other)
         {
             if (ReferenceEquals(other, null))
@@ -32,9 +36,9 @@ namespace InventoryCoreLib
             if (ReferenceEquals(this, other))
                 return true;
 
-            return this.Definition.Equals(other.Definition) &&
-                _owner.Equals(other._owner) &&
-                _target.Equals(other._target);
+            return Equals(this.Definition, other.Definition) &&
+                Equals(this._owner, other._owner) &&
+                Equals(this._target, other._target);
         }
 
         public override bool Equals(object? obj)
@@ -46,7 +50,7 @@ namespace InventoryCoreLib
         {
             HashCode hash = new HashCode();
 
-            hash.Add(base.GetHashCode());
+            hash.Add(_itemDefinition);
 
             hash.Add(_owner);
 
@@ -55,7 +59,7 @@ namespace InventoryCoreLib
             return hash.ToHashCode();
         }
 
-        public static bool operator ==(BaseItemInstance? one, BaseItemInstance? other)
+        public static bool? operator ==(BaseItemInstance? one, BaseItemInstance? other)
         {
 
             if (ReferenceEquals(one, other)) return true;
@@ -66,20 +70,13 @@ namespace InventoryCoreLib
             return one.Equals(other);
         }
 
-        public static bool operator !=(BaseItemInstance one, BaseItemInstance other)
+        public static bool? operator !=(BaseItemInstance one, BaseItemInstance other)
         {
             return !(one == other);
         }
 
         #endregion //equals
 
-        #region Effects
-
-        #endregion
-
-        #region Methods
-
-
-        #endregion
+        public abstract void SetTargetFunction();
     }
 }

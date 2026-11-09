@@ -7,8 +7,12 @@ using System.Text;
 namespace InventoryCoreLib
 {
     public class DemoInventory :
-        InventoryGridArray<IUsable>
+        InventoryGridArray<IOwnedUsable>
     {
+
+        private IDemoCharacter _owner;
+        public IDemoCharacter Owner { get => _owner; }
+
 
         private void ValidatePosition(Position pos)
         {
@@ -27,12 +31,12 @@ namespace InventoryCoreLib
                    existing.Equals(incoming);
         }
 
-        public DemoInventory(InventorySize body, IAffectableCharacter owner) : base(body, owner)
+        public DemoInventory(InventorySize body, IDemoCharacter owner) : base(body)
         {
-            
+            _owner = owner;
         }
 
-        public override IUsable? AddItem(IUsable? item, Position pos)
+        public override IOwnedUsable? AddItem(IOwnedUsable? item, Position pos)
         {
             if (item is null)
                 return null;
@@ -75,7 +79,7 @@ namespace InventoryCoreLib
         }
 
 
-        public override IUsable? AddItem(IUsable item)
+        public override IOwnedUsable? AddItem(IOwnedUsable item)
         {
             if (item is null)
                 throw new ArgumentNullException("Cant add item - it is null");
@@ -131,30 +135,30 @@ namespace InventoryCoreLib
         }
 
 
-        public override IEnumerator<IUsable> GetEnumerator()
+        public override IEnumerator<IOwnedUsable> GetEnumerator()
         {
-            foreach (IUsable? item in Container)
+            foreach (IOwnedUsable? item in Container)
             {
                 if (item is not null)
                     yield return item;
             }
         }
 
-        public override IUsable? RemoveItem(Position pos)
+        public override IOwnedUsable? RemoveItem(Position pos)
         {
             ValidatePosition(pos);
 
-            IUsable? result = Container[pos.Row, pos.Column];
+            IOwnedUsable? result = Container[pos.Row, pos.Column];
 
-            if(result is not null) 
-                result.SetMyOwner(null);
+            //if(result is not null) 
+            //    result.SetMyOwner(null);
 
             Container[pos.Row, pos.Column] = null;
 
             return result;
         }
 
-        public override IUsable? RemoveItem(IUsable searchItem)
+        public override IOwnedUsable? RemoveItem(IOwnedUsable searchItem)
         {
             if (searchItem is null)
                 return null;
@@ -166,7 +170,7 @@ namespace InventoryCoreLib
                     if (ReferenceEquals(
                         Container[row, col], searchItem))
                     {
-                        IUsable? result = Container[row, col];
+                        IOwnedUsable? result = Container[row, col];
 
                         if (result is not null)
                             result.SetMyOwner(null);
@@ -192,7 +196,7 @@ namespace InventoryCoreLib
         }
 
         //це потенційно використовується для свапання екіпірування, коли зброї наприклад слот зайнятий
-        public override void SwapItems(ref IUsable? one, ref IUsable? two)
+        public override void SwapItems(ref IOwnedUsable? one, ref IOwnedUsable? two)
         {
             CommonFunctions.Swap(ref one, ref two);
         }
@@ -234,7 +238,7 @@ namespace InventoryCoreLib
             return result.ToString();
         }
 
-        public override IUsable? ItemAt(Position position)
+        public override IOwnedUsable? ItemAt(Position position)
         {
 
             ValidatePosition(position);
@@ -243,6 +247,25 @@ namespace InventoryCoreLib
                 return Container[position.Row, position.Column];
             else
                 return null;
+        }
+
+        public override void SetThisAsItemOwner(ref IOwnedUsable? item)
+        {
+            if (item is null || _owner is null)
+                return;
+
+            if (ReferenceEquals(item.MyOwner, _owner))
+                return;
+
+            item.SetMyOwner(_owner);
+
+        }
+
+        public override void RemoveItemOwnership(ref IOwnedUsable? item)
+        {
+            if (item is null) return;
+
+            item.SetMyOwner(null);
         }
     }
 }

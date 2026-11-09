@@ -18,6 +18,8 @@ namespace InventoryCoreLib
         public string Icon { get; protected init; } = "";
         public string Miniature2D { get; protected init; } = "";
 
+        #region Equals
+
         public override string ToString()
         {
             return $"Name: {Name}\n" +
@@ -34,8 +36,13 @@ namespace InventoryCoreLib
             if (ReferenceEquals(this, other))
                 return true;
 
+            //для нащадків це потрібно, щоб порівнювати один тип а не всі нащадки
+            if (other is null || GetType() != other.GetType())
+                return false;
+
             return this.Id.Equals(other.Id) &&
                 this.Name.Equals(other.Name) &&
+                this.Descriprion.Equals(other.Descriprion) &&
                 this.Weight.Equals(other.Weight) &&
                 this.Price.Equals(other.Price);
         }
@@ -44,16 +51,16 @@ namespace InventoryCoreLib
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id,Name,Descriprion,Weight,Price);
+            return HashCode.Combine(Id, Name, Descriprion, Weight, Price);
         }
 
         public static bool operator==(BaseItem one, BaseItem other)
         {
-            if (one is null || other is null)
-                return false;
-
             if (ReferenceEquals(one, other))
                 return true;
+
+            if (one is null || other is null)
+                return false;
 
             return one.Equals(other);
         }
@@ -63,5 +70,6 @@ namespace InventoryCoreLib
             return !(one == other);
         }
 
+        #endregion
     }
 }

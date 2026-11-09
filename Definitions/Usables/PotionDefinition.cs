@@ -27,6 +27,8 @@ namespace InventoryCoreLib
             MaxStackSize = 5;
             Icon = iconRef;
             Miniature2D = miniature2DRef;
+
+            IsSelfApplycable = true;
         }
 
     }

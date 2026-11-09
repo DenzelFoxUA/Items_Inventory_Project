@@ -9,7 +9,7 @@ namespace InventoryCoreLib
     public abstract class UsableItemInstance<T> : BaseItemInstance, IStackable
         where T : IAffectImmediately<IAffectableActor>
     {
-        public UsableItem Item => (UsableItem)Definition;
+        private UsableItem Item => (UsableItem)Definition;
 
         private uint _currStackCount = 1;
 
@@ -17,23 +17,27 @@ namespace InventoryCoreLib
 
         public IReadOnlyList<T> Effects { get; }
 
-        public IAffectableCharacter? MyOwner => _owner;
+        #region [ Owner - Target ]
+
+        public IDemoCharacter? MyOwner => (IDemoCharacter)_owner;
 
         public IAffectableActor? MyTarget => _target;
 
-        public UsableItemInstance(BaseItem item, uint stackCount,
+        #endregion
+
+        public UsableItemInstance(
+            BaseItem item, 
+            uint stackCount, 
             params T[]? effects) 
             : base(item)
         {
             _currStackCount = stackCount;
+            
             Effects = Array.AsReadOnly(effects?.ToArray() ??
                 Array.Empty<T>());
         }
 
-        public virtual object? Use()
-        {
-            return Effects.ToList();
-        }
+        public abstract void Use();
 
         public virtual uint AddToStack(uint count)
         {
@@ -103,26 +107,16 @@ namespace InventoryCoreLib
                     itemEff += effect.ToString() + "\n";
             }
 
-
             return Definition.ToString() + "\n" + itemEff;
         }
 
-        //public virtual void SetItemTarget(IAffectableActor? target)
-        //{
-        //    Target = target;
-
-        //    foreach(var effect in Effects)
-        //    {
-        //        effect.SetTarget(target);
-        //    }
-        //}
 
         public string GetDefinitionName()
         {
             return Item.Name;
         }
 
-        public virtual void SetMyOwner(IAffectableCharacter? owner)
+        public virtual void SetMyOwner(IDemoCharacter? owner)
         {
             if (owner is null || ReferenceEquals(MyOwner, owner)) return;
 
@@ -133,12 +127,21 @@ namespace InventoryCoreLib
         {
             if (target is null) return;
 
-            _target = target;
+            if (Item.IsSelfApplycable)
+                _target = _owner;
+            else
+                _target = target;
 
             foreach (var effect in Effects)
             {
                 effect.SetTarget(_target);
             }
+
+        }
+
+        public object? GetEffects()
+        {
+            return Effects.ToList().AsReadOnly();
         }
     }
 }

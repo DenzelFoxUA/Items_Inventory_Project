@@ -21,8 +21,6 @@ namespace InventoryCoreLib
     {
 
         public string EqupmentCategory { get; protected init; } = "";
-
-        //public IReadOnlyList<BaseEffect> Effects { get; }
         
         public uint LevelRequired { get; protected init; } = 0;
 
@@ -34,12 +32,21 @@ namespace InventoryCoreLib
             if (obj is not EquipableItem other)
                 return false;
 
-            return base.Equals(obj) && EqupmentCategory == other.EqupmentCategory;
+            return base.Equals(obj) && 
+                EqupmentCategory == other.EqupmentCategory && 
+                LevelRequired == other.LevelRequired;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(base.GetHashCode(), EqupmentCategory);
+            return HashCode.Combine(base.GetHashCode(), EqupmentCategory, LevelRequired);
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() +
+                $"LevelReq: {LevelRequired}\n" +
+                $"Category: {EqupmentCategory}";
         }
     }
 }

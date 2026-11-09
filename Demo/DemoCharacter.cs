@@ -1,16 +1,14 @@
 ﻿
+using CharacterMainLib;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using CharacterMainLib;
 
 namespace InventoryCoreLib
 {
-
     /// <summary>
     /// Demo-verison of a class using Grid as Inventory.
     /// </summary>
-    public class DemoCharacter : Character, IDemoCharacter
+    public class DemoCharacter : Character<IOwnedUsable, IOwnedEquipable>, IDemoCharacter
     {
 
         public bool IsItemEqupped = false;
@@ -22,9 +20,9 @@ namespace InventoryCoreLib
         private EffectsManager<IAffectableCharacter> effectsManager;
 
 
-        protected override IEquipmentHandler<IEquipable>? EquipmentSection => _myEquipment;
+        protected override IEquipmentHandler<IOwnedEquipable>? EquipmentSection => _myEquipment;
 
-        protected override IInventoryHandler<IUsable>? InventorySection => _myInventory;
+        protected override IInventoryHandler<IOwnedUsable>? InventorySection => _myInventory;
 
         public DemoCharacter(
             string name,
@@ -44,7 +42,7 @@ namespace InventoryCoreLib
             _myEquipment = new DemoEquipmentContainer(this, equipBlockNames);
         }
 
-        public void GetItem(IUsable? item)
+        public void PickUpItem(IOwnedUsable? item)
         {
             if (item is null || InventorySection is null)
                 return;
@@ -52,36 +50,22 @@ namespace InventoryCoreLib
             InventorySection.AddItem(item);
         }
 
-        public void UseItem(IUsable? item, IAffectable? target)
+        void ICanUseItems<IOwnedUsable>.UseItem(IOwnedUsable? item, IAffectableActor? target)
         {
-            if (item is null)
+            if (item is null || target is null)
                 return;
 
-            if (ReferenceEquals(item.MyOwner, target))
-            {
-                SetItemTarget(ref item, this);
-
-                if (item.Use() is not List<IAffectImmediately<IAffectableCharacter>> effects)
-                    return;
-
-                foreach (var effect in effects)
-                {
-                    effect.Apply();
-                }
-            }
+            UseItem(item, target);
         }
 
-        public void UseItem(Position itemPos, IAffectable? target)
+        public void UseItem(Position itemPos, IAffectableActor? target)
         {
             if (_myInventory is null)
                 throw new NullReferenceException("INVENTORY::NULL::ERR");
 
             var _item = _myInventory.ItemAt(itemPos);
 
-            if(_item is null)
-            {
-                return;
-            }
+            if (_item is null || target is null) return;
 
             if(_item is IStackable stackable && stackable.CurrentStackCount > 1)
             {
@@ -91,14 +75,13 @@ namespace InventoryCoreLib
             else
             {
                 var item = _myInventory.RemoveItem(itemPos);
+
+                if (item is null)
+                    return;
+
                 UseItem(item, target);
             }
             
-        }
-
-        public void CastSpell(uint manaSpent)
-        {
-            VitalStats["Mana"].Decrease(manaSpent);
         }
 
         public void OpenInventory()
@@ -106,7 +89,17 @@ namespace InventoryCoreLib
             if (InventorySection is null)
                 throw new NullReferenceException("INVENTORY::NULL::ERR");
 
-            Console.Write(InventorySection.ShowInventory());
+            if (EquipmentSection is null)
+                throw new NullReferenceException("EQUIPMENT::NULL::ERR");
+
+
+             Console.WriteLine(EquipmentSection.ShowEquipment());
+
+             Console.WriteLine();
+
+             Console.WriteLine(InventorySection.ShowInventory());
+
+
         }
 
         public override void Move<DirVector>(DirVector? directionVector) where DirVector : default
@@ -119,7 +112,69 @@ namespace InventoryCoreLib
             effectsManager.Update(deltaTime);
         }
 
-        public void SetItemTarget(ref IUsable item, IAffectableActor? target)
+        void ICanUseItems<IOwnedUsable>.SetItemTarget(ref IOwnedUsable item, IAffectableActor? target)
+        {
+            if (item is null || target is null)
+                return;
+
+            SetItemTarget(ref item, target);
+        }
+
+        #region [ Equip ]
+
+        public void Equip(IOwnedEquipable item)
+        {
+            if (EquipmentSection is null)
+                throw new NullReferenceException("EQUIPMENT::NULL::ERROR");
+
+            if (item is null)
+                return;
+
+            bool isOk = EquipmentSection.TryEquipIntoSlot(ref item);
+
+            if (isOk)
+                Console.WriteLine("ItemEquiped!");
+        }
+
+        public IOwnedEquipable? Unequip(string slotName)
+        {
+            var item = EquipmentSection!.UnequipFromSlot(slotName);
+
+            if (InventorySection is null)
+                throw new NullReferenceException("INVNTORY::NULL::ERROR");
+
+            if (item is null)
+                return null;
+
+            var notFit = InventorySection!.AddItem(item);
+
+            if (notFit is not null && notFit is IOwnedEquipable _item)
+                return _item;
+
+            return null;
+        }
+
+        #endregion
+
+        public IOwnedEquipable? DropItem(IOwnedEquipable item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DoNothing()
+        {
+            return;
+        }
+
+        void IDemoCharacter.UseConsumable(IOwnedUsable? consumable)
+        {
+            if(consumable is not null)
+                UseConsumable(consumable);
+        }
+
+        #region [ CAPSULE ]
+
+        private void SetItemTarget(ref IOwnedUsable item, IAffectableActor? target)
         {
             if (target is IAffectableCharacter _char)
             {
@@ -131,30 +186,8 @@ namespace InventoryCoreLib
             }
         }
 
-        public bool TryEquip(IEquipable item)
-        {
-            throw new NotImplementedException();
-        }
 
-        IEquipable? ICanUseEquipment<IEquipable>.Unequip(string slotName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object? UseTool(IEquipable item, IAffectable? target)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEquipable? DropItem(IEquipable item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DoNothing()
-        {
-            throw new NotImplementedException();
-        }
+        #region [ UPDATE CHARACTER ]
 
         protected override void UpdateVitalsByStats()
         {
@@ -165,6 +198,48 @@ namespace InventoryCoreLib
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region [ USE ITEMS ]
+
+        private void UseItem(IOwnedUsable item, IAffectableActor target)
+        {
+            if (target is IAffectableCharacter character)
+            {
+                SetItemTarget(ref item, character);
+            }
+            else
+            {
+                SetItemTarget(ref item, target);
+            }
+
+            item.Use();
+        }
+
+        private void UseConsumable(IOwnedUsable consumable)
+        {
+
+            if (consumable.GetEffects() is IReadOnlyList<IAffectImmediately<IAffectableCharacter>> effects)
+            {
+                foreach (var effect in effects)
+                {
+                    effect.Apply();
+                }
+                Console.WriteLine("Consumable used!");
+                Console.ReadLine();
+            }
+
+        }
+
+        #endregion
+
+        #region [ Equip ]
+
+
+        #endregion
+
+        #endregion
 
     }
 }

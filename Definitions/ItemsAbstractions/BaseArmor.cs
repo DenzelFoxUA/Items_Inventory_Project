@@ -6,6 +6,7 @@ namespace InventoryCoreLib
 {
     public abstract class BaseArmor: DurableItem
     {
+
         public uint MaxDefence { get; protected init; } = 0;
 
         public override bool Equals(BaseItem? obj)
@@ -22,6 +23,12 @@ namespace InventoryCoreLib
         public override int GetHashCode()
         {
             return HashCode.Combine(base.GetHashCode(), MaxDefence);
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() +
+                $"Base Defence: {LevelRequired}\n";
         }
     }
 }

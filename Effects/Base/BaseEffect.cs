@@ -6,7 +6,6 @@ namespace InventoryCoreLib
 
     public abstract class BaseEffect<T, P> : IAffect<T>
         where T : class, IAffectable
-        where P : INumber<P>
     {
         public T? Target { get; protected set; }
 

@@ -18,7 +18,7 @@ namespace InventoryCoreLib
             throw new System.NotImplementedException();
         }
 
-        public override List<IAffectImmediately<IAffectableCharacter>>? Use()
+        public override void Use()
         {
             throw new System.NotImplementedException();
         }
@@ -29,6 +29,11 @@ namespace InventoryCoreLib
         }
 
         public override void Unequip()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void SetTargetFunction()
         {
             throw new System.NotImplementedException();
         }

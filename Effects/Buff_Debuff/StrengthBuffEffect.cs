@@ -1,11 +1,11 @@
 ﻿using CharacterMainLib;
 
-namespace InventoryCoreLib.Effects.Static
+namespace InventoryCoreLib
 {
-    public class StaticStrengthUpEffect : StaticIncreaseAttributeEffect<IAffectableCharacter, uint>,
+    public class StrengthBuffEffect : BuffAttributeEffect<IAffectableCharacter, uint>,
         IAffectConditionally<IAffectableCharacter>
     {
-        public StaticStrengthUpEffect(uint power) : base("Strength", power)
+        public StrengthBuffEffect(uint power) : base("Strength", power)
         {
 
         }
