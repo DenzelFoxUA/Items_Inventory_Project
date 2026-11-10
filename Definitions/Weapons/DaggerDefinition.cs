@@ -14,7 +14,6 @@ namespace InventoryCoreLib
             uint maxDurability,
             uint levelReq,
             uint attackDamage,
-            string placementCategory,
             bool isIndestructible,
             string iconPath,
             string miniaturePath) 
