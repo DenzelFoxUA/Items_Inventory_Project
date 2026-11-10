@@ -6,13 +6,15 @@ using System.Collections.Generic;
 
 namespace InventoryCoreLib
 {
-    public class CustomPotion : UsableItemInstance<IAffectImmediately<IAffectableActor>>
+    public class CustomPotion :
+         UsableItemInstance<IAffectImmediately<IAffectableCharacter>, 
+            IAffectableCharacter>
     {
 
         private Action<IOwnedUsable>? _useFunction = null;
 
         public CustomPotion(PotionDefinition potion, uint stackCount, 
-            params IAffectImmediately<IAffectableActor>[] effects) 
+            params IAffectImmediately<IAffectableCharacter>[] effects) 
             : base(potion, stackCount, effects)
         {
             
@@ -30,7 +32,10 @@ namespace InventoryCoreLib
 
         public override void SetTargetFunction()
         {
-            _useFunction = MyOwner.UseConsumable;
+            if (MyOwner is not null)
+                _useFunction = MyOwner.UseConsumable;
+            else
+                throw new ArgumentNullException("Owner not set!");
         }
     }
 }

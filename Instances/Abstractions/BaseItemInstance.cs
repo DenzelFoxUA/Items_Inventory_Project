@@ -1,21 +1,20 @@
 ﻿
 using CharacterMainLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace InventoryCoreLib
 {
 
     public abstract class BaseItemInstance
     {
-
-        protected BaseItem? _itemDefinition;
+        private BaseItem? _itemDefinition;
 
         public BaseItem? Definition { get => _itemDefinition; }
 
         protected IDemoCharacter? _owner;
-        protected IAffectableActor? _target;
+
+        #region [ CTOR ]
 
         public BaseItemInstance(BaseItem definition)
         {
@@ -24,8 +23,9 @@ namespace InventoryCoreLib
 
             _itemDefinition = definition;
             _owner = null;
-            _target = null;
         }
+
+        #endregion
 
         #region Equals
 
@@ -36,9 +36,7 @@ namespace InventoryCoreLib
             if (ReferenceEquals(this, other))
                 return true;
 
-            return Equals(this.Definition, other.Definition) &&
-                Equals(this._owner, other._owner) &&
-                Equals(this._target, other._target);
+            return Equals(this.Definition, other.Definition);
         }
 
         public override bool Equals(object? obj)
@@ -51,10 +49,6 @@ namespace InventoryCoreLib
             HashCode hash = new HashCode();
 
             hash.Add(_itemDefinition);
-
-            hash.Add(_owner);
-
-            hash.Add(_target);
 
             return hash.ToHashCode();
         }

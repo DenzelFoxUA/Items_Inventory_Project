@@ -8,7 +8,6 @@ namespace InventoryCoreLib
         public StaffDefinition(uint id,
             string name,
             string describtion,
-            string equipCategory,
             double weight_kg,
             uint price,
             uint maxDurability,
@@ -27,7 +26,7 @@ namespace InventoryCoreLib
             IsStackable = false;
             MaxStackSize = 1;
             MaxDurability = maxDurability;
-            EqupmentCategory = equipCategory;
+            EqupmentCategory = "Weapon";
             LevelRequired = levelReq;
             IsTwoHanded = true;
 

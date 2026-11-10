@@ -78,7 +78,6 @@ namespace InventoryCoreLib
             return remaining == 0 ? null : item;
         }
 
-
         public override IOwnedUsable? AddItem(IOwnedUsable item)
         {
             if (item is null)
@@ -134,7 +133,6 @@ namespace InventoryCoreLib
             return item;
         }
 
-
         public override IEnumerator<IOwnedUsable> GetEnumerator()
         {
             foreach (IOwnedUsable? item in Container)
@@ -184,7 +182,6 @@ namespace InventoryCoreLib
 
             return null;
         }
-
 
         //це переміщує всередині інвентаря
         public override void SwapItems(Position one, Position two)

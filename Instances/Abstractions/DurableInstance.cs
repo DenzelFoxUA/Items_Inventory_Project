@@ -1,18 +1,18 @@
 ﻿
 using CharacterMainLib;
-using System.Collections.Generic;
 
 namespace InventoryCoreLib
 {
-    public abstract class DurableInstance<T> : EquipableInstance<T>, IDurable
-        where T : IAffect<IAffectableCharacter>
+    public abstract class DurableInstance<TEffect,TTarget> : EquipableInstance<TEffect,TTarget>, IDurable
+        where TEffect : class, IAffect<TTarget>
+        where TTarget : class, IAffectableCharacter
     {
         private DurableItem DurableDefinition => (DurableItem)Definition;
 
         public uint CurrentDurability { get; protected set; }
 
         public DurableInstance(DurableItem definition, 
-            params T[]?effects) :
+            params TEffect[]?effects) :
             base(definition,effects)
         {
             CurrentDurability = definition.MaxDurability;

@@ -26,22 +26,22 @@
 //            double conditionCoef = GetDurabilityCoefficient();
 //            uint damage = (uint)Math.Round(Bow.PrimaryAttack.MaxDamage * conditionCoef);
 
-//            foreach(var eff in Effects)
+//            foreach (var eff in Effects)
 //            {
-                
+
 //            }
 
 //            var effectsList = ArrowInstance.AmmoDefinition.GetEffects();
 
-//            foreach(var eff in effectsList)
+//            foreach (var eff in effectsList)
 //            {
-                
+
 //            }
 
 //            CurrentAmmoCount--;
 
 //            return damage;
-            
+
 //        }
 
 //        public override bool Reload()
@@ -51,7 +51,7 @@
 
 //            if (CurrentAmmoInstance.CurrentStackCount > 0 && CurrentAmmoCount == 0)
 //            {
-//                if(!CurrentAmmoInstance.Use())
+//                if (!CurrentAmmoInstance.Use())
 //                    return false;
 
 //                CurrentAmmoCount++;
@@ -81,14 +81,14 @@
 //        {
 //            string ammoInstance = "ARROW::NULL";
 
-//            if(ArrowInstance is not null)
+//            if (ArrowInstance is not null)
 //            {
 //                ammoInstance = $"Arrows Loaded: {CurrentAmmoCount}\n" +
 //                $"Arrows in sack: {ArrowInstance!.CurrentStackCount}\n" +
 //                $"Arrow type: {ArrowInstance.AmmoDefinition.Ammo.ToString()}\n";
 //            }
 
-//            return base.ToString() + 
+//            return base.ToString() +
 //                $"\n{ammoInstance}";
 //        }
 

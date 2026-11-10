@@ -5,7 +5,8 @@ using System;
 
 namespace InventoryCoreLib
 {
-    public class LeatherArmor : ArmorInstance<IAffectConditionally<IAffectableCharacter>>
+    public class LeatherArmor :
+        ArmorInstance<IAffectConditionally<IAffectableCharacter>,IAffectableCharacter>
     {
         private Action<IOwnedEquipable>? _useFunction = null;
         private Func<string, IOwnedEquipable?>? _unequipFunction = null;
@@ -31,7 +32,10 @@ namespace InventoryCoreLib
         {
             SetTargetFunction();
 
-            _useFunction.Invoke(this);
+            if (!IsEquipped)
+                _useFunction.Invoke(this);
+            else
+                _unequipFunction.Invoke(this.GetEquipSlotCategory());
 
         }
 
@@ -62,6 +66,8 @@ namespace InventoryCoreLib
                 effect.SetTarget(MyOwner);
                 effect.Remove();
             }
+
+            CancelMyTarget();
         }
     }
 }

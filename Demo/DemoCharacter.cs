@@ -2,6 +2,7 @@
 using CharacterMainLib;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace InventoryCoreLib
 {
@@ -10,8 +11,6 @@ namespace InventoryCoreLib
     /// </summary>
     public class DemoCharacter : Character<IOwnedUsable, IOwnedEquipable>, IDemoCharacter
     {
-
-        public bool IsItemEqupped = false;
 
         private DemoInventory? _myInventory = null;
 
@@ -110,6 +109,8 @@ namespace InventoryCoreLib
         public void Update(float deltaTime)
         {
             effectsManager.Update(deltaTime);
+            UpdateMovespeedByStats();
+            UpdateVitalsByStats();
         }
 
         void ICanUseItems<IOwnedUsable>.SetItemTarget(ref IOwnedUsable item, IAffectableActor? target)
@@ -158,7 +159,10 @@ namespace InventoryCoreLib
 
         public IOwnedEquipable? DropItem(IOwnedEquipable item)
         {
-            throw new NotImplementedException();
+            item.SetMyTarget(null);
+            item.SetMyOwner(null);
+
+            return item;
         }
 
         public void DoNothing()

@@ -26,12 +26,12 @@ namespace InventoryCoreLib
             Price = price;
             IsStackable = false;
             MaxStackSize = 1;
-            EqupmentCategory = placementCategory;
+            
             LevelRequired = levelReq;
             MaxDurability = maxDurability;
             IsIndestructible = isIndestructible;
             IsTwoHanded = false;
-
+            EqupmentCategory = "Weapon";
 
             PrimaryAttack = new AttackDefinition 
             { 
@@ -40,7 +40,7 @@ namespace InventoryCoreLib
             };
 
             SecondaryAttack = null;
-
+            
             Icon = iconPath;
             Miniature2D = miniaturePath;
 

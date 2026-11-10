@@ -1,41 +1,61 @@
 ﻿
 using CharacterMainLib;
+using System;
 using System.Collections.Generic;
 
 namespace InventoryCoreLib
 {
-    public class DaggerInstance : WeaponInstance<IAffectImmediately<IAffectableActor>>
+    public class DaggerInstance 
+        : WeaponInstance<IAffectImmediately<IAffectableCharacter>, 
+            IAffectableCharacter>
     {
-        public DaggerDefinition Dagger => (DaggerDefinition)Definition;
+        private DaggerDefinition Dagger => (DaggerDefinition)Definition;
 
-        public DaggerInstance(DaggerDefinition daggerItem) : base(daggerItem)
+        private Action<IOwnedEquipable>? _useFunction = null;
+        private Func<string, IOwnedEquipable?>? _unequipFunction = null;
+
+        public DaggerInstance(DaggerDefinition daggerItem, 
+            params IAffectImmediately<IAffectableCharacter>[]? effects) : base(daggerItem, effects)
         {
 
-        }
-
-        public override void SetItemTarget(IAffectableActor? target)
-        {
-            throw new System.NotImplementedException();
         }
 
         public override void Use()
         {
-            throw new System.NotImplementedException();
+            SetTargetFunction();
+
+            if (!IsEquipped)
+                _useFunction.Invoke(this);
+            else
+                _unequipFunction.Invoke(this.GetEquipSlotCategory());
         }
 
         public override void Equip()
         {
-            throw new System.NotImplementedException();
+            if (IsEquipped)
+                return;
+
+            IsEquipped = true;
+
         }
 
         public override void Unequip()
         {
-            throw new System.NotImplementedException();
+            if (!IsEquipped)
+                return;
+
+            IsEquipped = false;
+
+            CancelMyTarget();
         }
 
         public override void SetTargetFunction()
         {
-            throw new System.NotImplementedException();
+            if (MyOwner is not null)
+            {
+                _useFunction = MyOwner.Equip;
+                _unequipFunction = MyOwner.Unequip;
+            }
         }
     }
 }

@@ -3,8 +3,10 @@ using CharacterMainLib;
 
 namespace InventoryCoreLib
 {
-    public abstract class RangedInstance<T> : WeaponInstance<T>, IRanged
-        where T : IAffectImmediately<IAffectableCharacter>
+    public abstract class RangedInstance<Effect, TTarget> :
+        WeaponInstance<Effect, TTarget>, IRanged
+        where Effect : class, IAffectImmediately<TTarget>
+        where TTarget : class, IAffectableCharacter
     {
 
         public RangedWeapon RangedWeapon => (RangedWeapon)Definition;
