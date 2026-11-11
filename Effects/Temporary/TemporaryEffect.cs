@@ -29,13 +29,13 @@ namespace InventoryCoreLib
 
         public override void Apply()
         {
-            if (_isApplied)
+            if (IsExpired)
                 return;
 
             if (_applyFunc is null || _restoreFunc is null)
                 throw new InvalidOperationException("Functions of this effect are not set!");
 
-            _applyFunc(PowerValue);
+            _applyFunc?.Invoke(PowerValue);
             _isApplied = true;
         }
 
@@ -52,6 +52,8 @@ namespace InventoryCoreLib
         {
             if (deltaTime <= 0.0f || IsExpired)
                 return;
+
+            Apply();
 
             EffectDuration -= deltaTime;
 

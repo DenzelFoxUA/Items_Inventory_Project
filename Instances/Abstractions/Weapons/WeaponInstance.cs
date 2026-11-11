@@ -3,7 +3,8 @@
 
 namespace InventoryCoreLib
 {
-    public abstract class WeaponInstance<Effect,TTarget> : DurableInstance<Effect, TTarget>, IAttack
+    public abstract class WeaponInstance<Effect,TTarget> : 
+        DurableInstance<Effect, TTarget>, IAttack<Effect, TTarget>
        where Effect : class, IAffectImmediately<TTarget>
         where TTarget : class, IAffectableCharacter
     {
@@ -17,32 +18,10 @@ namespace InventoryCoreLib
         }
 
         //IAttack
-        public virtual void PrimaryAttack(ref IAffectable? target, double distanceToTarget) { }
-        //{
-        //    if (Weapon.PrimaryAttack == null)
-        //        throw new ArgumentNullException("ERR::Primary attack not set!");
+        public abstract AttackComplex<Effect,TTarget> PrimaryAttack(IAffectable? target);
 
-        //    if (distanceToTarget <= Weapon.PrimaryAttack.AttackRange)
-        //    {
-        //        return BaseAttackFunc(Weapon.PrimaryAttack.MaxDamage);
-        //    }
-
-        //    return 0;
-        //}
-
-        public virtual void SecondaryAttack(ref IAffectable? target, double distanceToTarget) { }
-        //{
-        //    if (Weapon.SecondaryAttack is null)
-        //        return null;
-
-        //    if (distanceToTarget <= Weapon.SecondaryAttack.AttackRange)
-        //    {
-        //        return BaseAttackFunc(Weapon.SecondaryAttack.MaxDamage);
-        //    }
-
-        //    return 0;
-
-        //}
+        public abstract AttackComplex<Effect, TTarget>? SecondaryAttack(IAffectable? target);
+       
 
         public override void SetMyTarget(IAffectable? target)
         {

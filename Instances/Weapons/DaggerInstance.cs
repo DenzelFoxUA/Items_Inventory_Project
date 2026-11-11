@@ -2,10 +2,11 @@
 using CharacterMainLib;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace InventoryCoreLib
 {
-    public class DaggerInstance 
+    public class DaggerInstance
         : WeaponInstance<IAffectImmediately<IAffectableCharacter>, 
             IAffectableCharacter>
     {
@@ -56,6 +57,28 @@ namespace InventoryCoreLib
                 _useFunction = MyOwner.Equip;
                 _unequipFunction = MyOwner.Unequip;
             }
+        }
+
+        public override AttackComplex<IAffectImmediately<IAffectableCharacter>, IAffectableCharacter> 
+            PrimaryAttack(IAffectable? target)
+        {
+            if (Dagger.PrimaryAttack == null)
+                throw new ArgumentNullException("ERR::Primary attack not set!");
+
+            var dmg = Dagger.PrimaryAttack.MaxDamage;
+            var dist = Dagger.PrimaryAttack.AttackRange;
+
+            return new AttackComplex<IAffectImmediately<IAffectableCharacter>,
+                IAffectableCharacter>(dmg, dist, Effects.ToList());
+        }
+
+        public override AttackComplex<IAffectImmediately<IAffectableCharacter>, IAffectableCharacter>? 
+            SecondaryAttack(IAffectable? target)
+        {
+            if (Dagger.SecondaryAttack is null)
+                return null;
+
+            return null;
         }
     }
 }

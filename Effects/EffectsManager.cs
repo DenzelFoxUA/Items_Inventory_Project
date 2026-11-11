@@ -13,24 +13,6 @@ public class EffectsManager<T> where T : class, IAffectable
         _target = target;
     }
 
-    public void AddToStatic(IAffectConditionally<T>? effect)
-    {
-        if (effect is null)
-            return;
-
-        effect.SetTarget(_target);
-        effect.Apply();
-    }
-
-    public void RemoveStatic(IAffectConditionally<T>? effect)
-    {
-        if (effect is null)
-            return;
-
-        effect.SetTarget(_target);
-        effect.Remove();
-    }
-
     public void AddToTemporary(IAffectTemporary<T>? effect)
     {
         if (effect is null)
@@ -42,7 +24,6 @@ public class EffectsManager<T> where T : class, IAffectable
 
     public void Update(float deltaTime)
     {
-
         for (int i = _temporaryEffects.Count - 1; i >= 0; i--)
         {
             var effect = _temporaryEffects[i];

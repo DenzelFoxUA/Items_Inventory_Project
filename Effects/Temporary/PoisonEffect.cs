@@ -12,6 +12,18 @@ namespace InventoryCoreLib
         {
         }
 
+        public override void Apply()
+        {
+            if (IsExpired)
+                return;
+
+            if (_applyFunc is null)
+                throw new InvalidOperationException("Functions of this effect are not set!");
+
+            _applyFunc?.Invoke(PowerValue);
+            _isApplied = true;
+        }
+
         public override void SetTarget(IAffectableActor? target)
         {
             if (_isApplied)
@@ -19,12 +31,10 @@ namespace InventoryCoreLib
 
             Target = target;
 
-            _applyFunc = null;
-            _restoreFunc = null;
-
             if (Target is not null)
             {
                 _applyFunc = power => Target.DamageVital(power.Item1, power.Item2);
+                
             }
 
         }

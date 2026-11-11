@@ -3,9 +3,11 @@ using CharacterMainLib;
 
 namespace InventoryCoreLib
 {
-    public interface IAttack
+    public interface IAttack<Effect, TTarget>
+        where Effect : class, IAffectImmediately<TTarget>
+        where TTarget : class, IAffectableCharacter
     {
-        public void PrimaryAttack(ref IAffectable? target, double distanceToTarget);
-        public void SecondaryAttack(ref IAffectable? target, double distanceToTarget);
+        public AttackComplex<Effect, TTarget> PrimaryAttack(IAffectable? target);
+        public AttackComplex<Effect, TTarget>? SecondaryAttack(IAffectable? target);
     }
 }

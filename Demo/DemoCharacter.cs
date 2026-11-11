@@ -2,7 +2,7 @@
 using CharacterMainLib;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace InventoryCoreLib
 {
@@ -16,12 +16,14 @@ namespace InventoryCoreLib
 
         private DemoEquipmentContainer? _myEquipment = null;
 
-        private EffectsManager<IAffectableCharacter> effectsManager;
+        private EffectsManager<IAffectableCharacter> _effectsManager;
 
 
         protected override IEquipmentHandler<IOwnedEquipable>? EquipmentSection => _myEquipment;
 
         protected override IInventoryHandler<IOwnedUsable>? InventorySection => _myInventory;
+
+        #region [ CTOR ]
 
         public DemoCharacter(
             string name,
@@ -36,10 +38,12 @@ namespace InventoryCoreLib
                   attributes,
                   equipBlockNames)
         {
-            effectsManager = new EffectsManager<IAffectableCharacter>(this);
+            _effectsManager = new EffectsManager<IAffectableCharacter>(this);
             _myInventory = new DemoInventory(size,this);
             _myEquipment = new DemoEquipmentContainer(this, equipBlockNames);
         }
+
+        #endregion
 
         public void PickUpItem(IOwnedUsable? item)
         {
@@ -47,14 +51,6 @@ namespace InventoryCoreLib
                 return;
 
             InventorySection.AddItem(item);
-        }
-
-        void ICanUseItems<IOwnedUsable>.UseItem(IOwnedUsable? item, IAffectableActor? target)
-        {
-            if (item is null || target is null)
-                return;
-
-            UseItem(item, target);
         }
 
         public void UseItem(Position itemPos, IAffectableActor? target)
@@ -101,25 +97,52 @@ namespace InventoryCoreLib
 
         }
 
-        public override void Move<DirVector>(DirVector? directionVector) where DirVector : default
+        public override void Move<DirVector>(DirVector? directionVector) 
+            where DirVector : default
         {
             Console.WriteLine($"{Name} - moving");
         }
 
         public void Update(float deltaTime)
         {
-            effectsManager.Update(deltaTime);
+            _effectsManager.Update(deltaTime);
             UpdateMovespeedByStats();
             UpdateVitalsByStats();
         }
 
-        void ICanUseItems<IOwnedUsable>.SetItemTarget(ref IOwnedUsable item, IAffectableActor? target)
-        {
-            if (item is null || target is null)
-                return;
+        #region [ ATTACK ]
 
-            SetItemTarget(ref item, target);
+        public AttackComplex<IAffectImmediately<IAffectableCharacter>,IAffectableCharacter>? 
+            PerformPrimaryAttack(IAffectable? target)
+        {
+            if (EquipmentSection is null)
+                throw new NullReferenceException("Cannot use weapon! Equipment is not initialized");
+
+            if (EquipmentSection is DemoEquipmentContainer equipmentContainer)
+            {
+                return equipmentContainer.UseWeaponPrimary(target);
+            }
+
+            return null;
         }
+
+        public AttackComplex<IAffectImmediately<IAffectableCharacter>, IAffectableCharacter>?
+            PerformSecondaryAttack(IAffectable? target)
+        {
+            if(EquipmentSection is DemoEquipmentContainer equipmentContainer)
+            {
+                return equipmentContainer.UseWeaponSecondary(target);
+            }
+
+            return null;
+        }
+
+        public void AddTemporaryEffect(IAffectTemporary<IAffectableCharacter>? effect)
+        {
+            _effectsManager.AddToTemporary(effect);
+        }
+
+        #endregion
 
         #region [ Equip ]
 
@@ -157,12 +180,23 @@ namespace InventoryCoreLib
 
         #endregion
 
+        #region [ Interfaces direct imlimentations ]
+
         public IOwnedEquipable? DropItem(IOwnedEquipable item)
         {
             item.SetMyTarget(null);
             item.SetMyOwner(null);
 
             return item;
+        }
+
+        void ICanUseItems<IOwnedUsable>.SetItemTarget(ref IOwnedUsable item, 
+            IAffectableActor? target)
+        {
+            if (item is null || target is null)
+                return;
+
+            SetItemTarget(ref item, target);
         }
 
         public void DoNothing()
@@ -175,6 +209,16 @@ namespace InventoryCoreLib
             if(consumable is not null)
                 UseConsumable(consumable);
         }
+
+        void ICanUseItems<IOwnedUsable>.UseItem(IOwnedUsable? item, IAffectableActor? target)
+        {
+            if (item is null || target is null)
+                return;
+
+            UseItem(item, target);
+        }
+
+        #endregion
 
         #region [ CAPSULE ]
 
@@ -195,12 +239,12 @@ namespace InventoryCoreLib
 
         protected override void UpdateVitalsByStats()
         {
-            throw new NotImplementedException();
+            
         }
 
         protected override void UpdateMovespeedByStats()
         {
-            throw new NotImplementedException();
+            
         }
 
         #endregion

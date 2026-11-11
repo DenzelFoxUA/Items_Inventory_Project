@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Microsoft.VisualBasic;
 
 namespace InventoryCoreLib
 {
@@ -169,6 +170,43 @@ namespace InventoryCoreLib
             }
 
             return equipmentStr;
+        }
+
+        public AttackComplex<IAffectImmediately<IAffectableCharacter>, IAffectableCharacter>?
+            UseWeaponPrimary(IAffectable? currTarget)
+        {
+            if (EquipmentSlots is null || EquipmentSlots["Weapon"] is null)
+            {
+                return null;
+            }
+
+            if (EquipmentSlots["Weapon"].ItemInstance is 
+                WeaponInstance<IAffectImmediately<IAffectableCharacter>, IAffectableCharacter> weapon)
+            {
+                weapon.SetMyTarget(currTarget);
+                return weapon.PrimaryAttack(weapon.MyTarget);
+            }
+
+            return null;
+        }
+
+        public AttackComplex<IAffectImmediately<IAffectableCharacter>, IAffectableCharacter>?
+            UseWeaponSecondary(IAffectable? currTarget)
+        {
+            if (EquipmentSlots is null || EquipmentSlots["Weapon"] is null)
+            {
+                return null;
+            }
+
+            if (EquipmentSlots["Weapon"].ItemInstance is
+                WeaponInstance<IAffectImmediately<IAffectableCharacter>, IAffectableCharacter> weapon)
+            {
+
+                weapon.SetMyTarget(currTarget);
+                return weapon.SecondaryAttack(weapon.MyTarget);
+            }
+
+            return null;
         }
     }
 }
