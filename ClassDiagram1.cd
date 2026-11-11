@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AttackComplex" Collapsed="true">
+    <Position X="3" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAQAAAAAAAAAQAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instances\_AttackComplex\AttackComplex.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.BodyArmor" Collapsed="true">
+    <Position X="1.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Definitions\ArmorPieces\BodyArmor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.BaseArmor" Collapsed="true">
+    <Position X="1.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEgAIAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Definitions\ItemsAbstractions\BaseArmor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.BaseItem" Collapsed="true">
+    <Position X="11.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAQQAAAAAEiAAAAAQAACAAAIAABCAAAAEAAiA=</HashCode>
+      <FileName>Definitions\ItemsAbstractions\BaseItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.BaseWeapon" Collapsed="true">
+    <Position X="6" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgIAQAAAAAAAEAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Definitions\ItemsAbstractions\BaseWeapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.DurableItem" Collapsed="true">
+    <Position X="4.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAEAAAAAACIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Definitions\ItemsAbstractions\DurableItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.EquipableItem" Collapsed="true">
+    <Position X="6" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAEgAAAAAAAAgAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Definitions\ItemsAbstractions\EquipableItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.RangedWeapon" Collapsed="true">
+    <Position X="4.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAEAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Definitions\ItemsAbstractions\RangedWeapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.UsableItem" Collapsed="true">
+    <Position X="17.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Definitions\ItemsAbstractions\UsableItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.AmuletDefinition" Collapsed="true">
+    <Position X="10.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Definitions\Jewelry\AmuletDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.FoodDefinition" Collapsed="true">
+    <Position X="12.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Definitions\Usables\FoodDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.MagicStoneDefinition" Collapsed="true">
+    <Position X="15" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Definitions\Usables\MagicStoneDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.PotionDefinition" Collapsed="true">
+    <Position X="17.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Definitions\Usables\PotionDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.ScrollDefinition" Collapsed="true">
+    <Position X="19.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Definitions\Usables\ScrollDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.ToolDefinition" Collapsed="true">
+    <Position X="21.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Definitions\Usables\ToolDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.BowDefinition" Collapsed="true">
+    <Position X="3.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Definitions\Weapons\BowDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.DaggerDefinition" Collapsed="true">
+    <Position X="8.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Definitions\Weapons\DaggerDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.StaffDefinition" Collapsed="true">
+    <Position X="6" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Definitions\Weapons\StaffDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.AttackDefinition" Collapsed="true">
+    <Position X="26.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Definitions\AttackDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.DemoCharacter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AARAAAQGAIgAYgKAACBAIAAAAACAAEAgAiAgAqAAAAA=</HashCode>
+      <FileName>Demo\DemoCharacter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InventoryCoreLib.DemoEquipmentContainer" Collapsed="true">
+    <Position X="25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAAAGAAAAAAAAgABAAQAIAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Demo\DemoEquipmentContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.DemoInventory" Collapsed="true">
+    <Position X="26.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAgAGAAAAAABIAAAACAAAAgAAAAAAEAAAAIAAEAAA=</HashCode>
+      <FileName>Demo\DemoInventory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.BaseEffect&lt;T, P&gt;" Collapsed="true">
+    <Position X="15.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAgAAABCAAAAAAAIABAAAAAAAAAiI=</HashCode>
+      <FileName>Effects\Base\BaseEffect.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="InventoryCoreLib.BuffAttributeEffect&lt;TTarget, TPower&gt;" Collapsed="true">
+    <Position X="17" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EABAAAEAABAAAAAAAAAABAAQAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Effects\Buff_Debuff\BuffAttributeEffect.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="InventoryCoreLib.IntelligenceBuffEffect" Collapsed="true">
+    <Position X="18" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Effects\Buff_Debuff\IntelligenceBuffEffect.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="InventoryCoreLib.StrengthBuffEffect" Collapsed="true">
+    <Position X="15.75" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Effects\Buff_Debuff\StrengthBuffEffect.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="InventoryCoreLib.DamageVitalEffect" Collapsed="true">
+    <Position X="11.25" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAEAAAAIAAAAAAAAI=</HashCode>
+      <FileName>Effects\Immediately\DamageVitalEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.ElementalEffect" Collapsed="true">
+    <Position X="9" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAgAAAAAQAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Effects\Immediately\ElementalEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.ImmediatelyEffect&lt;TTarget, TPower&gt;" Collapsed="true">
+    <Position X="11.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAEAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\Immediately\ImmediatelyEffect.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="InventoryCoreLib.RecoveryVitalEffect" Collapsed="true">
+    <Position X="13.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAEAAAAIAAAAAAAAI=</HashCode>
+      <FileName>Effects\Immediately\RecoveryVitalEffect.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="InventoryCoreLib.PoisonEffect" Collapsed="true">
+    <Position X="22.5" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Effects\Temporary\PoisonEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.TemporaryEffect&lt;TTarget, TPower&gt;" Collapsed="true">
+    <Position X="21.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EARAAAEIABAAAAAAAAAABAAAAAQAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\Temporary\TemporaryEffect.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="InventoryCoreLib.WeaponDistanceConstants" Collapsed="true">
+    <Position X="25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAwAkAAAACAAAAAIAABAQAAAQQAAAIAAAAA=</HashCode>
+      <FileName>GlobalConstants\ItemsConstantParameters.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.AmmoStackConstants" Collapsed="true">
+    <Position X="25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>GlobalConstants\ItemsConstantParameters.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.RangedInstance&lt;Effect, TTarget&gt;" Collapsed="true">
+    <Position X="8.25" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAABAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAE=</HashCode>
+      <FileName>Instances\Abstractions\Weapons\RangedInstance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="InventoryCoreLib.WeaponInstance&lt;Effect, TTarget&gt;" Collapsed="true">
+    <Position X="9.25" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAIAQACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instances\Abstractions\Weapons\WeaponInstance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="InventoryCoreLib.ArmorInstance&lt;Effect, Target&gt;" Collapsed="true">
+    <Position X="12.75" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instances\Abstractions\Wearable\ArmorInstance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.JewelryInstance&lt;Effect, Target&gt;" Collapsed="true">
+    <Position X="6" Y="17.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instances\Abstractions\Wearable\JewelryInstance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.BaseItemInstance" Collapsed="true">
+    <Position X="11.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAEAACAAAgAAAAAAAAAAAAIAAAAAABAAAAiA=</HashCode>
+      <FileName>Instances\Abstractions\BaseItemInstance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.DurableInstance&lt;TEffect, TTarget&gt;" Collapsed="true">
+    <Position X="10.5" Y="17.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAABAAAAAAAAAACAAAAAAAAAAgAABAAA=</HashCode>
+      <FileName>Instances\Abstractions\DurableInstance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="InventoryCoreLib.EquipableInstance&lt;TEffect, TTarget&gt;" Collapsed="true">
+    <Position X="9.25" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAYAAAAEgAQEAAAEQAAEAKBoAAABCYCAQAA=</HashCode>
+      <FileName>Instances\Abstractions\EquipableInstance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="InventoryCoreLib.UsableItemInstance&lt;TEffect, TTarget&gt;" Collapsed="true">
+    <Position X="16" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAQAAAAAYAAAAEgAQEAAAEQAAEAIAIAAACCACAAAQ=</HashCode>
+      <FileName>Instances\Abstractions\UsableItemInstance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="InventoryCoreLib.LeatherArmor" Collapsed="true">
+    <Position X="12.75" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAEAAAAAEAAAgAAAABIAAAAA=</HashCode>
+      <FileName>Instances\Armor\LeatherArmor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.Amulet" Collapsed="true">
+    <Position X="6" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAEAAAAAEAAAgAAAABIAAAAA=</HashCode>
+      <FileName>Instances\Jewelery\Amulet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.CustomPotion" Collapsed="true">
+    <Position X="16" Y="17.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAEAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Instances\Usables\Consumables\CustomPotion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.HealthPotion" Collapsed="true">
+    <Position X="15" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instances\Usables\Consumables\HealthPotion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.ManaPotion" Collapsed="true">
+    <Position X="17.25" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instances\Usables\Consumables\ManaPotion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.DaggerInstance" Collapsed="true">
+    <Position X="10.5" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAIAQAEAAIAAEAAAgAAAABIAAAAA=</HashCode>
+      <FileName>Instances\Weapons\DaggerInstance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryCoreLib.Effects.SlowDownEffect" Collapsed="true">
+    <Position X="20.25" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Effects\Temporary\SlowDownEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EffectsManager&lt;T&gt;" Collapsed="true">
+    <Position X="28.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAQAAAAAEAAAAAAAAgAAA=</HashCode>
+      <FileName>Effects\EffectsManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="InventoryCoreLib.IDemoActor" Collapsed="true">
+    <Position X="5.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Demo\IDemoActor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InventoryCoreLib.IDemoCharacter" Collapsed="true">
+    <Position X="7.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Demo\IDemoCharacter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InventoryCoreLib.ICanDealDamage" Collapsed="true">
+    <Position X="0.5" Y="21.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ICharacter\ICanDealDamage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InventoryCoreLib.ICollectEffects&lt;TTarget&gt;" Collapsed="true">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ICharacter\ICollectEffects.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InventoryCoreLib.IAffect" Collapsed="true">
+    <Position X="1.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IEffects\IAffect.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InventoryCoreLib.IAffect&lt;T&gt;" Collapsed="true">
+    <Position X="1.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Interfaces\IEffects\IAffect.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InventoryCoreLib.IAffectConditionally&lt;T&gt;" Collapsed="true">
+    <Position X="0.5" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IEffects\IAffectConditionally.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InventoryCoreLib.IAffectImmediately&lt;T&gt;" Collapsed="true">
+    <Position X="2.75" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IEffects\IAffectImmediately.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InventoryCoreLib.IAffectTemporary&lt;T&gt;" Collapsed="true">
+    <Position X="2.25" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAABAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IEffects\IAffectTemporary.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InventoryCoreLib.IDurable" Collapsed="true">
+    <Position X="25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Interfaces\IItems\IDurable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InventoryCoreLib.IOwnedEquipable" Collapsed="true">
+    <Position X="0.5" Y="20" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Interfaces\IItems\IOwnedEquipable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InventoryCoreLib.IOwnedUsable" Collapsed="true">
+    <Position X="1.75" Y="18.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAYAAAAAAAAEAAAAAAAAAAAAAAAAAACAQAA=</HashCode>
+      <FileName>Interfaces\IItems\IOwnedUsable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InventoryCoreLib.IStackable" Collapsed="true">
+    <Position X="2.75" Y="20" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAQAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IItems\IStackable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InventoryCoreLib.IRanged" Collapsed="true">
+    <Position X="26.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAE=</HashCode>
+      <FileName>Interfaces\TrashCan\IRanged.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InventoryCoreLib.IRechargeble" Collapsed="true">
+    <Position X="28.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\TrashCan\IRechargeble.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="InventoryCoreLib.FoodCategory" Collapsed="true">
+    <Position X="26.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAQAgAAAAgAMAAEAAAAAAAAAAAAAAQAAAAAAAgAAAA=</HashCode>
+      <FileName>Definitions\Usables\FoodDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="InventoryCoreLib.Elements" Collapsed="true">
+    <Position X="25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Effects\Immediately\ElementalEffect.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

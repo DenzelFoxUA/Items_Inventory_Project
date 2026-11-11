@@ -51,6 +51,7 @@ namespace InventoryCoreLib
                 return;
 
             InventorySection.AddItem(item);
+
         }
 
         public void UseItem(Position itemPos, IAffectableActor? target)
@@ -112,8 +113,7 @@ namespace InventoryCoreLib
 
         #region [ ATTACK ]
 
-        public AttackComplex<IAffectImmediately<IAffectableCharacter>,IAffectableCharacter>? 
-            PerformPrimaryAttack(IAffectable? target)
+        public AttackComplex? PerformPrimaryAttack(IAffectable? target)
         {
             if (EquipmentSection is null)
                 throw new NullReferenceException("Cannot use weapon! Equipment is not initialized");
@@ -126,8 +126,7 @@ namespace InventoryCoreLib
             return null;
         }
 
-        public AttackComplex<IAffectImmediately<IAffectableCharacter>, IAffectableCharacter>?
-            PerformSecondaryAttack(IAffectable? target)
+        public AttackComplex? PerformSecondaryAttack(IAffectable? target)
         {
             if(EquipmentSection is DemoEquipmentContainer equipmentContainer)
             {
@@ -154,7 +153,7 @@ namespace InventoryCoreLib
             if (item is null)
                 return;
 
-            bool isOk = EquipmentSection.TryEquipIntoSlot(ref item);
+            bool isOk = EquipmentSection.TryEquipIntoSlot(ref item!);
 
             if (isOk)
                 Console.WriteLine("ItemEquiped!");

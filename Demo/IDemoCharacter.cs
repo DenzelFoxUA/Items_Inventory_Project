@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace InventoryCoreLib
 {
     public interface IDemoCharacter : 
-        IDemoActor<IAffectTemporary<IAffectableCharacter>, IAffectableCharacter>,
+        ICollectEffects<IAffectableCharacter>,
         IAffectableCharacter, 
         ICanUseItems<IOwnedUsable>,
         ICanUseEquipment<IOwnedEquipable>

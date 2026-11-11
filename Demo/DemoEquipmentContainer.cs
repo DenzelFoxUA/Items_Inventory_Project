@@ -74,12 +74,12 @@ namespace InventoryCoreLib
 
             bool isOk = false;
 
-            if (EquipmentSlots["Weapon"] is not null)
+            if (EquipmentSlots["Weapon"].ItemInstance is not null)
             {
-                var definition = EquipmentSlots["Weapon"].ItemInstance.GetDefinition() 
+                var definition = EquipmentSlots["Weapon"].ItemInstance!.GetDefinition() 
                     as BaseWeapon;
 
-                if(definition.IsTwoHanded)
+                if(definition!.IsTwoHanded)
                 {
                     return isOk;
                 }
@@ -172,8 +172,7 @@ namespace InventoryCoreLib
             return equipmentStr;
         }
 
-        public AttackComplex<IAffectImmediately<IAffectableCharacter>, IAffectableCharacter>?
-            UseWeaponPrimary(IAffectable? currTarget)
+        public AttackComplex? UseWeaponPrimary(IAffectable? currTarget)
         {
             if (EquipmentSlots is null || EquipmentSlots["Weapon"] is null)
             {
@@ -181,7 +180,7 @@ namespace InventoryCoreLib
             }
 
             if (EquipmentSlots["Weapon"].ItemInstance is 
-                WeaponInstance<IAffectImmediately<IAffectableCharacter>, IAffectableCharacter> weapon)
+                ICanDealDamage weapon)
             {
                 weapon.SetMyTarget(currTarget);
                 return weapon.PrimaryAttack(weapon.MyTarget);
@@ -190,8 +189,7 @@ namespace InventoryCoreLib
             return null;
         }
 
-        public AttackComplex<IAffectImmediately<IAffectableCharacter>, IAffectableCharacter>?
-            UseWeaponSecondary(IAffectable? currTarget)
+        public AttackComplex? UseWeaponSecondary(IAffectable? currTarget)
         {
             if (EquipmentSlots is null || EquipmentSlots["Weapon"] is null)
             {

@@ -1,22 +1,21 @@
 ﻿
 using CharacterMainLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace InventoryCoreLib
 {
     public class DaggerInstance
-        : WeaponInstance<IAffectImmediately<IAffectableCharacter>, 
+        : WeaponInstance<IAffect<IAffectableCharacter>, 
             IAffectableCharacter>
     {
-        private DaggerDefinition Dagger => (DaggerDefinition)Definition;
+        private DaggerDefinition Dagger => (DaggerDefinition)Definition!;
 
         private Action<IOwnedEquipable>? _useFunction = null;
         private Func<string, IOwnedEquipable?>? _unequipFunction = null;
 
         public DaggerInstance(DaggerDefinition daggerItem, 
-            params IAffectImmediately<IAffectableCharacter>[]? effects) : base(daggerItem, effects)
+            params IAffect<IAffectableActor>[]? effects) : base(daggerItem, effects)
         {
 
         }
@@ -24,6 +23,9 @@ namespace InventoryCoreLib
         public override void Use()
         {
             SetTargetFunction();
+
+            if (_useFunction is null || _unequipFunction is null)
+                throw new NullReferenceException("Equip/Unequip funcs are not set");
 
             if (!IsEquipped)
                 _useFunction.Invoke(this);
@@ -59,8 +61,7 @@ namespace InventoryCoreLib
             }
         }
 
-        public override AttackComplex<IAffectImmediately<IAffectableCharacter>, IAffectableCharacter> 
-            PrimaryAttack(IAffectable? target)
+        public override AttackComplex PrimaryAttack(IAffectable? target)
         {
             if (Dagger.PrimaryAttack == null)
                 throw new ArgumentNullException("ERR::Primary attack not set!");
@@ -68,12 +69,10 @@ namespace InventoryCoreLib
             var dmg = Dagger.PrimaryAttack.MaxDamage;
             var dist = Dagger.PrimaryAttack.AttackRange;
 
-            return new AttackComplex<IAffectImmediately<IAffectableCharacter>,
-                IAffectableCharacter>(dmg, dist, Effects.ToList());
+            return new AttackComplex(dmg, dist, Effects);
         }
 
-        public override AttackComplex<IAffectImmediately<IAffectableCharacter>, IAffectableCharacter>? 
-            SecondaryAttack(IAffectable? target)
+        public override AttackComplex? SecondaryAttack(IAffectable? target)
         {
             if (Dagger.SecondaryAttack is null)
                 return null;

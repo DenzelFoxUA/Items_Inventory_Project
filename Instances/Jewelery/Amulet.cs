@@ -63,6 +63,9 @@ namespace InventoryCoreLib
         {
             SetTargetFunction();
 
+            if (_useFunction is null || _unequipFunction is null)
+                throw new NullReferenceException("Equip/Unequip funcs are not set");
+
             if (!IsEquipped)
                 _useFunction.Invoke(this);
             else

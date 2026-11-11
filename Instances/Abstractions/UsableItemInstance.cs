@@ -26,7 +26,7 @@ namespace InventoryCoreLib
 
         protected TTarget? _target;
 
-        public IDemoCharacter? MyOwner => (IDemoCharacter)_owner;
+        public IDemoCharacter? MyOwner => (IDemoCharacter)_owner!;
 
         public TTarget? MyTarget => _target;
 
@@ -118,7 +118,7 @@ namespace InventoryCoreLib
         }
 
 
-        public string GetDefinitionName() => Item.Name;
+        public string GetDefinitionName() => Item!.Name;
 
         #region [ OWNER_TARGET_SET ]
 

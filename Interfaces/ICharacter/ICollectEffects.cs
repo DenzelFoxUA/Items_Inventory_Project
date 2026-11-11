@@ -4,17 +4,10 @@ using InventoryCoreLib;
 
 namespace InventoryCoreLib
 {
-    public interface ICollectEffects : IDemoActor
+    public interface ICollectEffects<TTarget> : IAffectableActor
+        where TTarget : IAffectable
     {
-        void AddTemporaryEffect(IAffectTemporary<IAffectableActor> effect);
-        public void AddTemporaryEffect(IAffectImmediately<IAffectable>? effect);
+        public void AddTemporaryEffect(IAffectTemporary<TTarget> effect);
 
-        public void RemoveStaticEffect();
-        public void RemoveTemporaryEffect();
     }
-}
-
-public interface ITemporaryEffectReceiver : IAffectableActor
-{
-   
 }

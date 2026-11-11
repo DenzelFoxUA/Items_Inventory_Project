@@ -1,51 +1,66 @@
 ﻿using CharacterMainLib;
+using InventoryCoreLib;
 using System.Collections.Generic;
 
-namespace InventoryCoreLib
+public class AttackComplex
 {
-    public class AttackComplex<TEffect, TTarget>
-         where TTarget : class, IAffectable
-    where TEffect : class, IAffect<TTarget>
+    public uint Damage { get; init; }
+    public double EffectiveRange { get; init; }
+
+    public IEnumerable<IAffect> Effects { get; init; }
+
+    public AttackComplex(
+        uint damage,
+        double range,
+        IEnumerable<IAffect> effects)
     {
-        public uint Damage { get; protected init; }
-        public double EffectiveRange { get; protected init; }
-        public List<TEffect> Effects { get; protected init; }
+        Damage = damage;
+        EffectiveRange = range;
+        Effects = effects;
+    }
 
-        public AttackComplex(uint damage, double range, List<TEffect> effects)
+    public void ApplyAttackToTarget(IAffectable? target)
+    {
+        if (target is not IAffectableActor actor)
+            return;
+
+        actor.DamageVital("Health", Damage);
+
+        foreach (var effect in Effects)
         {
-            Damage = damage;
-            EffectiveRange = range;
-            Effects = effects;
-        }
-
-
-        public void ApplyAttackToTarget(IAffectable? target)
-        {
-            if (target is null)
-                return;
-
-            if (target is TTarget charTarget && charTarget is IDemoCharacter character)
+            switch (effect)
             {
-                character.DamageVital("Health", Damage);
+                case IAffectTemporary<IAffectableActor> tempActor
+                    when actor is IDemoActor collector:
 
-                foreach(var effect in Effects)
-                {
-                    if (effect is TEffect currEffect)
-                    {
-                        if (currEffect is IAffectTemporary<IAffectableActor> tempEff)
-                        {
-                            tempEff.SetTarget(character);
-                            character.AddTemporaryEffect(tempEff);
-                        }
-                        else if(currEffect is IAffectImmediately<IAffectableActor> immediateEff)
-                        {
-                            immediateEff.SetTarget(character);
-                            immediateEff.Apply();
-                        }
+                    tempActor.SetTarget(actor);
+                    collector.AddTemporaryEffect(tempActor);
 
-                    }
+                    break;
 
-                }
+                case IAffectImmediately<IAffectableActor> immediateActor
+                    when actor is IDemoActor character:
+
+                    immediateActor.SetTarget(actor);
+                    immediateActor.Apply();
+
+                    break;
+
+                case IAffectTemporary<IAffectableCharacter> tempCharacter
+                    when actor is IDemoCharacter character:
+
+                    tempCharacter.SetTarget(character);
+                    character.AddTemporaryEffect(tempCharacter);
+
+                    break;
+
+                case IAffectImmediately<IAffectableCharacter> immediateCharacter
+                    when actor is IDemoCharacter character:
+
+                    immediateCharacter.SetTarget(character);
+                    immediateCharacter.Apply();
+
+                    break;
             }
         }
     }

@@ -8,7 +8,7 @@ namespace InventoryCoreLib
     {
         public T? Target { get; protected set; }
 
-        public P PowerValue { get; protected init; }
+        public P PowerValue { get; protected init; } = default!;
 
         //methods
 
@@ -31,7 +31,7 @@ namespace InventoryCoreLib
             if (ReferenceEquals(this, other))
                 return true;
 
-            return PowerValue.Equals(other.PowerValue);
+            return PowerValue!.Equals(other.PowerValue);
         }
 
         public override bool Equals(object? obj) => Equals(obj as BaseEffect<T, P>);

@@ -9,7 +9,7 @@ namespace InventoryCoreLib
         where TTarget : class, IAffectableCharacter
     {
 
-        public RangedWeapon RangedWeapon => (RangedWeapon)Definition;
+        public RangedWeapon RangedWeapon => (RangedWeapon)Definition!;
 
         //public IAmmoInstance? CurrentAmmoInstance { get; protected set; }
 

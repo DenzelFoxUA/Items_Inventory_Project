@@ -32,7 +32,7 @@ namespace InventoryCoreLib
             if (_applyFunc is null || _restoreFunc is null)
                 throw new InvalidOperationException("Functions of this effect are not set!");
 
-            _applyFunc(_attributeName, PowerValue);
+            _applyFunc?.Invoke(_attributeName, PowerValue);
             _isApplied = true;
         }
 

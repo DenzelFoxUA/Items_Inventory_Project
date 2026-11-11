@@ -14,11 +14,11 @@ namespace InventoryCoreLib
 
         private EquipableItem? Item => Definition is not null ? (EquipableItem)Definition : null;
 
+        public IReadOnlyList<TEffect> Effects { get; }
+
         #region [ OWNER_TARGET ]
 
         protected TTarget? _target;
-
-        public IReadOnlyList<TEffect> Effects { get; }
 
         public  IDemoCharacter? MyOwner { get => _owner; }
 

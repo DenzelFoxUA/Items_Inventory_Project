@@ -3,11 +3,12 @@ using CharacterMainLib;
 
 namespace InventoryCoreLib
 {
-    public abstract class DurableInstance<TEffect,TTarget> : EquipableInstance<TEffect,TTarget>, IDurable
+    public abstract class DurableInstance<TEffect,TTarget> : 
+        EquipableInstance<TEffect,TTarget>, IDurable
         where TEffect : class, IAffect<TTarget>
-        where TTarget : class, IAffectableCharacter
+        where TTarget : class, IAffectable
     {
-        private DurableItem DurableDefinition => (DurableItem)Definition;
+        private DurableItem DurableDefinition => (DurableItem)Definition!;
 
         public uint CurrentDurability { get; protected set; }
 

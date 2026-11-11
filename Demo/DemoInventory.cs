@@ -122,7 +122,7 @@ namespace InventoryCoreLib
                 {
                     if (Container[row, col] is null)
                     {
-                        SetThisAsItemOwner(ref item);
+                        SetThisAsItemOwner(ref item!);
                         Container[row, col] = item;
                         return null;
                     }

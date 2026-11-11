@@ -4,7 +4,7 @@ using System;
 
 namespace InventoryCoreLib
 {
-    public class DamageVitalEffect : BaseEffect<IAffectableCharacter,uint>
+    public class DamageVitalEffect : ImmediatelyEffect<IAffectableActor, uint>
     {
         private Action<string, uint>? _targetFunc = null;
 
@@ -15,10 +15,9 @@ namespace InventoryCoreLib
         /// </summary>
         /// <param name="name">Vital parameter name from your vital system names</param>
         /// <param name="value">Damage amount</param>
-        /// <param name="duration_sec">Time effect works</param>
         public DamageVitalEffect(
             string name,
-            uint value)
+            uint value) : base(value)
         {
             vitalName = name;
             PowerValue = value;
@@ -32,7 +31,7 @@ namespace InventoryCoreLib
             }
         }
 
-        public override void SetTarget(IAffectableCharacter? target)
+        public override void SetTarget(IAffectableActor? target)
         {
             Target = target;
 
