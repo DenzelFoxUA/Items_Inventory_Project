@@ -16,12 +16,13 @@ namespace InventoryCoreLib
         protected Action<string, TPower>? _applyFunc;
         protected Action<string, TPower>? _restoreFunc;
 
-        protected bool _isApplied = false;
+        protected bool _isRemoved = true;
 
-        public BuffAttributeEffect(string name, TPower power)
+        public BuffAttributeEffect(string attributeName, TPower power, string effName)
         {
-            _attributeName = name;
+            _attributeName = attributeName;
             PowerValue = power;
+            Name = effName;
         }
 
         public override void Apply()
@@ -29,23 +30,27 @@ namespace InventoryCoreLib
             if (_isApplied)
                 return;
 
-            if (_applyFunc is null || _restoreFunc is null)
-                throw new InvalidOperationException("Functions of this effect are not set!");
+            if (_applyFunc is null)
+                throw new ObjectNotInitializedException(nameof(_applyFunc));
+
+            if(_restoreFunc is null)
+                throw new ObjectNotInitializedException(nameof(_restoreFunc));
 
             _applyFunc?.Invoke(_attributeName, PowerValue);
             _isApplied = true;
+            _isRemoved = false;
         }
 
         public override void Remove()
         {
-            if (!_isApplied)
+            if (_isRemoved)
                 return;
 
             _restoreFunc?.Invoke(_attributeName, PowerValue);
             _isApplied = false;
+            _isRemoved = true;
         }
 
-        public abstract override void SetTarget(TTarget? target);
 
     }
 }

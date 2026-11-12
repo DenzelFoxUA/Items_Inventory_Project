@@ -5,10 +5,10 @@ using System;
 
 namespace InventoryCoreLib
 {
-    public class PoisonEffect : TemporaryEffect<IAffectableActor, (string, uint)>
+    public class TempDrainHealthEffect : TemporaryEffect<IAffectableActor, (string, uint)>
     {
-        public PoisonEffect(uint power, float durationSec) 
-            : base(("Health",power), durationSec)
+        public TempDrainHealthEffect(uint power, float durationSec, string name = "Drain Health") 
+            : base(("Health",power), durationSec, name)
         {
         }
 
@@ -26,17 +26,13 @@ namespace InventoryCoreLib
 
         public override void SetTarget(IAffectableActor? target)
         {
-            if (_isApplied)
-                throw new InvalidOperationException("Cannot change target when effect is applied.");
+            base.SetTarget(target);
 
-            Target = target;
+            if (Target is null)
+                return;
 
-            if (Target is not null)
-            {
-                _applyFunc = power => Target.DamageVital(power.Item1, power.Item2);
+            _applyFunc = power => Target.DamageVital(power.Item1, power.Item2);
                 
-            }
-
         }
     }
 }

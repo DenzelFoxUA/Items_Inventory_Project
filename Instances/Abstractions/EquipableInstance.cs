@@ -6,13 +6,22 @@ using System.Linq;
 
 namespace InventoryCoreLib
 {
-    public abstract class EquipableInstance<TEffect, TTarget> 
+    public abstract class EquipableInstance<TEffect, TTarget>
         : BaseItemInstance, IOwnedEquipable
         where TTarget : class, IAffectable
         where TEffect : class, IAffect<TTarget>
     {
 
-        private EquipableItem? Item => Definition is not null ? (EquipableItem)Definition : null;
+        private EquipableItem Item 
+        {
+            get
+            {
+                if (Definition is null)
+                    throw new ObjectNotInitializedException(nameof(Definition));
+                else 
+                  return (EquipableItem)Definition;
+            }
+        }
 
         public IReadOnlyList<TEffect> Effects { get; }
 
@@ -161,5 +170,7 @@ namespace InventoryCoreLib
         {
             return Item;
         }
+
+        public abstract void Update();
     }
 }

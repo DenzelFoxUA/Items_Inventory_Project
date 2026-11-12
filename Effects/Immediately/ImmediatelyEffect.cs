@@ -13,12 +13,12 @@ namespace InventoryCoreLib
 
         protected Action<TPower>? _applyFunc;
 
-        protected bool _isApplied = false;
-
-        protected ImmediatelyEffect(TPower power)
+        protected ImmediatelyEffect(TPower power, string effectName)
         {
             PowerValue = power;
+            Name = effectName;
         }
+
 
         public abstract override void Apply();
 

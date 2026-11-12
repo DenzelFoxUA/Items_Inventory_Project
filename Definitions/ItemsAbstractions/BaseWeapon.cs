@@ -5,7 +5,7 @@ namespace InventoryCoreLib
 {
     public abstract class BaseWeapon: DurableItem
     {
-        public AttackDefinition? PrimaryAttack { get; protected init; } = null;
+        public AttackDefinition PrimaryAttack { get; protected init; } = default!;
         public AttackDefinition? SecondaryAttack { get; protected init; } = null;
         public bool IsTwoHanded { get; protected init; }
 

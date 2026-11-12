@@ -6,9 +6,13 @@ namespace InventoryCoreLib
     public abstract class BaseEffect<T, P> : IAffect<T>
         where T : class, IAffectable
     {
+        public string Name { get; protected init; } = "NONAME";
+
         public T? Target { get; protected set; }
 
         public P PowerValue { get; protected init; } = default!;
+
+        protected bool _isApplied = false;
 
         //methods
 
@@ -18,6 +22,9 @@ namespace InventoryCoreLib
 
         public virtual void SetTarget(T? target)
         {
+            if (_isApplied)
+                throw new EffectStateException(Name);
+
             Target = target;
         }
 
@@ -31,14 +38,14 @@ namespace InventoryCoreLib
             if (ReferenceEquals(this, other))
                 return true;
 
-            return PowerValue!.Equals(other.PowerValue);
+            return Name.Equals(other.Name) && PowerValue!.Equals(other.PowerValue);
         }
 
         public override bool Equals(object? obj) => Equals(obj as BaseEffect<T, P>);
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(PowerValue);
+            return HashCode.Combine(Name, PowerValue);
         }
 
         public static bool operator ==(BaseEffect<T, P>? one, BaseEffect<T, P>? other)

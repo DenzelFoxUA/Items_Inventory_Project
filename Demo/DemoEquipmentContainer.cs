@@ -1,14 +1,17 @@
 ﻿using CharacterMainLib;
 using System.Collections.Generic;
-using System.Linq;
 using System;
-using Microsoft.VisualBasic;
+
 
 namespace InventoryCoreLib
 {
     public class DemoEquipmentContainer : EquipmentContainer<IOwnedEquipable>
     {
         public IDemoCharacter? Owner { get; private set; } = null;
+
+        private uint _defencePoints = 0;
+
+        public uint Defence { get => _defencePoints; }
 
         public DemoEquipmentContainer(IAffectableCharacter? ownerRef, 
             IEnumerable<string> equipBlockNames) : base(equipBlockNames)
@@ -126,13 +129,23 @@ namespace InventoryCoreLib
 
         public override IOwnedEquipable? UnequipFromSlot(string slotName)
         {
-            if (slotName == string.Empty ||
-                EquipmentSlots is null ||
-                !EquipmentSlots.ContainsKey(slotName)||
-                EquipmentSlots[slotName] is null)
-                return null;
+            if (EquipmentSlots is null)
+                throw new ObjectNotInitializedException(nameof(EquipmentSlots));
 
-            //EquipmentSlots[slotName].ItemInstance!.Unequip();
+
+            if (slotName == string.Empty || !EquipmentSlots.ContainsKey(slotName))
+                throw new InvalidParameterNameException(nameof(slotName));
+
+            if(EquipmentSlots[slotName] is null)
+            {
+                return null;
+            }
+
+            if(EquipmentSlots[slotName].ItemInstance is not null)
+            {
+                EquipmentSlots[slotName].ItemInstance!.Unequip();
+            }
+
             return EquipmentSlots[slotName].Unequip();
         }
 
@@ -149,7 +162,26 @@ namespace InventoryCoreLib
 
         public override void Update(float deltaTime)
         {
-            throw new System.NotImplementedException();
+            uint tottalDefence = 0;
+
+            if (EquipmentSlots is null)
+                throw new ObjectNotInitializedException(nameof(EquipmentSlots));
+
+            foreach(var block in EquipmentSlots)
+            {
+                if (block.Value.ItemInstance is IOwnedEquipable item)
+                {
+                    item.Update();
+                }
+
+                if(block.Value.ItemInstance is IReducePhysicalDamage armor)
+                {
+                    tottalDefence += armor.GetDefencePoints();
+                }
+
+            }
+
+            _defencePoints = tottalDefence;
         }
 
         public override string ShowEquipment()
@@ -169,7 +201,7 @@ namespace InventoryCoreLib
                 equipmentStr += $"{eq.Key} - [ {itemName} ]\n";
             }
 
-            return equipmentStr;
+            return equipmentStr + $"\n\n  <[ DEFENCE ]>: {Defence} pts.";
         }
 
         public AttackComplex? UseWeaponPrimary(IAffectable? currTarget)

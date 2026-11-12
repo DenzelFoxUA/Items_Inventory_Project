@@ -1,5 +1,7 @@
 ﻿
 using CharacterMainLib;
+using System;
+using System.Data;
 
 namespace InventoryCoreLib
 {
@@ -8,7 +10,16 @@ namespace InventoryCoreLib
         where TEffect : class, IAffect<TTarget>
         where TTarget : class, IAffectable
     {
-        private DurableItem DurableDefinition => (DurableItem)Definition!;
+        private DurableItem Item
+        {
+            get 
+            {
+                if (Definition is null)
+                    throw new ObjectNotInitializedException(nameof(Definition));
+                
+                return (DurableItem)Definition!; 
+            }
+        }
 
         public uint CurrentDurability { get; protected set; }
 
@@ -21,7 +32,7 @@ namespace InventoryCoreLib
 
         public virtual void TakeDamage(uint damage)
         {
-            if (DurableDefinition.IsIndestructible)
+            if (Item.IsIndestructible)
                 return;
 
             if (damage >= CurrentDurability)
@@ -36,20 +47,20 @@ namespace InventoryCoreLib
 
         public double GetDurabilityCoefficient()
         {
-            if (DurableDefinition.IsIndestructible)
+            if (Item.IsIndestructible)
                 return 1.0;
 
-            return DurableDefinition.MaxDurability != 0 ?
-                (double)CurrentDurability / DurableDefinition.MaxDurability : 0;
+            return Item.MaxDurability != 0 ?
+                (double)CurrentDurability / Item.MaxDurability : 0;
         }
 
         public void Repair(uint points)
         {
-            if (DurableDefinition.IsIndestructible)
+            if (Item.IsIndestructible)
                 return;
 
-            if (points >= DurableDefinition.MaxDurability - CurrentDurability)
-                CurrentDurability = DurableDefinition.MaxDurability;
+            if (points >= Item.MaxDurability - CurrentDurability)
+                CurrentDurability = Item.MaxDurability;
             else
                 CurrentDurability += points;
         }

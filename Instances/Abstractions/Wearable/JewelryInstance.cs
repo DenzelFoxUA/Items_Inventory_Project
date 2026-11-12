@@ -9,12 +9,12 @@ namespace InventoryCoreLib
         where Target : class, IAffectableCharacter
     {
 
-        public uint CurrentDefence { get; protected set; }
-
         public JewelryInstance(in EquipableItem jewelry,
             params Effect[] effects) : base(jewelry, effects)
         {
         }
+
+        public override void Update(){}
 
     }
 }

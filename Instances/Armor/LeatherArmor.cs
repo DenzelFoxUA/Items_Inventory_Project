@@ -1,15 +1,11 @@
 ﻿
-
 using CharacterMainLib;
-using System;
 
 namespace InventoryCoreLib
 {
     public class LeatherArmor :
         ArmorInstance<IAffectConditionally<IAffectableCharacter>,IAffectableCharacter>
     {
-        private Action<IOwnedEquipable>? _useFunction = null;
-        private Func<string, IOwnedEquipable?>? _unequipFunction = null;
 
         public LeatherArmor(in BodyArmor armor, 
             params IAffectConditionally<IAffectableCharacter>[] effects) 
@@ -18,59 +14,48 @@ namespace InventoryCoreLib
            
         }
 
-        public override void SetTargetFunction()
-        {
-            if(MyOwner is not null)
-            {
-                _useFunction = MyOwner.Equip;
-                _unequipFunction = MyOwner.Unequip;
-            }
-           
-        }
+        //public override void Use()
+        //{
+        //    SetTargetFunction();
 
-        public override void Use()
-        {
-            SetTargetFunction();
+        //    if (_useFunction is null || _unequipFunction is null)
+        //        throw new NullReferenceException("Equip/Unequip funcs are not set");
 
-            if (_useFunction is null || _unequipFunction is null)
-                throw new NullReferenceException("Equip/Unequip funcs are not set");
+        //    if (!IsEquipped)
+        //        _useFunction.Invoke(this);
+        //    else
+        //        _unequipFunction.Invoke(this.GetEquipSlotCategory());
 
-            if (!IsEquipped)
-                _useFunction.Invoke(this);
-            else
-                _unequipFunction.Invoke(this.GetEquipSlotCategory());
+        //}
 
-        }
+        //public override void Equip()
+        //{
+        //    if (IsEquipped)
+        //        return;
 
-        public override void Equip()
-        {
-            if (IsEquipped)
-                return;
+        //    IsEquipped = true;
 
-            IsEquipped = true;
+        //    foreach (var effect in Effects)
+        //    {
+        //        effect.SetTarget(MyOwner);
+        //        effect.Apply();
+        //    }
 
-            foreach (var effect in Effects)
-            {
-                effect.SetTarget(MyOwner);
-                effect.Apply();
-            }
+        //}
 
-        }
+        //public override void Unequip()
+        //{
+        //    if (!IsEquipped)
+        //        return;
 
-        public override void Unequip()
-        {
-            if (!IsEquipped)
-                return;
+        //    IsEquipped = false;
 
-            IsEquipped = false;
+        //    foreach (var effect in Effects)
+        //    {
+        //        effect.Remove();
+        //    }
 
-            foreach (var effect in Effects)
-            {
-                effect.SetTarget(MyOwner);
-                effect.Remove();
-            }
-
-            CancelMyTarget();
-        }
+        //    CancelMyTarget();
+        //}
     }
 }

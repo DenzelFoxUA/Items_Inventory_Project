@@ -106,7 +106,11 @@ namespace InventoryCoreLib
 
         public void Update(float deltaTime)
         {
+            if (EquipmentSection is null)
+                throw new ObjectNotInitializedException(nameof(EquipmentSection));
+
             _effectsManager.Update(deltaTime);
+            EquipmentSection.Update(deltaTime);
             UpdateMovespeedByStats();
             UpdateVitalsByStats();
         }

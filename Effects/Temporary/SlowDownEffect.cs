@@ -1,26 +1,25 @@
 ﻿using CharacterMainLib;
 using System;
 
-namespace InventoryCoreLib.Effects
+namespace InventoryCoreLib
 {
     public class SlowDownEffect : TemporaryEffect<ICanMove,float>
     {
-        public SlowDownEffect(float strength, uint durationSec) : base(strength ,durationSec)
+        public SlowDownEffect(float strength, uint durationSec, string name = "Slow Effect") 
+            : base(strength ,durationSec, name)
         {
         }
 
         public override void SetTarget(ICanMove? target)
         {
-            if (_isApplied)
-                throw new InvalidOperationException("Cannot change target when effect is applied.");
 
-            Target = target;
+            base.SetTarget(target);
 
-            if (Target is not null)
-            {
-                _applyFunc = Target.MovementSlowDown;
-                _restoreFunc = Target.MovementSpeedUp;
-            }
+            if (Target is null)
+                return;
+
+            _applyFunc = Target.MovementSlowDown;
+            _restoreFunc = Target.MovementSpeedUp;
 
         }
 

@@ -61,23 +61,6 @@ namespace InventoryCoreLib
             }
         }
 
-        public override AttackComplex PrimaryAttack(IAffectable? target)
-        {
-            if (Dagger.PrimaryAttack == null)
-                throw new ArgumentNullException("ERR::Primary attack not set!");
-
-            var dmg = Dagger.PrimaryAttack.MaxDamage;
-            var dist = Dagger.PrimaryAttack.AttackRange;
-
-            return new AttackComplex(dmg, dist, Effects);
-        }
-
-        public override AttackComplex? SecondaryAttack(IAffectable? target)
-        {
-            if (Dagger.SecondaryAttack is null)
-                return null;
-
-            return null;
-        }
+        
     }
 }

@@ -6,20 +6,22 @@ namespace InventoryCoreLib
         BuffAttributeEffect<IAffectableCharacter, uint>,
         IAffectConditionally<IAffectableCharacter>
     {
-        public IntelligenceBuffEffect(uint power) : base("Intelligence", power)
+        public IntelligenceBuffEffect(uint power, string effName = "Intelligence boos") 
+            : base("Intelligence", power, effName)
         {
 
         }
 
         public override void SetTarget(IAffectableCharacter? target)
         {
-            Target = target;
 
-            if (Target is not null)
-            {
-                _applyFunc = Target.IncreaseAttribute;
-                _restoreFunc = Target.DecreaseAttribute;
-            }
+            base.SetTarget(target);
+
+            if (Target is null)
+                return;
+
+            _applyFunc = Target!.IncreaseAttribute;
+            _restoreFunc = Target.DecreaseAttribute;
         }
     }
 }

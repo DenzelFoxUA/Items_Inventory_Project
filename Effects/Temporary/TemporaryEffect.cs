@@ -12,19 +12,18 @@ namespace InventoryCoreLib
         protected Action<TPower>? _applyFunc;
         protected Action<TPower>? _restoreFunc;
 
-        protected bool _isApplied = false;
-
         public bool IsExpired => EffectDuration <= 0;
 
         protected float EffectDuration { get; set; }
 
-        protected TemporaryEffect(TPower power, float durationSec)
+        protected TemporaryEffect(TPower power, float durationSec, string effectName)
         {
             if (durationSec <= 0.0f)
                 throw new ArgumentOutOfRangeException(nameof(durationSec));
 
             EffectDuration = durationSec;
             PowerValue = power;
+            Name = effectName;
         }
 
         public override void Apply()
