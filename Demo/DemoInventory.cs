@@ -1,7 +1,6 @@
 ﻿using CharacterMainLib;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Text;
 
 namespace InventoryCoreLib
@@ -12,7 +11,6 @@ namespace InventoryCoreLib
 
         private IDemoCharacter _owner;
         public IDemoCharacter Owner { get => _owner; }
-
 
         private void ValidatePosition(Position pos)
         {
@@ -78,6 +76,8 @@ namespace InventoryCoreLib
             return remaining == 0 ? null : item;
         }
 
+        #region [! ADD ITEM !]
+
         public override IOwnedUsable? AddItem(IOwnedUsable item)
         {
             if (item is null)
@@ -133,6 +133,8 @@ namespace InventoryCoreLib
             return item;
         }
 
+        #endregion
+
         public override IEnumerator<IOwnedUsable> GetEnumerator()
         {
             foreach (IOwnedUsable? item in Container)
@@ -142,46 +144,40 @@ namespace InventoryCoreLib
             }
         }
 
+        #region [! REMOVE !]
+
         public override IOwnedUsable? RemoveItem(Position pos)
         {
             ValidatePosition(pos);
 
             IOwnedUsable? result = Container[pos.Row, pos.Column];
 
-            //if(result is not null) 
-            //    result.SetMyOwner(null);
-
             Container[pos.Row, pos.Column] = null;
 
             return result;
         }
 
-        public override IOwnedUsable? RemoveItem(IOwnedUsable searchItem)
+        public override IOwnedUsable? RemoveItemBySearch(IOwnedUsable searchItem)
         {
             if (searchItem is null)
                 return null;
 
-            for (int row = 0; row < InventoryGrid.Rows; row++)
+            for (ushort row = 0; row < InventoryGrid.Rows; row++)
             {
-                for (int col = 0; col < InventoryGrid.Columns; col++)
+                for (ushort col = 0; col < InventoryGrid.Columns; col++)
                 {
-                    if (ReferenceEquals(
-                        Container[row, col], searchItem))
-                    {
-                        IOwnedUsable? result = Container[row, col];
-
-                        if (result is not null)
-                            result.SetMyOwner(null);
-
-                        Container[row, col] = null;
-
-                        return result;
+                    if (Container[row, col] == searchItem)
+                    { 
+                        return RemoveItem(new Position(row,col));
                     }
                 }
             }
 
             return null;
         }
+        #endregion
+
+        #region [ SWAP ]
 
         //це переміщує всередині інвентаря
         public override void SwapItems(Position one, Position two)
@@ -198,6 +194,7 @@ namespace InventoryCoreLib
             CommonFunctions.Swap(ref one, ref two);
         }
 
+        #endregion
 
         public override string ShowInventory()
         {
@@ -246,6 +243,8 @@ namespace InventoryCoreLib
                 return null;
         }
 
+        #region [ ITEMS OWNERSHIP ]
+
         public override void SetThisAsItemOwner(ref IOwnedUsable? item)
         {
             if (item is null || _owner is null)
@@ -264,5 +263,7 @@ namespace InventoryCoreLib
 
             item.SetMyOwner(null);
         }
+
+        #endregion
     }
 }

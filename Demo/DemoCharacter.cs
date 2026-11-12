@@ -23,6 +23,19 @@ namespace InventoryCoreLib
 
         protected override IInventoryHandler<IOwnedUsable>? InventorySection => _myInventory;
 
+        #region [ AVALONIA DEMO ADDON]
+
+        public DemoInventory Inventory =>
+            _myInventory ?? throw new InvalidOperationException(
+                "Inventory is not initialized.");
+
+        public DemoEquipmentContainer Equipment =>
+            _myEquipment ?? throw new InvalidOperationException(
+                "Equipment is not initialized.");
+
+        #endregion
+
+
         #region [ CTOR ]
 
         public DemoCharacter(
@@ -278,7 +291,6 @@ namespace InventoryCoreLib
                     effect.Apply();
                 }
                 Console.WriteLine("Consumable used!");
-                Console.ReadLine();
             }
 
         }

@@ -1,12 +1,27 @@
 ﻿using CharacterMainLib;
-using System.Collections.Generic;
 using System;
-
+using System.Collections.Generic;
+using System.Linq;
 
 namespace InventoryCoreLib
 {
     public class DemoEquipmentContainer : EquipmentContainer<IOwnedEquipable>
     {
+        #region [ AVALONIA ADDON ]
+
+        public IReadOnlyList<string> SlotNames =>
+                    EquipmentSlots!.Keys.ToList();
+
+        public IOwnedEquipable? ItemAtSlot(string slotName)
+        {
+            if (!EquipmentSlots!.TryGetValue(slotName, out var block))
+                return null;
+
+            return block.ItemInstance;
+        }
+
+        #endregion
+
         public IDemoCharacter? Owner { get; private set; } = null;
 
         private uint _defencePoints = 0;
@@ -18,6 +33,8 @@ namespace InventoryCoreLib
         {
 
         }
+
+        #region [ TRY EQUIP WEAPON ]
 
         private bool TryEquipWeapon(ref IOwnedEquipable? weapon)
         {
@@ -67,6 +84,10 @@ namespace InventoryCoreLib
 
         }
 
+        #endregion
+
+        #region [ TRY EQUIP SHIELD ]
+
         private bool TryEquipShield(ref IOwnedEquipable? shield)
         {
             if (shield is null)
@@ -98,6 +119,10 @@ namespace InventoryCoreLib
             return isOk;
         }
 
+        #endregion
+
+        #region [! EQUIP INTO SLOT !]
+
         public override bool TryEquipIntoSlot(ref IOwnedEquipable? item)
         {
             if (EquipmentSlots is null || item is null)
@@ -127,6 +152,10 @@ namespace InventoryCoreLib
             
         }
 
+        #endregion
+
+        #region [ UNEQUIP ]
+
         public override IOwnedEquipable? UnequipFromSlot(string slotName)
         {
             if (EquipmentSlots is null)
@@ -148,6 +177,7 @@ namespace InventoryCoreLib
 
             return EquipmentSlots[slotName].Unequip();
         }
+        #endregion
 
         public override string ItemInfo(string slotName)
         {
@@ -159,6 +189,8 @@ namespace InventoryCoreLib
 
             return string.Empty;
         }
+
+        #region [ UPDATE ]
 
         public override void Update(float deltaTime)
         {
@@ -183,6 +215,7 @@ namespace InventoryCoreLib
 
             _defencePoints = tottalDefence;
         }
+        #endregion
 
         public override string ShowEquipment()
         {
@@ -203,6 +236,8 @@ namespace InventoryCoreLib
 
             return equipmentStr + $"\n\n  <[ DEFENCE ]>: {Defence} pts.";
         }
+
+        #region [ USE WEAPONS ]
 
         public AttackComplex? UseWeaponPrimary(IAffectable? currTarget)
         {
@@ -238,5 +273,7 @@ namespace InventoryCoreLib
 
             return null;
         }
+
+        #endregion
     }
 }
